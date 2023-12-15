@@ -270,7 +270,9 @@ int updateBoard(game* current_game) {
         piece* current_piece = tail;
 
         while(current_piece->next->next->next != current_game->head) {
-            if(current_piece->next->color == current_piece->next->next->color && current_piece->next->color == current_piece->next->next->next->color) {
+            if(current_piece->next->color == current_piece->next->next->color && current_piece->next->color == current_piece->next->next->next->color
+            ||current_piece->next->shape == current_piece->next->next->shape && current_piece->next->shape == current_piece->next->next->next->shape
+                    ) {
                 // S'il y a 3 exactement 3 pièces sur le plateau
                 if(current_game->pieces_count == 3) {
                     return 1; // Fin de la partie
@@ -298,9 +300,6 @@ int updateBoard(game* current_game) {
                 free_piece(to_delete2);
                 free_piece(to_delete3);
 
-
-
-
                 current_game->pieces_count -= 3;
                 current_game->score += 3;
                 return 0;
@@ -315,6 +314,7 @@ int updateBoard(game* current_game) {
     return 0;
 
 }
+
 
 void free_piece(piece* piece) {
     free(piece->display_str);

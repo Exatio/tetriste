@@ -29,8 +29,6 @@ piece* generatePiece();
 
 char* get_display_str(int color, int shape);
 
-
-
 void leftInsert(game* current_game, piece* current);
 void rightInsert(game* current_game, piece* current);
 void updateShapes(piece* to_update);

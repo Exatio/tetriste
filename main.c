@@ -7,7 +7,6 @@
 // Entrée du programme principal
 // -------------------------------------------
 int main() {
-
     srand(time(NULL));
     game* current_game = init_game();
 
