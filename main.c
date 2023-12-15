@@ -21,6 +21,7 @@ int main() {
 
     while(continuer) {
 
+
         piece* current;
 
         // On génère une nouvelle pièce si on a inséré la dernière
@@ -36,8 +37,16 @@ int main() {
         current = next_pieces[4];
 
 
+
+
         // On se place en haut à gauche du terminal et on efface tout puis on réinitialise la couleur du terminal
         printf("%s\033[0;0H\033[2J", "\033[0m");
+
+        if(updateBoard(current_game)) {
+            printf("Félicitations, vous avez gagné !\n");
+            break;
+        }
+
         printf("------   TETRISTE   ------\nProchains : ");
         for(int i = 0; i < 5; i++) {
             printf("%s ", next_pieces[i]->display_str);
@@ -137,7 +146,6 @@ int main() {
                 while (getchar() != '\n');
                 break;
         }
-
 
     }
 

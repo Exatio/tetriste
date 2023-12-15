@@ -39,6 +39,8 @@ void updateColors(piece* to_update);
 void shiftByColor(game* current_game, int color);
 void shiftByShape(game* current_game, int shape);
 
+int updateBoard(game* current_game);
+
 void free_piece(piece* piece);
 void free_game(game* current_game);
 

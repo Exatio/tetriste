@@ -156,9 +156,163 @@ void rightInsert(game* current_game, piece* to_insert) {
 
 void shiftByColor(game* current_game, int color) {
 
+    piece* tail = current_game->head;
+    while(tail->next != current_game->head) {
+        tail = tail->next;
+    }
+
+    piece* firstColor = current_game->head;
+    while(firstColor->next != current_game->head) {
+        if(firstColor->color == color) {
+            break;
+        }
+        firstColor = firstColor->next;
+    }
+
+    if(firstColor->color != color) {
+        printf("Aucune pièce de cette couleur n'est présente sur le plateau !\n");
+        return;
+    }
+
+    piece* lastColor = firstColor->colorPrev;
+
+    if(firstColor != lastColor) {
+
+        piece* current = firstColor;
+
+        do {
+            int tmp = current->shape;
+            current->shape = current->colorNext->shape;
+            current->colorNext->shape = tmp;
+
+            free(current->display_str);
+            free(current->colorNext->display_str);
+
+
+            current->display_str = get_display_str(color, current->shape);
+            current->colorNext->display_str = get_display_str(color, current->colorNext->shape);
+
+            current = current->colorNext;
+        } while(current != lastColor);
+
+        // TODO: Optimiser cette partie
+        current = current_game->head;
+        do {
+            updateShapes(current);
+            current = current->next;
+        } while(current != current_game->head);
+
+    }
 }
 
 void shiftByShape(game* current_game, int shape) {
+
+    piece* tail = current_game->head;
+    while(tail->next != current_game->head) {
+        tail = tail->next;
+    }
+
+    piece* firstShape = current_game->head;
+    while(firstShape->next != current_game->head) {
+        if(firstShape->shape == shape) {
+            break;
+        }
+        firstShape = firstShape->next;
+    }
+
+    if(firstShape->shape != shape) {
+        printf("Aucune pièce de cette forme n'est présente sur le plateau !\n");
+        return;
+    }
+
+    piece* lastShape = firstShape->shapePrev;
+
+    if(firstShape != lastShape) {
+
+        piece* current = firstShape;
+
+        do {
+
+            int tmp = current->color;
+            current->color = current->shapeNext->color;
+            current->shapeNext->color = tmp;
+
+            free(current->display_str);
+            free(current->shapeNext->display_str);
+
+            current->display_str = get_display_str(current->color, shape);
+            current->shapeNext->display_str = get_display_str(current->shapeNext->color, shape);
+            
+
+            current = current->shapeNext;
+        } while(current != lastShape);
+
+        // TODO: Optimiser cette partie
+        current = current_game->head;
+        do {
+            updateColors(current);
+            current = current->next;
+        } while(current != current_game->head);
+
+    }
+
+}
+
+int updateBoard(game* current_game) {
+    // Au moins 3 pièces sur le plateau
+    if(current_game->head->next != current_game->head && current_game->head->next->next != current_game->head) {
+
+        piece* tail = current_game->head;
+        while(tail->next != current_game->head) {
+            tail = tail->next;
+        }
+
+        piece* current_piece = tail;
+
+        while(current_piece->next->next->next != current_game->head) {
+            if(current_piece->next->color == current_piece->next->next->color && current_piece->next->color == current_piece->next->next->next->color) {
+                // S'il y a 3 exactement 3 pièces sur le plateau
+                if(current_game->pieces_count == 3) {
+                    return 1; // Fin de la partie
+                }
+
+                // On supprime les 3 pièces
+                piece* to_delete = current_piece->next;
+                piece* to_delete2 = current_piece->next->next;
+                piece* to_delete3 = current_piece->next->next->next;
+
+                if(to_delete == current_game->head) {
+                    current_game->head = to_delete3->next;
+                }
+
+                // TODO: Optimiser cette partie
+                piece* tmp = current_game->head;
+                do {
+                    updateShapes(tmp);
+                    updateColors(tmp);
+                    tmp = tmp->next;
+                } while(tmp != current_game->head);
+
+                current_piece->next = current_piece->next->next->next->next;
+                free_piece(to_delete);
+                free_piece(to_delete2);
+                free_piece(to_delete3);
+
+
+
+
+                current_game->pieces_count -= 3;
+                current_game->score += 3;
+                return 0;
+            }
+
+
+            current_piece = current_piece->next;
+        }
+    }
+
+
+    return 0;
 
 }
 
