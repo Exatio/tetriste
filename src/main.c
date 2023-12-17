@@ -9,7 +9,7 @@ void startGUI() {
 int main(int argc, char** argv) {
     if(argc != 2) {
         printf("Must have 1 argument!\n");
-        printf("Usage: ./%s <cli | gui>\n", argv[0]);
+        printf("Usage: %s <cli | gui>\n", argv[0]);
         return 1;
     } else if(strcmp(argv[1], "cli") == 0) {
         startCLI();
