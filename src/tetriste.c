@@ -235,6 +235,7 @@ int updateBoard(Game* game) {
         Piece* nextNextNextPiece = nextNextPiece->next;
 
         // If the 3 pieces are of the same color or shape, delete them
+        // TODO: Ask & check if we need to delete all the pieces of the same color/shape or only the 3 first
         if ((nextPiece->color == nextNextPiece->color && nextPiece->color == nextNextNextPiece->color) ||
             (nextPiece->shape == nextNextPiece->shape && nextPiece->shape == nextNextNextPiece->shape)) {
 
