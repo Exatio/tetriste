@@ -101,7 +101,7 @@ int main() {
                 scanf("%d", &choix);
                 printf("\n");
 
-                if(choix < 1 || choix > 4) {
+                if(choix < 1 || choix > 5) {
                     printf("Choix invalide !\n");
                     break;
                 }
