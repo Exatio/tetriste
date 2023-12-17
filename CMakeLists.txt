@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(tetristeCLI C)
+project(tetriste C)
 
 set(CMAKE_C_STANDARD 11)
 
