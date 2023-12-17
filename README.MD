@@ -17,12 +17,12 @@ To install the game, just clone the git repository and compile the program with 
 
 ### Automatic installation
 
-Hop over to the [release page](https://github.com/Exatio/tetristeCLI/releases) and download the latest release.
+Hop over to the [release page](https://github.com/Exatio/tetriste/releases) and download the latest release.
 
 ## Usage
 
-To launch the game, just launch the `tetriste` program with the `./tetriste` command.
-
+To launch the game in CLI mode, use the `./tetriste cli` command.
+To start it in GUI mode, use the './tetriste gui' command.
 
 ## Controls
 
