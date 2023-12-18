@@ -4,6 +4,10 @@
 #include "../tetriste.h"
 #include "tetriste_cli.h"
 
+void showDebug(Game* currentGame);
+Piece* debugGetNextShape(Piece* piece);
+Piece* debugGetNextColor(Piece* piece);
+
 void startCLI() {
 
     // Initialization of the random number generator
@@ -28,14 +32,7 @@ void startCLI() {
         printf("%s\033[0;0H\033[2J", "\033[0m");
 
         displayGameInfo(currentGame, nextPieces);
-
-        /* DEBUG
-        printf("colorPrev : %s\n", current_game->head->colorPrev->display_str);
-        printf("colorNext : %s\n", current_game->head->colorNext->display_str);
-        printf("shapePrev : %s\n", current_game->head->shapePrev->display_str);
-        printf("shapeNext : %s\n", current_game->head->shapeNext->display_str);
-        */
-
+        showDebug(currentGame);
         displayMainMenu();
 
         printf("Your choice: ");
@@ -55,7 +52,7 @@ void startCLI() {
             case 'c':
                 displayColorMenu();
                 char colorChoice;
-                scanf("%c", &colorChoice);
+                scanf(" %c", &colorChoice);
                 printf("\n");
 
                 switch (colorChoice) {
@@ -78,7 +75,7 @@ void startCLI() {
             case 's':
                 displayShapeMenu();
                 char shapeChoice;
-                scanf("%c", &shapeChoice);
+                scanf(" %c", &shapeChoice);
                 printf("\n");
 
                 switch (shapeChoice) {
@@ -142,6 +139,7 @@ void displayGameInfo(Game *currentGame, Piece **nextPieces) {
         printf("%s ", currentPiece->displayStr);
         currentPiece = currentPiece->next;
     }
+
     printf("\n\n");
 }
 
@@ -170,4 +168,110 @@ void displayShapeMenu() {
     printf("c. Circle\n");
     printf("t. Triangle\n");
     printf("0. Back\n");
+}
+
+/* DEBUG : Display all the pieces adresses, and, with tabulations, the adresses of the pieces they point to for colorNext and shapeNext and the prevs */
+void showDebug(Game* currentGame) {
+    printf("\n");
+
+    printf("Disp\t");
+    Piece* currentPiece = currentGame->head;
+    for (int i = 0; i < currentGame->piecesCount; i++) {
+        printf("%s               ", currentPiece->displayStr);
+        currentPiece = currentPiece->next;
+    }
+    printf("\n");
+    printf("Address\t");
+    currentPiece = currentGame->head;
+    for(int i = 0; i < currentGame->piecesCount; i++) {
+        printf("%p\t", currentPiece);
+        currentPiece = currentPiece->next;
+    }
+    printf("\n\n");
+
+
+
+    printf("ColorP\t");
+    currentPiece = currentGame->head;
+    for(int i = 0; i < currentGame->piecesCount; i++) {
+
+        Piece* colorPrev = currentPiece->next;
+
+        while(debugGetNextColor(colorPrev) != currentPiece) {
+            colorPrev = colorPrev->next;
+        }
+
+        if(currentPiece->colorPrev != colorPrev) {
+            printf("\033[31m");
+        }
+        
+        printf("%p\033[0m\t", currentPiece->colorPrev);
+        currentPiece = currentPiece->next;
+    }
+    printf("\n");
+    
+    
+
+    printf("ColorN\t");
+    currentPiece = currentGame->head;
+    for(int i = 0; i < currentGame->piecesCount; i++) {
+        if(currentPiece->colorNext != debugGetNextColor(currentPiece)) {
+            printf("\033[31m");
+        }
+
+        printf("%p\033[0m\t", currentPiece->colorNext);
+        currentPiece = currentPiece->next;
+    }
+    printf("\n");
+    
+    
+    
+    printf("ShapeP\t");
+    currentPiece = currentGame->head;
+    for(int i = 0; i < currentGame->piecesCount; i++) {
+
+        Piece* shapePrev = currentPiece->next;
+
+        while(debugGetNextShape(shapePrev) != currentPiece) {
+            shapePrev = shapePrev->next;
+        }
+
+        if(currentPiece->shapePrev != shapePrev) {
+            printf("\033[31m");
+        }
+        
+        printf("%p\033[0m\t", currentPiece->shapePrev);
+        currentPiece = currentPiece->next;
+    }
+    printf("\n");
+
+    
+    printf("ShapeN\t");
+    currentPiece = currentGame->head;
+    for(int i = 0; i < currentGame->piecesCount; i++) {
+
+        if(currentPiece->shapeNext != debugGetNextShape(currentPiece)) {
+            printf("\033[31m");
+        }
+
+        printf("%p\033[0m\t", currentPiece->shapeNext);
+        currentPiece = currentPiece->next;
+    }
+    printf("\n\n");
+}
+
+Piece* debugGetNextColor(Piece* piece) {
+    Piece* colorNext = piece->next;
+    while(colorNext->color != piece->color) {
+        colorNext = colorNext->next;
+    }
+    return colorNext;
+}
+
+Piece* debugGetNextShape(Piece* piece) {
+    Piece* shapeNext = piece->next;
+    while(shapeNext->shape != piece->shape) {
+        shapeNext = shapeNext->next;
+    }
+    return shapeNext;
 }

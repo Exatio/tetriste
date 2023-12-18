@@ -252,6 +252,7 @@ int updateBoard(Game* game) {
             }
 
             // TODO: Optimize the update of the shapes and colors for all the pieces related to the deleted ones
+            // TODO: it doesnt work lol
             Piece* tmp = game->head;
             do {
                 updateShapes(tmp);
