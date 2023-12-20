@@ -35,6 +35,8 @@ void updateShapes(Piece* piece);
 void updateColors(Piece* piece);
 int updateBoard(Game* game);
 Piece* getTail(Game* game);
+// Files
+void saveGame(Game* game, Piece** nextPieces, char* name);
 // Memory
 void freePiece(Piece* piece);
 void freeGame(Game* game);

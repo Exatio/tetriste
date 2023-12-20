@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "cli/tetriste_cli.h"
-
-void startGUI() {
-    printf("GUI not implemented yet!\n");
-}
+#include "src/cli/tetriste_cli.h"
+#include "src/gui/tetriste_gui.h"
 
 int main(int argc, char** argv) {
     if(argc != 2) {

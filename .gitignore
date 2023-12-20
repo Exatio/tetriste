@@ -2,7 +2,7 @@
 tetristeCLI
 cmake-build-debug/
 .idea/
-.idea
+bin/
 
 # CMake
 CMakeLists.txt.user

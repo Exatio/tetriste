@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <string.h>
 #include "tetriste.h"
 
@@ -42,8 +43,9 @@ Piece* generatePiece() {
 
 // Get the string displayed for a given color/shape in the terminal
 char* getDisplayStr(int color, int shape) {
+
+    char* shapes[] = {"■", "◊", "●", "▲"};
     char* colors[] = {"\033[34m", "\033[33m", "\033[31m", "\033[32m"};
-    char* shapes[] = {"■", "◊", "●", "▲"}; // {"C", "L", "R", "T"};
     char* resetColor = "\033[0m";
 
     char* displayStr = (char*)malloc(15);
@@ -216,7 +218,11 @@ void updateColors(Piece* piece) {
 }
 
 /* Check if some pieces need to be deleted (3 pieces of the same color/shape)
-   Returns one if the game is won, otherwise it will return 0 */
+   Returns:
+     O if nothing changed
+    -1 if the game is won
+    the combo otherwise
+*/
 int updateBoard(Game* game) {
 
     // No need to check if there is less than 3 pieces
@@ -226,7 +232,7 @@ int updateBoard(Game* game) {
 
     Piece* currentPiece = getTail(game);
 
-    int combo = 3;
+    int combo = 0;
     // For all the combinaisons of 3 pieces starting from the head to the tail
     while (getXPiecesAfter(currentPiece, 3) != game->head) {
 
@@ -241,7 +247,7 @@ int updateBoard(Game* game) {
 
             // If there are exactly 3 pieces on the board, its a win, the game will end so everything will be correctly freed
             if (game->piecesCount == 3) {
-                return 1;
+                return -1;
             }
 
             // Removing the pieces from the single circular linked list
@@ -265,19 +271,23 @@ int updateBoard(Game* game) {
             freePiece(nextNextPiece);
             freePiece(nextNextNextPiece);
 
+            // TODO
+            // PlaySound(successSound);
+
+            combo++;
+
             game->piecesCount -= 3;
-            game->score += combo;
-            combo = combo*combo; // If there are combos, the score will augment exponentially (3^x)
-            currentPiece = getTail(game); // We need to check again since the beginning to see if a new combinaison was created from this deletion
+            game->score += (int) pow(3, combo);// If there are combos, the score will augment exponentially (3^x)
+
             // TODO: Optimize this by only checking from two pieces before the current one or from the tail if we are in the 3 first
-            // TODO: Show combos + score to user
+            currentPiece = getTail(game); // We need to check again since the beginning to see if a new combinaison was created from this deletion
         } else {
             currentPiece = currentPiece->next; // Only increment if no deletion was done
         }
 
     }
 
-    return 0;
+    return combo;
 }
 
 // Returns the last displayed piece "tail"
@@ -287,6 +297,23 @@ Piece* getTail(Game* game) {
         tail = tail->next;
     }
     return tail;
+}
+
+void saveGame(Game *game, Piece **nextPieces, char *name){
+    FILE *file = fopen(strcat(name, ".txt"), "w");
+    fprintf(file, "%d\n%d\n", game->score, game->piecesCount);
+
+    for(int i = 0 ; i < 5 ; i++){
+        fprintf(file, "%d %d\n", nextPieces[i]->color, nextPieces[i]->shape);
+    }
+
+    Piece *toSave = game->head;
+    for(int i = 0 ; i < game->piecesCount ; i++){
+        fprintf(file, "%d %d\n", toSave->color, toSave->shape);
+        toSave = toSave->next;
+    }
+
+    fclose(file);
 }
 
 // Free the memory allocated to a piece

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include "../tetriste.h"
 #include "tetriste_cli.h"
 
@@ -22,6 +23,7 @@ void startCLI() {
     }
 
     int keepNextPieces;
+    int combo = 0;
 
     while (continueGame) {
 
@@ -31,7 +33,7 @@ void startCLI() {
 
         printf("%s\033[0;0H\033[2J", "\033[0m");
 
-        displayGameInfo(currentGame, nextPieces);
+        displayGameInfo(currentGame, nextPieces, combo);
         showDebug(currentGame);
         displayMainMenu();
 
@@ -97,6 +99,17 @@ void startCLI() {
                 break;
             case 'q':
                 continueGame = 0;
+
+                printf("Do you want to save your progression (y/n) ? ");
+                char saveChoice;
+                scanf(" %c", &saveChoice);
+                if (saveChoice == 'y') {
+                    char name[21] = "";
+                    printf("Name of the save (max of 20): ");
+                    scanf("%s", name);
+                    saveGame(currentGame, nextPieces, name);
+                }
+
                 break;
             default:
                 // Useless to say that the choice is invalid because the next execution of the loop will clear the terminal
@@ -112,7 +125,8 @@ void startCLI() {
             nextPieces[0] = generatePiece();
         }
 
-        if (updateBoard(currentGame)) {
+        combo = updateBoard(currentGame);
+        if (combo == -1) {
             printf("YOU WIN !\n");
             continueGame = 0;
         }
@@ -127,8 +141,19 @@ void startCLI() {
     freeGame(currentGame);
 }
 
-void displayGameInfo(Game *currentGame, Piece **nextPieces) {
-    printf("------   TETRISTE   ------\nCurrent score : %d\nNext pieces: ", currentGame->score);
+void displayGameInfo(Game *currentGame, Piece **nextPieces, int combo) {
+
+    printf("------   TETRISTE   ------\n");
+
+    if(combo == 1){
+        printf("Current score : %d (+3)\n", currentGame->score);
+    } else if (combo > 1){
+        printf("Current score : %d (COMBO! +%d)\n", currentGame->score, (int) pow(3, combo));
+    } else {
+        printf("Current score : %d\n", currentGame->score);
+    }
+   printf("Next pieces: ");
+
     for (int i = 0; i < 5; i++) {
         printf("%s ", nextPieces[i]->displayStr);
     }
@@ -150,6 +175,7 @@ void displayMainMenu() {
     printf("c. Shift by color\n");
     printf("s. Shift by shape\n");
     printf("q. Quit\n");
+
 }
 
 void displayColorMenu() {
@@ -177,7 +203,7 @@ void showDebug(Game* currentGame) {
     printf("Disp\t");
     Piece* currentPiece = currentGame->head;
     for (int i = 0; i < currentGame->piecesCount; i++) {
-        printf("%s               ", currentPiece->displayStr);
+        printf("%s           \t", currentPiece->displayStr);
         currentPiece = currentPiece->next;
     }
     printf("\n");
