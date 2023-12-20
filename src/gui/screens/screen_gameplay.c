@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "../../tetriste.h"
 #include "rlgl.h"
+#include "../audio/audio.h"
 
 
 static Texture2D background;
@@ -75,6 +76,7 @@ void UpdateDrawGameplayScreen(void) {
             next_pieces[0] = generatePiece();
 
             combo = updateBoard(current_game);
+            if(combo > 0) PlaySound(successSound);
 
             if(current_game->piecesCount >= 15) {
                 lost = 1;
@@ -89,6 +91,7 @@ void UpdateDrawGameplayScreen(void) {
             next_pieces[0] = generatePiece();
 
             combo = updateBoard(current_game);
+            if(combo > 0) PlaySound(successSound);
 
             if(current_game->piecesCount >= 15) {
                 lost = 1;

@@ -250,6 +250,15 @@ int updateBoard(Game* game) {
                 return -1;
             }
 
+            // Updating the linking for the shapes and colors
+            for(int i = 0; i < 3; i++) {
+                Piece* tmp = getXPiecesAfter(currentPiece, i+1);
+                tmp->shapePrev->shapeNext = tmp->shapeNext;
+                tmp->shapeNext->shapePrev = tmp->shapePrev;
+                tmp->colorPrev->colorNext = tmp->colorNext;
+                tmp->colorNext->colorPrev = tmp->colorPrev;
+            }
+
             // Removing the pieces from the single circular linked list
             currentPiece->next = nextNextNextPiece->next;
 
@@ -257,29 +266,16 @@ int updateBoard(Game* game) {
                 game->head = nextNextNextPiece->next;
             }
 
-            // TODO: Optimize the update of the shapes and colors for all the pieces related to the deleted ones
-            // TODO: it doesnt work lol
-            Piece* tmp = game->head;
-            do {
-                updateShapes(tmp);
-                updateColors(tmp);
-                tmp = tmp->next;
-            } while (tmp != game->head);
-
             // They aren't used anymore by any other pieces thanks to the above update
             freePiece(nextPiece);
             freePiece(nextNextPiece);
             freePiece(nextNextNextPiece);
-
-            // TODO
-            // PlaySound(successSound);
 
             combo++;
 
             game->piecesCount -= 3;
             game->score += (int) pow(3, combo);// If there are combos, the score will augment exponentially (3^x)
 
-            // TODO: Optimize this by only checking from two pieces before the current one or from the tail if we are in the 3 first
             currentPiece = getTail(game); // We need to check again since the beginning to see if a new combinaison was created from this deletion
         } else {
             currentPiece = currentPiece->next; // Only increment if no deletion was done
