@@ -312,6 +312,59 @@ void saveGame(Game *game, Piece **nextPieces, char *name){
     fclose(file);
 }
 
+// Returns 1 if the game was successfully loaded, 0 otherwise (file doesn't exist)
+int loadGame(Game* game, Piece** nextPieces, char* name) {
+
+    FILE* file = fopen(strcat(name, ".txt"), "r");
+
+    if (file == NULL) {
+        return 0;
+    }
+
+    freeGame(game);
+
+    Game* newGame = (Game*)malloc(sizeof(Game));
+    fscanf(file, "%d\n%d\n", &(newGame->score), &(newGame->piecesCount));
+
+    for (int i = 0; i < 5; i++) {
+        int color, shape;
+        fscanf(file, "%d %d\n", &color, &shape);
+        nextPieces[i]->color = color;
+        nextPieces[i]->shape = shape;
+        nextPieces[i]->displayStr = getDisplayStr(color, shape);
+    }
+
+
+    Piece* current = NULL;
+    for (int i = 0; i < newGame->piecesCount; i++) {
+        int color, shape;
+        fscanf(file, "%d %d\n", &color, &shape);
+        Piece* newPiece = (Piece*)malloc(sizeof(Piece));
+        newPiece->color = color;
+        newPiece->shape = shape;
+        newPiece->displayStr = getDisplayStr(color, shape);
+
+        if (i == 0) {
+            newGame->head = newPiece;
+            newPiece->next = newPiece;
+            newPiece->shapePrev = newPiece;
+            newPiece->shapeNext = newPiece;
+            newPiece->colorPrev = newPiece;
+            newPiece->colorNext = newPiece;
+            current = newPiece;
+        } else {
+            rightInsert(newGame, newPiece);
+            current = newPiece;
+        }
+    }
+
+    current->next = game->head;
+
+    fclose(file);
+    game = newGame;
+    return 1;
+}
+
 // Free the memory allocated to a piece
 void freePiece(Piece* piece) {
     free(piece->displayStr);

@@ -137,7 +137,7 @@ void UpdateDrawGameplayScreen(void) {
         DrawText(TextFormat("%d", current_game->score), 200, 390, 50, RED);
         DrawText("YOU WIN!", 200, 450, 50, RED);
     } else if(lost) {
-        DrawText("YOU LOST!", 200, 450, 50, RED);
+        DrawText("YOU LOST!", 200, 460, 50, RED);
         DrawText(TextFormat("%d", current_game->score), 200, 390, 50, RED);
     }
 

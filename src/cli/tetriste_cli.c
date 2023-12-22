@@ -25,6 +25,17 @@ void startCLI() {
     int keepNextPieces;
     int combo = 0;
 
+    printf("Voulez-vous charger une partie (y/n) ? ");
+    char loadChoice;
+    scanf(" %c", &loadChoice);
+    printf("\n");
+    if(loadChoice == 'y') {
+        char name[21] = "";
+        printf("Nom de la sauvegarde (max de 20): ");
+        scanf("%s", name);
+        loadGame(currentGame, nextPieces, name);
+    }
+
     while (continueGame) {
 
         Piece *current = nextPieces[4];
