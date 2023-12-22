@@ -1,6 +1,6 @@
 # Tetriste
 
-## Screenshot
+## Screenshots
 
 ![CLI Mode](screenshots/screenshot_cli.png)
 ![GUI Mode - title screen](screenshots/screenshot_gui_title.png)
@@ -23,11 +23,13 @@ To start it in GUI mode, use the `./tetriste gui` command.
 
 ## Controls
 
-You can currently use the following controls:
+For the GUI, you can currently use the following controls:
 - Insert a piece to the left : Left arrow
 - Insert a piece to the right : Right arrow
 - Rotate through the shape cycle : S, D, C, T
 - Rotate through the color cycle : R, B, Y, G
+- Switch the music or disable it : 1, 2, 3, 4
+- Quit the game : Esc
 
 ## C Coding Style Conventions
 
