@@ -296,7 +296,9 @@ Piece* getTail(Game* game) {
 }
 
 void saveGame(Game *game, Piece **nextPieces, char *name){
+    char* magic = "TETRISTE";
     FILE *file = fopen(strcat(name, ".txt"), "w");
+    fprintf(file, "%s\n", magic); // permet de vérifier que le fichier est bien un fichier de sauvegarde valide
     fprintf(file, "%d\n%d\n", game->score, game->piecesCount);
 
     for(int i = 0 ; i < 5 ; i++){
@@ -313,27 +315,38 @@ void saveGame(Game *game, Piece **nextPieces, char *name){
 }
 
 // Returns 1 if the game was successfully loaded, 0 otherwise (file doesn't exist)
-int loadGame(Game* game, Piece** nextPieces, char* name) {
+Game* loadGame(Piece** nextPieces, char* name) {
 
-    FILE* file = fopen(strcat(name, ".txt"), "r");
+    char magic[] = "        ";
+    strcat(name, ".txt");
+
+    FILE* file = fopen(name, "r");;
 
     if (file == NULL) {
-        return 0;
+        printf("This save doesn't exist!\n");
+        return NULL;
     }
 
-    freeGame(game);
+    fgets(magic, 9, file);
+
+    if (strcmp(magic, "TETRISTE") != 0) {
+        printf("This save is invalid or corrupted!\n");
+        fclose(file);
+        return NULL;
+    }
 
     Game* newGame = (Game*)malloc(sizeof(Game));
-    fscanf(file, "%d\n%d\n", &(newGame->score), &(newGame->piecesCount));
-
+    fscanf(file, "%d\n%d\n", &newGame->score, &newGame->piecesCount);
+    printf("Score: %d\nPieces count: %d\n", newGame->score, newGame->piecesCount);
     for (int i = 0; i < 5; i++) {
         int color, shape;
         fscanf(file, "%d %d\n", &color, &shape);
+        nextPieces[i] = (Piece*)malloc(sizeof(Piece));
         nextPieces[i]->color = color;
         nextPieces[i]->shape = shape;
         nextPieces[i]->displayStr = getDisplayStr(color, shape);
+        printf("Next piece %d: %s\n", i, nextPieces[i]->displayStr);
     }
-
 
     Piece* current = NULL;
     for (int i = 0; i < newGame->piecesCount; i++) {
@@ -343,7 +356,7 @@ int loadGame(Game* game, Piece** nextPieces, char* name) {
         newPiece->color = color;
         newPiece->shape = shape;
         newPiece->displayStr = getDisplayStr(color, shape);
-
+        printf("Piece %d: %s\n", i, newPiece->displayStr);
         if (i == 0) {
             newGame->head = newPiece;
             newPiece->next = newPiece;
@@ -354,15 +367,14 @@ int loadGame(Game* game, Piece** nextPieces, char* name) {
             current = newPiece;
         } else {
             rightInsert(newGame, newPiece);
+            newGame->piecesCount--; // Because rightInsert increments it
             current = newPiece;
         }
     }
 
-    current->next = game->head;
-
+    current->next = newGame->head;
     fclose(file);
-    game = newGame;
-    return 1;
+    return newGame;
 }
 
 // Free the memory allocated to a piece

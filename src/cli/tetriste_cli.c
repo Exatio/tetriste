@@ -13,27 +13,33 @@ void startCLI() {
 
     // Initialization of the random number generator
     srand(time(NULL));
-    Game *currentGame = initGame();
+    Game *currentGame;
 
     int continueGame = 1;
     Piece **nextPieces = (Piece **)malloc(5 * sizeof(Piece *));
 
-    for (int i = 0; i < 5; i++) {
-        nextPieces[i] = generatePiece();
-    }
-
     int keepNextPieces;
     int combo = 0;
 
-    printf("Voulez-vous charger une partie (y/n) ? ");
+    printf("Do you want to load a game (y/n) ? ");
     char loadChoice;
     scanf(" %c", &loadChoice);
     printf("\n");
     if(loadChoice == 'y') {
         char name[21] = "";
-        printf("Nom de la sauvegarde (max de 20): ");
+        printf("Name of the save file (max 20): ");
         scanf("%s", name);
-        loadGame(currentGame, nextPieces, name);
+        currentGame = loadGame(nextPieces, name);
+        if(currentGame == NULL) {
+            printf("Impossible to load the game. Exiting...\n");
+            free(nextPieces);
+            return;
+        }
+    } else {
+        currentGame = initGame();
+        for (int i = 0; i < 5; i++) {
+            nextPieces[i] = generatePiece();
+        }
     }
 
     while (continueGame) {
