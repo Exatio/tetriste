@@ -46,7 +46,8 @@ void startCLI() {
 
         Piece *current = nextPieces[4];
 
-        keepNextPieces = 1; // By default, we keep nextPieces as is for the next execution of the loop (shifting by color/shape, quit or wrong action)
+         // By default, we keep nextPieces as is for the next execution of the loop (shifting by color/shape, quit or wrong action)
+        keepNextPieces = 1;
 
         printf("%s\033[0;0H\033[2J", "\033[0m");
 
@@ -145,6 +146,10 @@ void startCLI() {
         combo = updateBoard(currentGame);
         if (combo == -1) {
             printf("YOU WIN !\n");
+            continueGame = 0;
+        }
+        if (currentGame->piecesCount >= 15) {
+            printf("YOU LOST!\n");
             continueGame = 0;
         }
     }
@@ -247,13 +252,13 @@ void showDebug(Game* currentGame) {
         if(currentPiece->colorPrev != colorPrev) {
             printf("\033[31m");
         }
-        
+
         printf("%p\033[0m\t", currentPiece->colorPrev);
         currentPiece = currentPiece->next;
     }
     printf("\n");
-    
-    
+
+
 
     printf("ColorN\t");
     currentPiece = currentGame->head;
@@ -266,9 +271,9 @@ void showDebug(Game* currentGame) {
         currentPiece = currentPiece->next;
     }
     printf("\n");
-    
-    
-    
+
+
+
     printf("ShapeP\t");
     currentPiece = currentGame->head;
     for(int i = 0; i < currentGame->piecesCount; i++) {
@@ -282,13 +287,13 @@ void showDebug(Game* currentGame) {
         if(currentPiece->shapePrev != shapePrev) {
             printf("\033[31m");
         }
-        
+
         printf("%p\033[0m\t", currentPiece->shapePrev);
         currentPiece = currentPiece->next;
     }
     printf("\n");
 
-    
+
     printf("ShapeN\t");
     currentPiece = currentGame->head;
     for(int i = 0; i < currentGame->piecesCount; i++) {
