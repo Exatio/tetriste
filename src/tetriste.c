@@ -51,7 +51,7 @@ char* getDisplayStr(int color, int shape) {
     displayStr[0] = '\0';
 
     // Found snprintf on internet as a great alternative to multiple strcat
-    snprintf(displayStr,
+    snprintf(displayStr, 15,
              "%s%s%s", colors[color-1], shapes[shape-1], resetColor);
 
     return displayStr;
