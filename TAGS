@@ -1,0 +1,1544 @@
+
+assets/logo.png,0
+
+assets/bg.png,0
+
+assets/success.mp3,0
+
+assets/theme.mp3,0
+
+assets/theme-2.mp3,0
+
+assets/theme-trap-remix.mp3,0
+
+main.c,45
+int main(int argc, char** argv) {main6,108
+
+Makefile,1010
+export LD_LIBRARY_PATH=./raylib/lib:$LD_LIBRARY_PATHLD_LIBRARY_PATH1,0
+CFLAGS=-Wall -I./raylib/include/CFLAGS3,54
+LDFLAGS=-L./raylib/lib/ -lraylib -lm -lpthread -ldl -lrt -lX11LDFLAGS4,87
+all: tetristeall6,151
+tetriste: src/tetriste.o src/cli/tetriste_cli.o src/gui/tetriste_gui.o src/gui/audio/audio.o srctetriste8,166
+src/tetriste.o: src/tetriste.c src/tetriste.hsrc/tetriste.o11,570
+src/cli/tetriste_cli.o: src/cli/tetriste_cli.c src/cli/tetriste_cli.hsrc/cli/tetriste_cli.o14,668
+src/gui/tetriste_gui.o: src/gui/tetriste_gui.c src/gui/tetriste_gui.hsrc/gui/tetriste_gui.o17,806
+src/gui/audio/audio.o: src/gui/audio/audio.c src/gui/audio/audio.hsrc/gui/audio/audio.o20,944
+src/gui/screens/screen_gameplay.o: src/gui/screens/screen_gameplay.c src/gui/screens/screens.hsrc/gui/screens/screen_gameplay.o23,1077
+src/gui/screens/screen_title.o: src/gui/screens/screen_title.c src/gui/screens/screens.hsrc/gui/screens/screen_title.o26,1262
+main.o: main.cmain.o29,1435
+clean:clean32,1486
+
+raylib/include/raylib.h,49970
+#define RAYLIB_HRAYLIB_H80,4875
+#define RAYLIB_VERSION_MAJOR RAYLIB_VERSION_MAJOR84,4975
+#define RAYLIB_VERSION_MINOR RAYLIB_VERSION_MINOR85,5006
+#define RAYLIB_VERSION_PATCH RAYLIB_VERSION_PATCH86,5037
+#define RAYLIB_VERSION RAYLIB_VERSION87,5068
+            #define __declspec(__declspec94,5365
+        #define RLAPI RLAPI96,5433
+        #define RLAPI RLAPI98,5583
+    #define RLAPI RLAPI103,5725
+    #define PI PI110,6026
+    #define DEG2RAD DEG2RAD113,6088
+    #define RAD2DEG RAD2DEG116,6143
+    #define RL_MALLOC(RL_MALLOC122,6279
+    #define RL_CALLOC(RL_CALLOC125,6347
+    #define RL_REALLOC(RL_REALLOC128,6418
+    #define RL_FREE(RL_FREE131,6489
+    #define CLITERAL(CLITERAL138,6777
+    #define CLITERAL(CLITERAL140,6820
+#define RL_COLOR_TYPERL_COLOR_TYPE154,7468
+#define RL_RECTANGLE_TYPERL_RECTANGLE_TYPE155,7490
+#define RL_VECTOR2_TYPERL_VECTOR2_TYPE156,7516
+#define RL_VECTOR3_TYPERL_VECTOR3_TYPE157,7540
+#define RL_VECTOR4_TYPERL_VECTOR4_TYPE158,7564
+#define RL_QUATERNION_TYPERL_QUATERNION_TYPE159,7588
+#define RL_MATRIX_TYPERL_MATRIX_TYPE160,7615
+#define LIGHTGRAY LIGHTGRAY164,7737
+#define GRAY GRAY165,7810
+#define DARKGRAY DARKGRAY166,7877
+#define YELLOW YELLOW167,7949
+#define GOLD GOLD168,8018
+#define ORANGE ORANGE169,8085
+#define PINK PINK170,8154
+#define RED RED171,8221
+#define MAROON MAROON172,8287
+#define GREEN GREEN173,8356
+#define LIME LIME174,8424
+#define DARKGREEN DARKGREEN175,8491
+#define SKYBLUE SKYBLUE176,8564
+#define BLUE BLUE177,8635
+#define DARKBLUE DARKBLUE178,8702
+#define PURPLE PURPLE179,8774
+#define VIOLET VIOLET180,8843
+#define DARKPURPLE DARKPURPLE181,8912
+#define BEIGE BEIGE182,8986
+#define BROWN BROWN183,9054
+#define DARKBROWN DARKBROWN184,9122
+#define WHITE WHITE186,9196
+#define BLACK BLACK187,9264
+#define BLANK BLANK188,9332
+#define MAGENTA MAGENTA189,9414
+#define RAYWHITE RAYWHITE190,9484
+    typedef enum bool { false = 0, true = !false } bool;__anon655048630103199,9954
+    typedef enum bool { false = 0, true = !false } bool;__anon655048630103199,9954
+    #define RL_BOOL_TYPERL_BOOL_TYPE200,10011
+typedef struct Vector2 {Vector2204,10069
+    float x;                // Vector x componentx205,10094
+    float y;                // Vector y componenty206,10144
+} Vector2;Vector2207,10194
+typedef struct Vector3 {Vector3210,10231
+    float x;                // Vector x componentx211,10256
+    float y;                // Vector y componenty212,10306
+    float z;                // Vector z componentz213,10356
+} Vector3;Vector3214,10406
+typedef struct Vector4 {Vector4217,10443
+    float x;                // Vector x componentx218,10468
+    float y;                // Vector y componenty219,10518
+    float z;                // Vector z componentz220,10568
+    float w;                // Vector w componentw221,10618
+} Vector4;Vector4222,10668
+typedef Vector4 Quaternion;Quaternion225,10724
+typedef struct Matrix {Matrix228,10821
+    float m0, m4, m8, m12;  // Matrix first row (4 components)m0229,10845
+    float m0, m4, m8, m12;  // Matrix first row (4 components)m4229,10845
+    float m0, m4, m8, m12;  // Matrix first row (4 components)m8229,10845
+    float m0, m4, m8, m12;  // Matrix first row (4 components)m12229,10845
+    float m1, m5, m9, m13;  // Matrix second row (4 components)m1230,10908
+    float m1, m5, m9, m13;  // Matrix second row (4 components)m5230,10908
+    float m1, m5, m9, m13;  // Matrix second row (4 components)m9230,10908
+    float m1, m5, m9, m13;  // Matrix second row (4 components)m13230,10908
+    float m2, m6, m10, m14; // Matrix third row (4 components)m2231,10972
+    float m2, m6, m10, m14; // Matrix third row (4 components)m6231,10972
+    float m2, m6, m10, m14; // Matrix third row (4 components)m10231,10972
+    float m2, m6, m10, m14; // Matrix third row (4 components)m14231,10972
+    float m3, m7, m11, m15; // Matrix fourth row (4 components)m3232,11035
+    float m3, m7, m11, m15; // Matrix fourth row (4 components)m7232,11035
+    float m3, m7, m11, m15; // Matrix fourth row (4 components)m11232,11035
+    float m3, m7, m11, m15; // Matrix fourth row (4 components)m15232,11035
+} Matrix;Matrix233,11099
+typedef struct Color {Color236,11151
+    unsigned char r;        // Color red valuer237,11174
+    unsigned char g;        // Color green valueg238,11221
+    unsigned char b;        // Color blue valueb239,11270
+    unsigned char a;        // Color alpha valuea240,11318
+} Color;Color241,11367
+typedef struct Rectangle {Rectangle244,11404
+    float x;                // Rectangle top-left corner position xx245,11431
+    float y;                // Rectangle top-left corner position yy246,11499
+    float width;            // Rectangle widthwidth247,11567
+    float height;           // Rectangle heightheight248,11614
+} Rectangle;Rectangle249,11662
+typedef struct Image {Image252,11724
+    void *data;             // Image raw datadata253,11747
+    int width;              // Image base widthwidth254,11793
+    int height;             // Image base heightheight255,11841
+    int mipmaps;            // Mipmap levels, 1 by defaultmipmaps256,11890
+    int format;             // Data format (PixelFormat type)format257,11949
+} Image;Image258,12011
+typedef struct Texture {Texture261,12070
+    unsigned int id;        // OpenGL texture idid262,12095
+    int width;              // Texture base widthwidth263,12144
+    int height;             // Texture base heightheight264,12194
+    int mipmaps;            // Mipmap levels, 1 by defaultmipmaps265,12245
+    int format;             // Data format (PixelFormat type)format266,12304
+} Texture;Texture267,12366
+typedef Texture Texture2D;Texture2D270,12408
+typedef Texture TextureCubemap;TextureCubemap273,12471
+typedef struct RenderTexture {RenderTexture276,12548
+    unsigned int id;        // OpenGL framebuffer object idid277,12579
+    Texture texture;        // Color buffer attachment texturetexture278,12639
+    Texture depth;          // Depth buffer attachment texturedepth279,12702
+} RenderTexture;RenderTexture280,12765
+typedef RenderTexture RenderTexture2D;RenderTexture2D283,12825
+typedef struct NPatchInfo {NPatchInfo286,12900
+    Rectangle source;       // Texture source rectanglesource287,12928
+    int left;               // Left border offsetleft288,12984
+    int top;                // Top border offsettop289,13034
+    int right;              // Right border offsetright290,13083
+    int bottom;             // Bottom border offsetbottom291,13134
+    int layout;             // Layout of the n-patch: 3x3, 1x3 or 3x1layout292,13186
+} NPatchInfo;NPatchInfo293,13256
+typedef struct GlyphInfo {GlyphInfo296,13313
+    int value;              // Character value (Unicode)value297,13340
+    int offsetX;            // Character offset X when drawingoffsetX298,13397
+    int offsetY;            // Character offset Y when drawingoffsetY299,13460
+    int advanceX;           // Character advance position XadvanceX300,13523
+    Image image;            // Character image dataimage301,13583
+} GlyphInfo;GlyphInfo302,13635
+typedef struct Font {Font305,13696
+    int baseSize;           // Base size (default chars height)baseSize306,13718
+    int glyphCount;         // Number of glyph charactersglyphCount307,13782
+    int glyphPadding;       // Padding around the glyph charactersglyphPadding308,13840
+    Texture2D texture;      // Texture atlas containing the glyphstexture309,13907
+    Rectangle *recs;        // Rectangles in texture for the glyphsrecs310,13974
+    GlyphInfo *glyphs;      // Glyphs info dataglyphs311,14042
+} Font;Font312,14090
+typedef struct Camera3D {Camera3D315,14151
+    Vector3 position;       // Camera positionposition316,14177
+    Vector3 target;         // Camera target it looks-attarget317,14224
+    Vector3 up;             // Camera up vector (rotation over its axis)up318,14281
+    float fovy;             // Camera field-of-view aperture in Y (degrees) in perspective, usedfovy319,14354
+    int projection;         // Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHICprojection320,14487
+} Camera3D;Camera3D321,14579
+typedef Camera3D Camera;    // Camera type fallback, defaults to Camera3DCamera323,14592
+typedef struct Camera2D {Camera2D326,14721
+    Vector2 offset;         // Camera offset (displacement from target)offset327,14747
+    Vector2 target;         // Camera target (rotation and zoom origin)target328,14819
+    float rotation;         // Camera rotation in degreesrotation329,14891
+    float zoom;             // Camera zoom (scaling), should be 1.0f by defaultzoom330,14949
+} Camera2D;Camera2D331,15029
+typedef struct Mesh {Mesh334,15075
+    int vertexCount;        // Number of vertices stored in arraysvertexCount335,15097
+    int triangleCount;      // Number of triangles stored (indexed or not)triangleCount336,15164
+    float *vertices;        // Vertex position (XYZ - 3 components per vertex) (shader-location vertices339,15270
+    float *texcoords;       // Vertex texture coordinates (UV - 2 components per vertex) (shadertexcoords340,15371
+    float *texcoords2;      // Vertex texture second coordinates (UV - 2 components per vertex) texcoords2341,15482
+    float *normals;         // Vertex normals (XYZ - 3 components per vertex) (shader-location =normals342,15600
+    float *tangents;        // Vertex tangents (XYZW - 4 components per vertex) (shader-locationtangents343,15700
+    unsigned char *colors;      // Vertex colors (RGBA - 4 components per vertex) (shader-locaticolors344,15802
+    unsigned short *indices;    // Vertex indices (in case vertex data comes indexed)indices345,15906
+    float *animVertices;    // Animated vertex positions (after bones transformations)animVertices348,16022
+    float *animNormals;     // Animated normals (after bones transformations)animNormals349,16109
+    unsigned char *boneIds; // Vertex bone ids, max 255 bone ids, up to 4 bones influence by verboneIds350,16187
+    float *boneWeights;     // Vertex bone weight, up to 4 bones influence by vertex (skinning)boneWeights351,16298
+    unsigned int vaoId;     // OpenGL Vertex Array Object idvaoId354,16421
+    unsigned int *vboId;    // OpenGL Vertex Buffer Objects id (default vertex data)vboId355,16482
+} Mesh;Mesh356,16567
+typedef struct Shader {Shader359,16586
+    unsigned int id;        // Shader program idid360,16610
+    int *locs;              // Shader locations array (RL_MAX_SHADER_LOCATIONS)locs361,16659
+} Shader;Shader362,16739
+typedef struct MaterialMap {MaterialMap365,16765
+    Texture2D texture;      // Material map texturetexture366,16794
+    Color color;            // Material map colorcolor367,16846
+    float value;            // Material map valuevalue368,16896
+} MaterialMap;MaterialMap369,16946
+typedef struct Material {Material372,17000
+    Shader shader;          // Material shadershader373,17026
+    MaterialMap *maps;      // Material maps array (MAX_MATERIAL_MAPS)maps374,17073
+    float params[4];        // Material generic parameters (if required)params375,17144
+} Material;Material376,17217
+typedef struct Transform {Transform379,17271
+    Vector3 translation;    // Translationtranslation380,17298
+    Quaternion rotation;    // Rotationrotation381,17341
+    Vector3 scale;          // Scalescale382,17381
+} Transform;Transform383,17418
+typedef struct BoneInfo {BoneInfo386,17465
+    char name[32];          // Bone namename387,17491
+    int parent;             // Bone parentparent388,17532
+} BoneInfo;BoneInfo389,17575
+typedef struct Model {Model392,17635
+    Matrix transform;       // Local transform matrixtransform393,17658
+    int meshCount;          // Number of meshesmeshCount395,17713
+    int materialCount;      // Number of materialsmaterialCount396,17761
+    Mesh *meshes;           // Meshes arraymeshes397,17812
+    Material *materials;    // Materials arraymaterials398,17856
+    int *meshMaterial;      // Mesh material numbermeshMaterial399,17903
+    int boneCount;          // Number of bonesboneCount402,17978
+    BoneInfo *bones;        // Bones information (skeleton)bones403,18025
+    Transform *bindPose;    // Bones base transformation (pose)bindPose404,18085
+} Model;Model405,18149
+typedef struct ModelAnimation {ModelAnimation408,18177
+    int boneCount;          // Number of bonesboneCount409,18209
+    int frameCount;         // Number of animation framesframeCount410,18256
+    BoneInfo *bones;        // Bones information (skeleton)bones411,18314
+    Transform **framePoses; // Poses array by frameframePoses412,18374
+    char name[32];          // Animation namename413,18426
+} ModelAnimation;ModelAnimation414,18472
+typedef struct Ray {Ray417,18518
+    Vector3 position;       // Ray position (origin)position418,18539
+    Vector3 direction;      // Ray directiondirection419,18592
+} Ray;Ray420,18637
+typedef struct RayCollision {RayCollision423,18682
+    bool hit;               // Did the ray hit something?hit424,18712
+    float distance;         // Distance to the nearest hitdistance425,18770
+    Vector3 point;          // Point of the nearest hitpoint426,18829
+    Vector3 normal;         // Surface normal of hitnormal427,18885
+} RayCollision;RayCollision428,18938
+typedef struct BoundingBox {BoundingBox431,18970
+    Vector3 min;            // Minimum vertex box-cornermin432,18999
+    Vector3 max;            // Maximum vertex box-cornermax433,19056
+} BoundingBox;BoundingBox434,19113
+typedef struct Wave {Wave437,19154
+    unsigned int frameCount;    // Total number of frames (considering channels)frameCount438,19176
+    unsigned int sampleRate;    // Frequency (samples per second)sampleRate439,19257
+    unsigned int sampleSize;    // Bit depth (bits per sample): 8, 16, 32 (24 not supported)sampleSize440,19323
+    unsigned int channels;      // Number of channels (1-mono, 2-stereo, ...)channels441,19416
+    void *data;                 // Buffer data pointerdata442,19494
+} Wave;Wave443,19549
+typedef struct rAudioBuffer rAudioBuffer;rAudioBuffer447,19652
+typedef struct rAudioProcessor rAudioProcessor;rAudioProcessor448,19694
+typedef struct AudioStream {AudioStream451,19779
+    rAudioBuffer *buffer;       // Pointer to internal data used by the audio systembuffer452,19808
+    rAudioProcessor *processor; // Pointer to internal data processor, useful for audio effectsprocessor453,19893
+    unsigned int sampleRate;    // Frequency (samples per second)sampleRate455,19990
+    unsigned int sampleSize;    // Bit depth (bits per sample): 8, 16, 32 (24 not supported)sampleSize456,20056
+    unsigned int channels;      // Number of channels (1-mono, 2-stereo, ...)channels457,20149
+} AudioStream;AudioStream458,20227
+typedef struct Sound {Sound461,20252
+    AudioStream stream;         // Audio streamstream462,20275
+    unsigned int frameCount;    // Total number of frames (considering channels)frameCount463,20323
+} Sound;Sound464,20404
+typedef struct Music {Music467,20490
+    AudioStream stream;         // Audio streamstream468,20513
+    unsigned int frameCount;    // Total number of frames (considering channels)frameCount469,20561
+    bool looping;               // Music looping enablelooping470,20642
+    int ctxType;                // Type of music context (audio filetype)ctxType472,20699
+    void *ctxData;              // Audio context data, depends on typectxData473,20773
+} Music;Music474,20844
+typedef struct VrDeviceInfo {VrDeviceInfo477,20910
+    int hResolution;                // Horizontal resolution in pixelshResolution478,20940
+    int vResolution;                // Vertical resolution in pixelsvResolution479,21011
+    float hScreenSize;              // Horizontal size in metershScreenSize480,21080
+    float vScreenSize;              // Vertical size in metersvScreenSize481,21145
+    float vScreenCenter;            // Screen center in metersvScreenCenter482,21208
+    float eyeToScreenDistance;      // Distance between eye and display in meterseyeToScreenDistance483,21271
+    float lensSeparationDistance;   // Lens separation distance in meterslensSeparationDistance484,21353
+    float interpupillaryDistance;   // IPD (distance between pupils) in metersinterpupillaryDistance485,21427
+    float lensDistortionValues[4];  // Lens distortion constant parameterslensDistortionValues486,21506
+    float chromaAbCorrection[4];    // Chromatic aberration correction parameterschromaAbCorrection487,21581
+} VrDeviceInfo;VrDeviceInfo488,21663
+typedef struct VrStereoConfig {VrStereoConfig491,21747
+    Matrix projection[2];           // VR projection matrices (per eye)projection492,21779
+    Matrix viewOffset[2];           // VR view offset matrices (per eye)viewOffset493,21851
+    float leftLensCenter[2];        // VR left lens centerleftLensCenter494,21924
+    float rightLensCenter[2];       // VR right lens centerrightLensCenter495,21983
+    float leftScreenCenter[2];      // VR left screen centerleftScreenCenter496,22043
+    float rightScreenCenter[2];     // VR right screen centerrightScreenCenter497,22104
+    float scale[2];                 // VR distortion scalescale498,22166
+    float scaleIn[2];               // VR distortion scale inscaleIn499,22225
+} VrStereoConfig;VrStereoConfig500,22287
+typedef struct FilePathList {FilePathList503,22324
+    unsigned int capacity;          // Filepaths max entriescapacity504,22354
+    unsigned int count;             // Filepaths entries countcount505,22415
+    char **paths;                   // Filepaths entriespaths506,22478
+} FilePathList;FilePathList507,22535
+typedef struct AutomationEvent {AutomationEvent510,22572
+    unsigned int frame;             // Event frameframe511,22605
+    unsigned int type;              // Event type (AutomationEventType)type512,22656
+    int params[4];                  // Event parameters (if required)params513,22728
+} AutomationEvent;AutomationEvent514,22798
+typedef struct AutomationEventList {AutomationEventList517,22843
+    unsigned int capacity;          // Events max entries (MAX_AUTOMATION_EVENTS)capacity518,22880
+    unsigned int count;             // Events entries countcount519,22962
+    AutomationEvent *events;        // Events entriesevents520,23022
+} AutomationEventList;AutomationEventList521,23076
+typedef enum {__anon655048630203529,23426
+    FLAG_VSYNC_HINT         = 0x00000040,   // Set to try enabling V-Sync on GPUFLAG_VSYNC_HINT530,23441
+    FLAG_FULLSCREEN_MODE    = 0x00000002,   // Set to run program in fullscreenFLAG_FULLSCREEN_MODE531,23522
+    FLAG_WINDOW_RESIZABLE   = 0x00000004,   // Set to allow resizable windowFLAG_WINDOW_RESIZABLE532,23602
+    FLAG_WINDOW_UNDECORATED = 0x00000008,   // Set to disable window decoration (frame and buttoFLAG_WINDOW_UNDECORATED533,23679
+    FLAG_WINDOW_HIDDEN      = 0x00000080,   // Set to hide windowFLAG_WINDOW_HIDDEN534,23779
+    FLAG_WINDOW_MINIMIZED   = 0x00000200,   // Set to minimize window (iconify)FLAG_WINDOW_MINIMIZED535,23845
+    FLAG_WINDOW_MAXIMIZED   = 0x00000400,   // Set to maximize window (expanded to monitor)FLAG_WINDOW_MAXIMIZED536,23925
+    FLAG_WINDOW_UNFOCUSED   = 0x00000800,   // Set to window non focusedFLAG_WINDOW_UNFOCUSED537,24017
+    FLAG_WINDOW_TOPMOST     = 0x00001000,   // Set to window always on topFLAG_WINDOW_TOPMOST538,24090
+    FLAG_WINDOW_ALWAYS_RUN  = 0x00000100,   // Set to allow windows running while minimizedFLAG_WINDOW_ALWAYS_RUN539,24165
+    FLAG_WINDOW_TRANSPARENT = 0x00000010,   // Set to allow transparent framebufferFLAG_WINDOW_TRANSPARENT540,24257
+    FLAG_WINDOW_HIGHDPI     = 0x00002000,   // Set to support HighDPIFLAG_WINDOW_HIGHDPI541,24341
+    FLAG_WINDOW_MOUSE_PASSTHROUGH = 0x00004000, // Set to support mouse passthrough, only supporFLAG_WINDOW_MOUSE_PASSTHROUGH542,24411
+    FLAG_BORDERLESS_WINDOWED_MODE = 0x00008000, // Set to run program in borderless windowed modFLAG_BORDERLESS_WINDOWED_MODE543,24540
+    FLAG_MSAA_4X_HINT       = 0x00000020,   // Set to try enabling MSAA 4XFLAG_MSAA_4X_HINT544,24638
+    FLAG_INTERLACED_HINT    = 0x00010000    // Set to try enabling interlaced video format (for FLAG_INTERLACED_HINT545,24713
+} ConfigFlags;ConfigFlags546,24814
+typedef enum {__anon655048630303550,24886
+    LOG_ALL = 0,        // Display all logsLOG_ALL551,24901
+    LOG_TRACE,          // Trace logging, intended for internal use onlyLOG_TRACE552,24945
+    LOG_DEBUG,          // Debug logging, used for internal debugging, it should be disabled on LOG_DEBUG553,25018
+    LOG_INFO,           // Info logging, used for program execution infoLOG_INFO554,25129
+    LOG_WARNING,        // Warning logging, used on recoverable failuresLOG_WARNING555,25202
+    LOG_ERROR,          // Error logging, used on unrecoverable failuresLOG_ERROR556,25275
+    LOG_FATAL,          // Fatal logging, used to abort program: exit(EXIT_FAILURE)LOG_FATAL557,25348
+    LOG_NONE            // Disable loggingLOG_NONE558,25432
+} TraceLogLevel;TraceLogLevel559,25475
+typedef enum {__anon655048630403564,25621
+    KEY_NULL            = 0,        // Key: NULL, used for no key pressedKEY_NULL565,25636
+    KEY_APOSTROPHE      = 39,       // Key: 'KEY_APOSTROPHE567,25735
+    KEY_COMMA           = 44,       // Key: ,KEY_COMMA568,25781
+    KEY_MINUS           = 45,       // Key: -KEY_MINUS569,25827
+    KEY_PERIOD          = 46,       // Key: .KEY_PERIOD570,25873
+    KEY_SLASH           = 47,       // Key: /KEY_SLASH571,25919
+    KEY_ZERO            = 48,       // Key: 0KEY_ZERO572,25965
+    KEY_ONE             = 49,       // Key: 1KEY_ONE573,26011
+    KEY_TWO             = 50,       // Key: 2KEY_TWO574,26057
+    KEY_THREE           = 51,       // Key: 3KEY_THREE575,26103
+    KEY_FOUR            = 52,       // Key: 4KEY_FOUR576,26149
+    KEY_FIVE            = 53,       // Key: 5KEY_FIVE577,26195
+    KEY_SIX             = 54,       // Key: 6KEY_SIX578,26241
+    KEY_SEVEN           = 55,       // Key: 7KEY_SEVEN579,26287
+    KEY_EIGHT           = 56,       // Key: 8KEY_EIGHT580,26333
+    KEY_NINE            = 57,       // Key: 9KEY_NINE581,26379
+    KEY_SEMICOLON       = 59,       // Key: ;KEY_SEMICOLON582,26425
+    KEY_EQUAL           = 61,       // Key: =KEY_EQUAL583,26471
+    KEY_A               = 65,       // Key: A | aKEY_A584,26517
+    KEY_B               = 66,       // Key: B | bKEY_B585,26567
+    KEY_C               = 67,       // Key: C | cKEY_C586,26617
+    KEY_D               = 68,       // Key: D | dKEY_D587,26667
+    KEY_E               = 69,       // Key: E | eKEY_E588,26717
+    KEY_F               = 70,       // Key: F | fKEY_F589,26767
+    KEY_G               = 71,       // Key: G | gKEY_G590,26817
+    KEY_H               = 72,       // Key: H | hKEY_H591,26867
+    KEY_I               = 73,       // Key: I | iKEY_I592,26917
+    KEY_J               = 74,       // Key: J | jKEY_J593,26967
+    KEY_K               = 75,       // Key: K | kKEY_K594,27017
+    KEY_L               = 76,       // Key: L | lKEY_L595,27067
+    KEY_M               = 77,       // Key: M | mKEY_M596,27117
+    KEY_N               = 78,       // Key: N | nKEY_N597,27167
+    KEY_O               = 79,       // Key: O | oKEY_O598,27217
+    KEY_P               = 80,       // Key: P | pKEY_P599,27267
+    KEY_Q               = 81,       // Key: Q | qKEY_Q600,27317
+    KEY_R               = 82,       // Key: R | rKEY_R601,27367
+    KEY_S               = 83,       // Key: S | sKEY_S602,27417
+    KEY_T               = 84,       // Key: T | tKEY_T603,27467
+    KEY_U               = 85,       // Key: U | uKEY_U604,27517
+    KEY_V               = 86,       // Key: V | vKEY_V605,27567
+    KEY_W               = 87,       // Key: W | wKEY_W606,27617
+    KEY_X               = 88,       // Key: X | xKEY_X607,27667
+    KEY_Y               = 89,       // Key: Y | yKEY_Y608,27717
+    KEY_Z               = 90,       // Key: Z | zKEY_Z609,27767
+    KEY_LEFT_BRACKET    = 91,       // Key: [KEY_LEFT_BRACKET610,27817
+    KEY_BACKSLASH       = 92,       // Key: '\'KEY_BACKSLASH611,27863
+    KEY_RIGHT_BRACKET   = 93,       // Key: ]KEY_RIGHT_BRACKET612,27911
+    KEY_GRAVE           = 96,       // Key: `KEY_GRAVE613,27957
+    KEY_SPACE           = 32,       // Key: SpaceKEY_SPACE615,28024
+    KEY_ESCAPE          = 256,      // Key: EscKEY_ESCAPE616,28074
+    KEY_ENTER           = 257,      // Key: EnterKEY_ENTER617,28122
+    KEY_TAB             = 258,      // Key: TabKEY_TAB618,28172
+    KEY_BACKSPACE       = 259,      // Key: BackspaceKEY_BACKSPACE619,28220
+    KEY_INSERT          = 260,      // Key: InsKEY_INSERT620,28274
+    KEY_DELETE          = 261,      // Key: DelKEY_DELETE621,28322
+    KEY_RIGHT           = 262,      // Key: Cursor rightKEY_RIGHT622,28370
+    KEY_LEFT            = 263,      // Key: Cursor leftKEY_LEFT623,28427
+    KEY_DOWN            = 264,      // Key: Cursor downKEY_DOWN624,28483
+    KEY_UP              = 265,      // Key: Cursor upKEY_UP625,28539
+    KEY_PAGE_UP         = 266,      // Key: Page upKEY_PAGE_UP626,28593
+    KEY_PAGE_DOWN       = 267,      // Key: Page downKEY_PAGE_DOWN627,28645
+    KEY_HOME            = 268,      // Key: HomeKEY_HOME628,28699
+    KEY_END             = 269,      // Key: EndKEY_END629,28748
+    KEY_CAPS_LOCK       = 280,      // Key: Caps lockKEY_CAPS_LOCK630,28796
+    KEY_SCROLL_LOCK     = 281,      // Key: Scroll downKEY_SCROLL_LOCK631,28850
+    KEY_NUM_LOCK        = 282,      // Key: Num lockKEY_NUM_LOCK632,28906
+    KEY_PRINT_SCREEN    = 283,      // Key: Print screenKEY_PRINT_SCREEN633,28959
+    KEY_PAUSE           = 284,      // Key: PauseKEY_PAUSE634,29016
+    KEY_F1              = 290,      // Key: F1KEY_F1635,29066
+    KEY_F2              = 291,      // Key: F2KEY_F2636,29113
+    KEY_F3              = 292,      // Key: F3KEY_F3637,29160
+    KEY_F4              = 293,      // Key: F4KEY_F4638,29207
+    KEY_F5              = 294,      // Key: F5KEY_F5639,29254
+    KEY_F6              = 295,      // Key: F6KEY_F6640,29301
+    KEY_F7              = 296,      // Key: F7KEY_F7641,29348
+    KEY_F8              = 297,      // Key: F8KEY_F8642,29395
+    KEY_F9              = 298,      // Key: F9KEY_F9643,29442
+    KEY_F10             = 299,      // Key: F10KEY_F10644,29489
+    KEY_F11             = 300,      // Key: F11KEY_F11645,29537
+    KEY_F12             = 301,      // Key: F12KEY_F12646,29585
+    KEY_LEFT_SHIFT      = 340,      // Key: Shift leftKEY_LEFT_SHIFT647,29633
+    KEY_LEFT_CONTROL    = 341,      // Key: Control leftKEY_LEFT_CONTROL648,29688
+    KEY_LEFT_ALT        = 342,      // Key: Alt leftKEY_LEFT_ALT649,29745
+    KEY_LEFT_SUPER      = 343,      // Key: Super leftKEY_LEFT_SUPER650,29798
+    KEY_RIGHT_SHIFT     = 344,      // Key: Shift rightKEY_RIGHT_SHIFT651,29853
+    KEY_RIGHT_CONTROL   = 345,      // Key: Control rightKEY_RIGHT_CONTROL652,29909
+    KEY_RIGHT_ALT       = 346,      // Key: Alt rightKEY_RIGHT_ALT653,29967
+    KEY_RIGHT_SUPER     = 347,      // Key: Super rightKEY_RIGHT_SUPER654,30021
+    KEY_KB_MENU         = 348,      // Key: KB menuKEY_KB_MENU655,30077
+    KEY_KP_0            = 320,      // Key: Keypad 0KEY_KP_0657,30148
+    KEY_KP_1            = 321,      // Key: Keypad 1KEY_KP_1658,30201
+    KEY_KP_2            = 322,      // Key: Keypad 2KEY_KP_2659,30254
+    KEY_KP_3            = 323,      // Key: Keypad 3KEY_KP_3660,30307
+    KEY_KP_4            = 324,      // Key: Keypad 4KEY_KP_4661,30360
+    KEY_KP_5            = 325,      // Key: Keypad 5KEY_KP_5662,30413
+    KEY_KP_6            = 326,      // Key: Keypad 6KEY_KP_6663,30466
+    KEY_KP_7            = 327,      // Key: Keypad 7KEY_KP_7664,30519
+    KEY_KP_8            = 328,      // Key: Keypad 8KEY_KP_8665,30572
+    KEY_KP_9            = 329,      // Key: Keypad 9KEY_KP_9666,30625
+    KEY_KP_DECIMAL      = 330,      // Key: Keypad .KEY_KP_DECIMAL667,30678
+    KEY_KP_DIVIDE       = 331,      // Key: Keypad /KEY_KP_DIVIDE668,30731
+    KEY_KP_MULTIPLY     = 332,      // Key: Keypad *KEY_KP_MULTIPLY669,30784
+    KEY_KP_SUBTRACT     = 333,      // Key: Keypad -KEY_KP_SUBTRACT670,30837
+    KEY_KP_ADD          = 334,      // Key: Keypad +KEY_KP_ADD671,30890
+    KEY_KP_ENTER        = 335,      // Key: Keypad EnterKEY_KP_ENTER672,30943
+    KEY_KP_EQUAL        = 336,      // Key: Keypad =KEY_KP_EQUAL673,31000
+    KEY_BACK            = 4,        // Key: Android back buttonKEY_BACK675,31080
+    KEY_MENU            = 82,       // Key: Android menu buttonKEY_MENU676,31144
+    KEY_VOLUME_UP       = 24,       // Key: Android volume up buttonKEY_VOLUME_UP677,31208
+    KEY_VOLUME_DOWN     = 25        // Key: Android volume down buttonKEY_VOLUME_DOWN678,31277
+} KeyboardKey;KeyboardKey679,31348
+#define MOUSE_LEFT_BUTTON MOUSE_LEFT_BUTTON682,31424
+#define MOUSE_RIGHT_BUTTON MOUSE_RIGHT_BUTTON683,31470
+#define MOUSE_MIDDLE_BUTTON MOUSE_MIDDLE_BUTTON684,31517
+typedef enum {__anon655048630503687,31583
+    MOUSE_BUTTON_LEFT    = 0,       // Mouse button leftMOUSE_BUTTON_LEFT688,31598
+    MOUSE_BUTTON_RIGHT   = 1,       // Mouse button rightMOUSE_BUTTON_RIGHT689,31655
+    MOUSE_BUTTON_MIDDLE  = 2,       // Mouse button middle (pressed wheel)MOUSE_BUTTON_MIDDLE690,31713
+    MOUSE_BUTTON_SIDE    = 3,       // Mouse button side (advanced mouse device)MOUSE_BUTTON_SIDE691,31788
+    MOUSE_BUTTON_EXTRA   = 4,       // Mouse button extra (advanced mouse device)MOUSE_BUTTON_EXTRA692,31869
+    MOUSE_BUTTON_FORWARD = 5,       // Mouse button forward (advanced mouse device)MOUSE_BUTTON_FORWARD693,31951
+    MOUSE_BUTTON_BACK    = 6,       // Mouse button back (advanced mouse device)MOUSE_BUTTON_BACK694,32035
+} MouseButton;MouseButton695,32116
+typedef enum {__anon655048630603698,32148
+    MOUSE_CURSOR_DEFAULT       = 0,     // Default pointer shapeMOUSE_CURSOR_DEFAULT699,32163
+    MOUSE_CURSOR_ARROW         = 1,     // Arrow shapeMOUSE_CURSOR_ARROW700,32228
+    MOUSE_CURSOR_IBEAM         = 2,     // Text writing cursor shapeMOUSE_CURSOR_IBEAM701,32283
+    MOUSE_CURSOR_CROSSHAIR     = 3,     // Cross shapeMOUSE_CURSOR_CROSSHAIR702,32352
+    MOUSE_CURSOR_POINTING_HAND = 4,     // Pointing hand cursorMOUSE_CURSOR_POINTING_HAND703,32407
+    MOUSE_CURSOR_RESIZE_EW     = 5,     // Horizontal resize/move arrow shapeMOUSE_CURSOR_RESIZE_EW704,32471
+    MOUSE_CURSOR_RESIZE_NS     = 6,     // Vertical resize/move arrow shapeMOUSE_CURSOR_RESIZE_NS705,32549
+    MOUSE_CURSOR_RESIZE_NWSE   = 7,     // Top-left to bottom-right diagonal resize/move arrow sMOUSE_CURSOR_RESIZE_NWSE706,32625
+    MOUSE_CURSOR_RESIZE_NESW   = 8,     // The top-right to bottom-left diagonal resize/move arrMOUSE_CURSOR_RESIZE_NESW707,32726
+    MOUSE_CURSOR_RESIZE_ALL    = 9,     // The omnidirectional resize/move cursor shapeMOUSE_CURSOR_RESIZE_ALL708,32831
+    MOUSE_CURSOR_NOT_ALLOWED   = 10     // The operation-not-allowed shapeMOUSE_CURSOR_NOT_ALLOWED709,32919
+} MouseCursor;MouseCursor710,32994
+typedef enum {__anon655048630703713,33029
+    GAMEPAD_BUTTON_UNKNOWN = 0,         // Unknown button, just for error checkingGAMEPAD_BUTTON_UNKNOWN714,33044
+    GAMEPAD_BUTTON_LEFT_FACE_UP,        // Gamepad left DPAD up buttonGAMEPAD_BUTTON_LEFT_FACE_UP715,33127
+    GAMEPAD_BUTTON_LEFT_FACE_RIGHT,     // Gamepad left DPAD right buttonGAMEPAD_BUTTON_LEFT_FACE_RIGHT716,33198
+    GAMEPAD_BUTTON_LEFT_FACE_DOWN,      // Gamepad left DPAD down buttonGAMEPAD_BUTTON_LEFT_FACE_DOWN717,33272
+    GAMEPAD_BUTTON_LEFT_FACE_LEFT,      // Gamepad left DPAD left buttonGAMEPAD_BUTTON_LEFT_FACE_LEFT718,33345
+    GAMEPAD_BUTTON_RIGHT_FACE_UP,       // Gamepad right button up (i.e. PS3: Triangle, Xbox: Y)GAMEPAD_BUTTON_RIGHT_FACE_UP719,33418
+    GAMEPAD_BUTTON_RIGHT_FACE_RIGHT,    // Gamepad right button right (i.e. PS3: Square, Xbox: XGAMEPAD_BUTTON_RIGHT_FACE_RIGHT720,33515
+    GAMEPAD_BUTTON_RIGHT_FACE_DOWN,     // Gamepad right button down (i.e. PS3: Cross, Xbox: A)GAMEPAD_BUTTON_RIGHT_FACE_DOWN721,33613
+    GAMEPAD_BUTTON_RIGHT_FACE_LEFT,     // Gamepad right button left (i.e. PS3: Circle, Xbox: B)GAMEPAD_BUTTON_RIGHT_FACE_LEFT722,33709
+    GAMEPAD_BUTTON_LEFT_TRIGGER_1,      // Gamepad top/back trigger left (first), it could be a GAMEPAD_BUTTON_LEFT_TRIGGER_1723,33806
+    GAMEPAD_BUTTON_LEFT_TRIGGER_2,      // Gamepad top/back trigger left (second), it could be aGAMEPAD_BUTTON_LEFT_TRIGGER_2724,33918
+    GAMEPAD_BUTTON_RIGHT_TRIGGER_1,     // Gamepad top/back trigger right (one), it could be a tGAMEPAD_BUTTON_RIGHT_TRIGGER_1725,34031
+    GAMEPAD_BUTTON_RIGHT_TRIGGER_2,     // Gamepad top/back trigger right (second), it could be GAMEPAD_BUTTON_RIGHT_TRIGGER_2726,34142
+    GAMEPAD_BUTTON_MIDDLE_LEFT,         // Gamepad center buttons, left one (i.e. PS3: Select)GAMEPAD_BUTTON_MIDDLE_LEFT727,34256
+    GAMEPAD_BUTTON_MIDDLE,              // Gamepad center buttons, middle one (i.e. PS3: PS, XboGAMEPAD_BUTTON_MIDDLE728,34351
+    GAMEPAD_BUTTON_MIDDLE_RIGHT,        // Gamepad center buttons, right one (i.e. PS3: Start)GAMEPAD_BUTTON_MIDDLE_RIGHT729,34456
+    GAMEPAD_BUTTON_LEFT_THUMB,          // Gamepad joystick pressed button leftGAMEPAD_BUTTON_LEFT_THUMB730,34551
+    GAMEPAD_BUTTON_RIGHT_THUMB          // Gamepad joystick pressed button rightGAMEPAD_BUTTON_RIGHT_THUMB731,34631
+} GamepadButton;GamepadButton732,34712
+typedef enum {__anon655048630803735,34746
+    GAMEPAD_AXIS_LEFT_X        = 0,     // Gamepad left stick X axisGAMEPAD_AXIS_LEFT_X736,34761
+    GAMEPAD_AXIS_LEFT_Y        = 1,     // Gamepad left stick Y axisGAMEPAD_AXIS_LEFT_Y737,34830
+    GAMEPAD_AXIS_RIGHT_X       = 2,     // Gamepad right stick X axisGAMEPAD_AXIS_RIGHT_X738,34899
+    GAMEPAD_AXIS_RIGHT_Y       = 3,     // Gamepad right stick Y axisGAMEPAD_AXIS_RIGHT_Y739,34969
+    GAMEPAD_AXIS_LEFT_TRIGGER  = 4,     // Gamepad back trigger left, pressure level: [1..-1]GAMEPAD_AXIS_LEFT_TRIGGER740,35039
+    GAMEPAD_AXIS_RIGHT_TRIGGER = 5      // Gamepad back trigger right, pressure level: [1..-1]GAMEPAD_AXIS_RIGHT_TRIGGER741,35133
+} GamepadAxis;GamepadAxis742,35228
+typedef enum {__anon655048630903745,35266
+    MATERIAL_MAP_ALBEDO = 0,        // Albedo material (same as: MATERIAL_MAP_DIFFUSE)MATERIAL_MAP_ALBEDO746,35281
+    MATERIAL_MAP_METALNESS,         // Metalness material (same as: MATERIAL_MAP_SPECULAR)MATERIAL_MAP_METALNESS747,35368
+    MATERIAL_MAP_NORMAL,            // Normal materialMATERIAL_MAP_NORMAL748,35459
+    MATERIAL_MAP_ROUGHNESS,         // Roughness materialMATERIAL_MAP_ROUGHNESS749,35514
+    MATERIAL_MAP_OCCLUSION,         // Ambient occlusion materialMATERIAL_MAP_OCCLUSION750,35572
+    MATERIAL_MAP_EMISSION,          // Emission materialMATERIAL_MAP_EMISSION751,35638
+    MATERIAL_MAP_HEIGHT,            // Heightmap materialMATERIAL_MAP_HEIGHT752,35695
+    MATERIAL_MAP_CUBEMAP,           // Cubemap material (NOTE: Uses GL_TEXTURE_CUBE_MAP)MATERIAL_MAP_CUBEMAP753,35753
+    MATERIAL_MAP_IRRADIANCE,        // Irradiance material (NOTE: Uses GL_TEXTURE_CUBE_MAP)MATERIAL_MAP_IRRADIANCE754,35842
+    MATERIAL_MAP_PREFILTER,         // Prefilter material (NOTE: Uses GL_TEXTURE_CUBE_MAP)MATERIAL_MAP_PREFILTER755,35934
+    MATERIAL_MAP_BRDF               // Brdf materialMATERIAL_MAP_BRDF756,36025
+} MaterialMapIndex;MaterialMapIndex757,36078
+#define MATERIAL_MAP_DIFFUSE MATERIAL_MAP_DIFFUSE759,36099
+#define MATERIAL_MAP_SPECULAR MATERIAL_MAP_SPECULAR760,36153
+typedef enum {__anon655048630a03763,36236
+    SHADER_LOC_VERTEX_POSITION = 0, // Shader location: vertex attribute: positionSHADER_LOC_VERTEX_POSITION764,36251
+    SHADER_LOC_VERTEX_TEXCOORD01,   // Shader location: vertex attribute: texcoord01SHADER_LOC_VERTEX_TEXCOORD01765,36334
+    SHADER_LOC_VERTEX_TEXCOORD02,   // Shader location: vertex attribute: texcoord02SHADER_LOC_VERTEX_TEXCOORD02766,36419
+    SHADER_LOC_VERTEX_NORMAL,       // Shader location: vertex attribute: normalSHADER_LOC_VERTEX_NORMAL767,36504
+    SHADER_LOC_VERTEX_TANGENT,      // Shader location: vertex attribute: tangentSHADER_LOC_VERTEX_TANGENT768,36585
+    SHADER_LOC_VERTEX_COLOR,        // Shader location: vertex attribute: colorSHADER_LOC_VERTEX_COLOR769,36667
+    SHADER_LOC_MATRIX_MVP,          // Shader location: matrix uniform: model-view-projectionSHADER_LOC_MATRIX_MVP770,36747
+    SHADER_LOC_MATRIX_VIEW,         // Shader location: matrix uniform: view (camera transform)SHADER_LOC_MATRIX_VIEW771,36841
+    SHADER_LOC_MATRIX_PROJECTION,   // Shader location: matrix uniform: projectionSHADER_LOC_MATRIX_PROJECTION772,36937
+    SHADER_LOC_MATRIX_MODEL,        // Shader location: matrix uniform: model (transform)SHADER_LOC_MATRIX_MODEL773,37020
+    SHADER_LOC_MATRIX_NORMAL,       // Shader location: matrix uniform: normalSHADER_LOC_MATRIX_NORMAL774,37110
+    SHADER_LOC_VECTOR_VIEW,         // Shader location: vector uniform: viewSHADER_LOC_VECTOR_VIEW775,37189
+    SHADER_LOC_COLOR_DIFFUSE,       // Shader location: vector uniform: diffuse colorSHADER_LOC_COLOR_DIFFUSE776,37266
+    SHADER_LOC_COLOR_SPECULAR,      // Shader location: vector uniform: specular colorSHADER_LOC_COLOR_SPECULAR777,37352
+    SHADER_LOC_COLOR_AMBIENT,       // Shader location: vector uniform: ambient colorSHADER_LOC_COLOR_AMBIENT778,37439
+    SHADER_LOC_MAP_ALBEDO,          // Shader location: sampler2d texture: albedo (same as: SHADSHADER_LOC_MAP_ALBEDO779,37525
+    SHADER_LOC_MAP_METALNESS,       // Shader location: sampler2d texture: metalness (same as: SSHADER_LOC_MAP_METALNESS780,37641
+    SHADER_LOC_MAP_NORMAL,          // Shader location: sampler2d texture: normalSHADER_LOC_MAP_NORMAL781,37761
+    SHADER_LOC_MAP_ROUGHNESS,       // Shader location: sampler2d texture: roughnessSHADER_LOC_MAP_ROUGHNESS782,37843
+    SHADER_LOC_MAP_OCCLUSION,       // Shader location: sampler2d texture: occlusionSHADER_LOC_MAP_OCCLUSION783,37928
+    SHADER_LOC_MAP_EMISSION,        // Shader location: sampler2d texture: emissionSHADER_LOC_MAP_EMISSION784,38013
+    SHADER_LOC_MAP_HEIGHT,          // Shader location: sampler2d texture: heightSHADER_LOC_MAP_HEIGHT785,38097
+    SHADER_LOC_MAP_CUBEMAP,         // Shader location: samplerCube texture: cubemapSHADER_LOC_MAP_CUBEMAP786,38179
+    SHADER_LOC_MAP_IRRADIANCE,      // Shader location: samplerCube texture: irradianceSHADER_LOC_MAP_IRRADIANCE787,38264
+    SHADER_LOC_MAP_PREFILTER,       // Shader location: samplerCube texture: prefilterSHADER_LOC_MAP_PREFILTER788,38352
+    SHADER_LOC_MAP_BRDF             // Shader location: sampler2d texture: brdfSHADER_LOC_MAP_BRDF789,38439
+} ShaderLocationIndex;ShaderLocationIndex790,38519
+#define SHADER_LOC_MAP_DIFFUSE SHADER_LOC_MAP_DIFFUSE792,38543
+#define SHADER_LOC_MAP_SPECULAR SHADER_LOC_MAP_SPECULAR793,38601
+typedef enum {__anon655048630b03796,38691
+    SHADER_UNIFORM_FLOAT = 0,       // Shader uniform type: floatSHADER_UNIFORM_FLOAT797,38706
+    SHADER_UNIFORM_VEC2,            // Shader uniform type: vec2 (2 float)SHADER_UNIFORM_VEC2798,38772
+    SHADER_UNIFORM_VEC3,            // Shader uniform type: vec3 (3 float)SHADER_UNIFORM_VEC3799,38847
+    SHADER_UNIFORM_VEC4,            // Shader uniform type: vec4 (4 float)SHADER_UNIFORM_VEC4800,38922
+    SHADER_UNIFORM_INT,             // Shader uniform type: intSHADER_UNIFORM_INT801,38997
+    SHADER_UNIFORM_IVEC2,           // Shader uniform type: ivec2 (2 int)SHADER_UNIFORM_IVEC2802,39061
+    SHADER_UNIFORM_IVEC3,           // Shader uniform type: ivec3 (3 int)SHADER_UNIFORM_IVEC3803,39135
+    SHADER_UNIFORM_IVEC4,           // Shader uniform type: ivec4 (4 int)SHADER_UNIFORM_IVEC4804,39209
+    SHADER_UNIFORM_SAMPLER2D        // Shader uniform type: sampler2dSHADER_UNIFORM_SAMPLER2D805,39283
+} ShaderUniformDataType;ShaderUniformDataType806,39353
+typedef enum {__anon655048630c03809,39410
+    SHADER_ATTRIB_FLOAT = 0,        // Shader attribute type: floatSHADER_ATTRIB_FLOAT810,39425
+    SHADER_ATTRIB_VEC2,             // Shader attribute type: vec2 (2 float)SHADER_ATTRIB_VEC2811,39493
+    SHADER_ATTRIB_VEC3,             // Shader attribute type: vec3 (3 float)SHADER_ATTRIB_VEC3812,39570
+    SHADER_ATTRIB_VEC4              // Shader attribute type: vec4 (4 float)SHADER_ATTRIB_VEC4813,39647
+} ShaderAttributeDataType;ShaderAttributeDataType814,39724
+typedef enum {__anon655048630d03818,39825
+    PIXELFORMAT_UNCOMPRESSED_GRAYSCALE = 1, // 8 bit per pixel (no alpha)PIXELFORMAT_UNCOMPRESSED_GRAYSCALE819,39840
+    PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,    // 8*2 bpp (2 channels)PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA820,39914
+    PIXELFORMAT_UNCOMPRESSED_R5G6B5,        // 16 bppPIXELFORMAT_UNCOMPRESSED_R5G6B5821,39982
+    PIXELFORMAT_UNCOMPRESSED_R8G8B8,        // 24 bppPIXELFORMAT_UNCOMPRESSED_R8G8B8822,40036
+    PIXELFORMAT_UNCOMPRESSED_R5G5B5A1,      // 16 bpp (1 bit alpha)PIXELFORMAT_UNCOMPRESSED_R5G5B5A1823,40090
+    PIXELFORMAT_UNCOMPRESSED_R4G4B4A4,      // 16 bpp (4 bit alpha)PIXELFORMAT_UNCOMPRESSED_R4G4B4A4824,40158
+    PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,      // 32 bppPIXELFORMAT_UNCOMPRESSED_R8G8B8A8825,40226
+    PIXELFORMAT_UNCOMPRESSED_R32,           // 32 bpp (1 channel - float)PIXELFORMAT_UNCOMPRESSED_R32826,40280
+    PIXELFORMAT_UNCOMPRESSED_R32G32B32,     // 32*3 bpp (3 channels - float)PIXELFORMAT_UNCOMPRESSED_R32G32B32827,40354
+    PIXELFORMAT_UNCOMPRESSED_R32G32B32A32,  // 32*4 bpp (4 channels - float)PIXELFORMAT_UNCOMPRESSED_R32G32B32A32828,40431
+    PIXELFORMAT_UNCOMPRESSED_R16,           // 16 bpp (1 channel - half float)PIXELFORMAT_UNCOMPRESSED_R16829,40508
+    PIXELFORMAT_UNCOMPRESSED_R16G16B16,     // 16*3 bpp (3 channels - half float)PIXELFORMAT_UNCOMPRESSED_R16G16B16830,40587
+    PIXELFORMAT_UNCOMPRESSED_R16G16B16A16,  // 16*4 bpp (4 channels - half float)PIXELFORMAT_UNCOMPRESSED_R16G16B16A16831,40669
+    PIXELFORMAT_COMPRESSED_DXT1_RGB,        // 4 bpp (no alpha)PIXELFORMAT_COMPRESSED_DXT1_RGB832,40751
+    PIXELFORMAT_COMPRESSED_DXT1_RGBA,       // 4 bpp (1 bit alpha)PIXELFORMAT_COMPRESSED_DXT1_RGBA833,40815
+    PIXELFORMAT_COMPRESSED_DXT3_RGBA,       // 8 bppPIXELFORMAT_COMPRESSED_DXT3_RGBA834,40882
+    PIXELFORMAT_COMPRESSED_DXT5_RGBA,       // 8 bppPIXELFORMAT_COMPRESSED_DXT5_RGBA835,40935
+    PIXELFORMAT_COMPRESSED_ETC1_RGB,        // 4 bppPIXELFORMAT_COMPRESSED_ETC1_RGB836,40988
+    PIXELFORMAT_COMPRESSED_ETC2_RGB,        // 4 bppPIXELFORMAT_COMPRESSED_ETC2_RGB837,41041
+    PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA,   // 8 bppPIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA838,41094
+    PIXELFORMAT_COMPRESSED_PVRT_RGB,        // 4 bppPIXELFORMAT_COMPRESSED_PVRT_RGB839,41147
+    PIXELFORMAT_COMPRESSED_PVRT_RGBA,       // 4 bppPIXELFORMAT_COMPRESSED_PVRT_RGBA840,41200
+    PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA,   // 8 bppPIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA841,41253
+    PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA    // 2 bppPIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA842,41306
+} PixelFormat;PixelFormat843,41359
+typedef enum {__anon655048630e03848,41549
+    TEXTURE_FILTER_POINT = 0,               // No filter, just pixel approximationTEXTURE_FILTER_POINT849,41564
+    TEXTURE_FILTER_BILINEAR,                // Linear filteringTEXTURE_FILTER_BILINEAR850,41647
+    TEXTURE_FILTER_TRILINEAR,               // Trilinear filtering (linear with mipmaps)TEXTURE_FILTER_TRILINEAR851,41711
+    TEXTURE_FILTER_ANISOTROPIC_4X,          // Anisotropic filtering 4xTEXTURE_FILTER_ANISOTROPIC_4X852,41800
+    TEXTURE_FILTER_ANISOTROPIC_8X,          // Anisotropic filtering 8xTEXTURE_FILTER_ANISOTROPIC_8X853,41872
+    TEXTURE_FILTER_ANISOTROPIC_16X,         // Anisotropic filtering 16xTEXTURE_FILTER_ANISOTROPIC_16X854,41944
+} TextureFilter;TextureFilter855,42017
+typedef enum {__anon655048630f03858,42068
+    TEXTURE_WRAP_REPEAT = 0,                // Repeats texture in tiled modeTEXTURE_WRAP_REPEAT859,42083
+    TEXTURE_WRAP_CLAMP,                     // Clamps texture to edge pixel in tiled modeTEXTURE_WRAP_CLAMP860,42160
+    TEXTURE_WRAP_MIRROR_REPEAT,             // Mirrors and repeats the texture in tiled modeTEXTURE_WRAP_MIRROR_REPEAT861,42250
+    TEXTURE_WRAP_MIRROR_CLAMP               // Mirrors and clamps to border the texture in tiledTEXTURE_WRAP_MIRROR_CLAMP862,42343
+} TextureWrap;TextureWrap863,42445
+typedef enum {__anon655048631003866,42480
+    CUBEMAP_LAYOUT_AUTO_DETECT = 0,         // Automatically detect layout typeCUBEMAP_LAYOUT_AUTO_DETECT867,42495
+    CUBEMAP_LAYOUT_LINE_VERTICAL,           // Layout is defined by a vertical line with facesCUBEMAP_LAYOUT_LINE_VERTICAL868,42575
+    CUBEMAP_LAYOUT_LINE_HORIZONTAL,         // Layout is defined by a horizontal line with facesCUBEMAP_LAYOUT_LINE_HORIZONTAL869,42670
+    CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR,     // Layout is defined by a 3x4 cross with cubemap facCUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR870,42767
+    CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE,     // Layout is defined by a 4x3 cross with cubemap facCUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE871,42866
+    CUBEMAP_LAYOUT_PANORAMA                 // Layout is defined by a panorama image (equirrectaCUBEMAP_LAYOUT_PANORAMA872,42965
+} CubemapLayout;CubemapLayout873,43073
+typedef enum {__anon655048631103876,43131
+    FONT_DEFAULT = 0,               // Default font generation, anti-aliasedFONT_DEFAULT877,43146
+    FONT_BITMAP,                    // Bitmap font generation, no anti-aliasingFONT_BITMAP878,43223
+    FONT_SDF                        // SDF font generation, requires external shaderFONT_SDF879,43303
+} FontType;FontType880,43388
+typedef enum {__anon655048631203883,43439
+    BLEND_ALPHA = 0,                // Blend textures considering alpha (default)BLEND_ALPHA884,43454
+    BLEND_ADDITIVE,                 // Blend textures adding colorsBLEND_ADDITIVE885,43536
+    BLEND_MULTIPLIED,               // Blend textures multiplying colorsBLEND_MULTIPLIED886,43604
+    BLEND_ADD_COLORS,               // Blend textures adding colors (alternative)BLEND_ADD_COLORS887,43677
+    BLEND_SUBTRACT_COLORS,          // Blend textures subtracting colors (alternative)BLEND_SUBTRACT_COLORS888,43759
+    BLEND_ALPHA_PREMULTIPLY,        // Blend premultiplied textures considering alphaBLEND_ALPHA_PREMULTIPLY889,43846
+    BLEND_CUSTOM,                   // Blend textures using custom src/dst factors (use rlSetBleBLEND_CUSTOM890,43932
+    BLEND_CUSTOM_SEPARATE           // Blend textures using custom rgb/alpha separate src/dst faBLEND_CUSTOM_SEPARATE891,44041
+} BlendMode;BlendMode892,44177
+typedef enum {__anon655048631303896,44270
+    GESTURE_NONE        = 0,        // No gestureGESTURE_NONE897,44285
+    GESTURE_TAP         = 1,        // Tap gestureGESTURE_TAP898,44335
+    GESTURE_DOUBLETAP   = 2,        // Double tap gestureGESTURE_DOUBLETAP899,44386
+    GESTURE_HOLD        = 4,        // Hold gestureGESTURE_HOLD900,44444
+    GESTURE_DRAG        = 8,        // Drag gestureGESTURE_DRAG901,44496
+    GESTURE_SWIPE_RIGHT = 16,       // Swipe right gestureGESTURE_SWIPE_RIGHT902,44548
+    GESTURE_SWIPE_LEFT  = 32,       // Swipe left gestureGESTURE_SWIPE_LEFT903,44607
+    GESTURE_SWIPE_UP    = 64,       // Swipe up gestureGESTURE_SWIPE_UP904,44665
+    GESTURE_SWIPE_DOWN  = 128,      // Swipe down gestureGESTURE_SWIPE_DOWN905,44721
+    GESTURE_PINCH_IN    = 256,      // Pinch in gestureGESTURE_PINCH_IN906,44779
+    GESTURE_PINCH_OUT   = 512       // Pinch out gestureGESTURE_PINCH_OUT907,44835
+} Gesture;Gesture908,44892
+typedef enum {__anon655048631403911,44927
+    CAMERA_CUSTOM = 0,              // Custom cameraCAMERA_CUSTOM912,44942
+    CAMERA_FREE,                    // Free cameraCAMERA_FREE913,44995
+    CAMERA_ORBITAL,                 // Orbital cameraCAMERA_ORBITAL914,45046
+    CAMERA_FIRST_PERSON,            // First person cameraCAMERA_FIRST_PERSON915,45100
+    CAMERA_THIRD_PERSON             // Third person cameraCAMERA_THIRD_PERSON916,45159
+} CameraMode;CameraMode917,45218
+typedef enum {__anon655048631503920,45254
+    CAMERA_PERSPECTIVE = 0,         // Perspective projectionCAMERA_PERSPECTIVE921,45269
+    CAMERA_ORTHOGRAPHIC             // Orthographic projectionCAMERA_ORTHOGRAPHIC922,45331
+} CameraProjection;CameraProjection923,45394
+typedef enum {__anon655048631603926,45433
+    NPATCH_NINE_PATCH = 0,          // Npatch layout: 3x3 tilesNPATCH_NINE_PATCH927,45448
+    NPATCH_THREE_PATCH_VERTICAL,    // Npatch layout: 1x3 tilesNPATCH_THREE_PATCH_VERTICAL928,45512
+    NPATCH_THREE_PATCH_HORIZONTAL   // Npatch layout: 3x1 tilesNPATCH_THREE_PATCH_HORIZONTAL929,45576
+} NPatchLayout;NPatchLayout930,45640
+typedef void (*TraceLogCallback)(int logLevel, const char *text, va_list args);  // Logging: RedTraceLogCallback934,45761
+typedef unsigned char *(*LoadFileDataCallback)(const char *fileName, int *dataSize);    // FileILoadFileDataCallback935,45882
+typedef bool (*SaveFileDataCallback)(const char *fileName, void *data, int dataSize);   // FileISaveFileDataCallback936,45998
+typedef char *(*LoadFileTextCallback)(const char *fileName);            // FileIO: Load text datLoadFileTextCallback937,46114
+typedef bool (*SaveFileTextCallback)(const char *fileName, char *text); // FileIO: Save text datSaveFileTextCallback938,46212
+typedef void (*AudioCallback)(void *bufferData, unsigned int frames);AudioCallback1578,117013
+
+raylib/include/rlgl.h,50080
+#define RLGL_HRLGL_H108,6650
+#define RLGL_VERSION RLGL_VERSION110,6666
+        #define RLAPI RLAPI116,6930
+        #define RLAPI RLAPI118,7080
+    #define RLAPI RLAPI124,7256
+    #define TRACELOG(TRACELOG129,7398
+    #define TRACELOGD(TRACELOGD130,7439
+    #define RL_MALLOC(RL_MALLOC135,7534
+    #define RL_CALLOC(RL_CALLOC138,7600
+    #define RL_REALLOC(RL_REALLOC141,7669
+    #define RL_FREE(RL_FREE144,7736
+        #define GRAPHICS_API_OPENGL_33GRAPHICS_API_OPENGL_33154,8090
+    #define GRAPHICS_API_OPENGL_33GRAPHICS_API_OPENGL_33176,8753
+    #define GRAPHICS_API_OPENGL_33GRAPHICS_API_OPENGL_33181,8881
+    #define GRAPHICS_API_OPENGL_ES2GRAPHICS_API_OPENGL_ES2186,9022
+#define RLGL_RENDER_TEXTURES_HINTRLGL_RENDER_TEXTURES_HINT191,9183
+        #define RL_DEFAULT_BATCH_BUFFER_ELEMENTS RL_DEFAULT_BATCH_BUFFER_ELEMENTS202,9711
+        #define RL_DEFAULT_BATCH_BUFFER_ELEMENTS RL_DEFAULT_BATCH_BUFFER_ELEMENTS208,10013
+    #define RL_DEFAULT_BATCH_BUFFERS RL_DEFAULT_BATCH_BUFFERS212,10119
+    #define RL_DEFAULT_BATCH_DRAWCALLS RL_DEFAULT_BATCH_DRAWCALLS215,10274
+    #define RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS218,10456
+    #define RL_MAX_MATRIX_STACK_SIZE RL_MAX_MATRIX_STACK_SIZE223,10683
+    #define RL_MAX_SHADER_LOCATIONS RL_MAX_SHADER_LOCATIONS228,10832
+    #define RL_CULL_DISTANCE_NEAR RL_CULL_DISTANCE_NEAR233,11007
+    #define RL_CULL_DISTANCE_FAR RL_CULL_DISTANCE_FAR236,11133
+#define RL_TEXTURE_WRAP_S RL_TEXTURE_WRAP_S240,11283
+#define RL_TEXTURE_WRAP_T RL_TEXTURE_WRAP_T241,11364
+#define RL_TEXTURE_MAG_FILTER RL_TEXTURE_MAG_FILTER242,11445
+#define RL_TEXTURE_MIN_FILTER RL_TEXTURE_MIN_FILTER243,11530
+#define RL_TEXTURE_FILTER_NEAREST RL_TEXTURE_FILTER_NEAREST245,11616
+#define RL_TEXTURE_FILTER_LINEAR RL_TEXTURE_FILTER_LINEAR246,11690
+#define RL_TEXTURE_FILTER_MIP_NEAREST RL_TEXTURE_FILTER_MIP_NEAREST247,11763
+#define RL_TEXTURE_FILTER_NEAREST_MIP_LINEAR RL_TEXTURE_FILTER_NEAREST_MIP_LINEAR248,11852
+#define RL_TEXTURE_FILTER_LINEAR_MIP_NEAREST RL_TEXTURE_FILTER_LINEAR_MIP_NEAREST249,11940
+#define RL_TEXTURE_FILTER_MIP_LINEAR RL_TEXTURE_FILTER_MIP_LINEAR250,12028
+#define RL_TEXTURE_FILTER_ANISOTROPIC RL_TEXTURE_FILTER_ANISOTROPIC251,12115
+#define RL_TEXTURE_MIPMAP_BIAS_RATIO RL_TEXTURE_MIPMAP_BIAS_RATIO252,12217
+#define RL_TEXTURE_WRAP_REPEAT RL_TEXTURE_WRAP_REPEAT254,12339
+#define RL_TEXTURE_WRAP_CLAMP RL_TEXTURE_WRAP_CLAMP255,12412
+#define RL_TEXTURE_WRAP_MIRROR_REPEAT RL_TEXTURE_WRAP_MIRROR_REPEAT256,12492
+#define RL_TEXTURE_WRAP_MIRROR_CLAMP RL_TEXTURE_WRAP_MIRROR_CLAMP257,12574
+#define RL_MODELVIEW RL_MODELVIEW260,12697
+#define RL_PROJECTION RL_PROJECTION261,12773
+#define RL_TEXTURE RL_TEXTURE262,12850
+#define RL_LINES RL_LINES265,12958
+#define RL_TRIANGLES RL_TRIANGLES266,13030
+#define RL_QUADS RL_QUADS267,13106
+#define RL_UNSIGNED_BYTE RL_UNSIGNED_BYTE270,13207
+#define RL_FLOAT RL_FLOAT271,13287
+#define RL_STREAM_DRAW RL_STREAM_DRAW274,13384
+#define RL_STREAM_READ RL_STREAM_READ275,13462
+#define RL_STREAM_COPY RL_STREAM_COPY276,13540
+#define RL_STATIC_DRAW RL_STATIC_DRAW277,13618
+#define RL_STATIC_READ RL_STATIC_READ278,13696
+#define RL_STATIC_COPY RL_STATIC_COPY279,13774
+#define RL_DYNAMIC_DRAW RL_DYNAMIC_DRAW280,13852
+#define RL_DYNAMIC_READ RL_DYNAMIC_READ281,13931
+#define RL_DYNAMIC_COPY RL_DYNAMIC_COPY282,14010
+#define RL_FRAGMENT_SHADER RL_FRAGMENT_SHADER285,14108
+#define RL_VERTEX_SHADER RL_VERTEX_SHADER286,14190
+#define RL_COMPUTE_SHADER RL_COMPUTE_SHADER287,14270
+#define RL_ZERO RL_ZERO290,14375
+#define RL_ONE RL_ONE291,14446
+#define RL_SRC_COLOR RL_SRC_COLOR292,14516
+#define RL_ONE_MINUS_SRC_COLOR RL_ONE_MINUS_SRC_COLOR293,14592
+#define RL_SRC_ALPHA RL_SRC_ALPHA294,14678
+#define RL_ONE_MINUS_SRC_ALPHA RL_ONE_MINUS_SRC_ALPHA295,14754
+#define RL_DST_ALPHA RL_DST_ALPHA296,14840
+#define RL_ONE_MINUS_DST_ALPHA RL_ONE_MINUS_DST_ALPHA297,14916
+#define RL_DST_COLOR RL_DST_COLOR298,15002
+#define RL_ONE_MINUS_DST_COLOR RL_ONE_MINUS_DST_COLOR299,15078
+#define RL_SRC_ALPHA_SATURATE RL_SRC_ALPHA_SATURATE300,15164
+#define RL_CONSTANT_COLOR RL_CONSTANT_COLOR301,15249
+#define RL_ONE_MINUS_CONSTANT_COLOR RL_ONE_MINUS_CONSTANT_COLOR302,15330
+#define RL_CONSTANT_ALPHA RL_CONSTANT_ALPHA303,15421
+#define RL_ONE_MINUS_CONSTANT_ALPHA RL_ONE_MINUS_CONSTANT_ALPHA304,15502
+#define RL_FUNC_ADD RL_FUNC_ADD307,15629
+#define RL_MIN RL_MIN308,15704
+#define RL_MAX RL_MAX309,15774
+#define RL_FUNC_SUBTRACT RL_FUNC_SUBTRACT310,15844
+#define RL_FUNC_REVERSE_SUBTRACT RL_FUNC_REVERSE_SUBTRACT311,15924
+#define RL_BLEND_EQUATION RL_BLEND_EQUATION312,16012
+#define RL_BLEND_EQUATION_RGB RL_BLEND_EQUATION_RGB313,16093
+#define RL_BLEND_EQUATION_ALPHA RL_BLEND_EQUATION_ALPHA314,16208
+#define RL_BLEND_DST_RGB RL_BLEND_DST_RGB315,16295
+#define RL_BLEND_SRC_RGB RL_BLEND_SRC_RGB316,16375
+#define RL_BLEND_DST_ALPHA RL_BLEND_DST_ALPHA317,16455
+#define RL_BLEND_SRC_ALPHA RL_BLEND_SRC_ALPHA318,16537
+#define RL_BLEND_COLOR RL_BLEND_COLOR319,16619
+typedef enum bool { false = 0, true = !false } bool;__anon190b81f10103329,17119
+typedef enum bool { false = 0, true = !false } bool;__anon190b81f10103329,17119
+typedef struct Matrix {Matrix334,17277
+    float m0, m4, m8, m12;      // Matrix first row (4 components)m0335,17301
+    float m0, m4, m8, m12;      // Matrix first row (4 components)m4335,17301
+    float m0, m4, m8, m12;      // Matrix first row (4 components)m8335,17301
+    float m0, m4, m8, m12;      // Matrix first row (4 components)m12335,17301
+    float m1, m5, m9, m13;      // Matrix second row (4 components)m1336,17368
+    float m1, m5, m9, m13;      // Matrix second row (4 components)m5336,17368
+    float m1, m5, m9, m13;      // Matrix second row (4 components)m9336,17368
+    float m1, m5, m9, m13;      // Matrix second row (4 components)m13336,17368
+    float m2, m6, m10, m14;     // Matrix third row (4 components)m2337,17436
+    float m2, m6, m10, m14;     // Matrix third row (4 components)m6337,17436
+    float m2, m6, m10, m14;     // Matrix third row (4 components)m10337,17436
+    float m2, m6, m10, m14;     // Matrix third row (4 components)m14337,17436
+    float m3, m7, m11, m15;     // Matrix fourth row (4 components)m3338,17503
+    float m3, m7, m11, m15;     // Matrix fourth row (4 components)m7338,17503
+    float m3, m7, m11, m15;     // Matrix fourth row (4 components)m11338,17503
+    float m3, m7, m11, m15;     // Matrix fourth row (4 components)m15338,17503
+} Matrix;Matrix339,17571
+#define RL_MATRIX_TYPERL_MATRIX_TYPE340,17581
+typedef struct rlVertexBuffer {rlVertexBuffer344,17687
+    int elementCount;           // Number of elements in the buffer (QUADS)elementCount345,17719
+    float *vertices;            // Vertex position (XYZ - 3 components per vertex) (shader-locatvertices347,17796
+    float *texcoords;           // Vertex texture coordinates (UV - 2 components per vertex) (shtexcoords348,17901
+    unsigned char *colors;      // Vertex colors (RGBA - 4 components per vertex) (shader-locaticolors349,18016
+    unsigned int *indices;      // Vertex indices (in case vertex data comes indexed) (6 indicesindices351,18191
+    unsigned short *indices;    // Vertex indices (in case vertex data comes indexed) (6 indicesindices354,18342
+    unsigned int vaoId;         // OpenGL Vertex Array Object idvaoId356,18456
+    unsigned int vboId[4];      // OpenGL Vertex Buffer Objects id (4 types of vertex data)vboId357,18521
+} rlVertexBuffer;rlVertexBuffer358,18613
+typedef struct rlDrawCall {rlDrawCall364,18904
+    int mode;                   // Drawing mode: LINES, TRIANGLES, QUADSmode365,18932
+    int vertexCount;            // Number of vertex of the drawvertexCount366,19005
+    int vertexAlignment;        // Number of vertex required for index alignment (LINES, TRIANGLvertexAlignment367,19069
+    unsigned int textureId;     // Texture id to be used on the draw -> Use to create new draw ctextureId370,19388
+} rlDrawCall;rlDrawCall374,19704
+typedef struct rlRenderBatch {rlRenderBatch377,19741
+    int bufferCount;            // Number of vertex buffers (multi-buffering support)bufferCount378,19772
+    int currentBuffer;          // Current buffer tracking in case of multi-bufferingcurrentBuffer379,19858
+    rlVertexBuffer *vertexBuffer; // Dynamic buffer(s) for vertex datavertexBuffer380,19944
+    rlDrawCall *draws;          // Draw calls array, depends on textureIddraws382,20016
+    int drawCounter;            // Draw calls counterdrawCounter383,20090
+    float currentDepth;         // Current depth value for next drawcurrentDepth384,20144
+} rlRenderBatch;rlRenderBatch385,20213
+typedef enum {__anon190b81f10203388,20249
+    RL_OPENGL_11 = 1,           // OpenGL 1.1RL_OPENGL_11389,20264
+    RL_OPENGL_21,               // OpenGL 2.1 (GLSL 120)RL_OPENGL_21390,20310
+    RL_OPENGL_33,               // OpenGL 3.3 (GLSL 330)RL_OPENGL_33391,20367
+    RL_OPENGL_43,               // OpenGL 4.3 (using GLSL 330)RL_OPENGL_43392,20424
+    RL_OPENGL_ES_20,            // OpenGL ES 2.0 (GLSL 100)RL_OPENGL_ES_20393,20487
+    RL_OPENGL_ES_30             // OpenGL ES 3.0 (GLSL 300 es)RL_OPENGL_ES_30394,20547
+} rlGlVersion;rlGlVersion395,20610
+typedef enum {__anon190b81f10303399,20682
+    RL_LOG_ALL = 0,             // Display all logsRL_LOG_ALL400,20697
+    RL_LOG_TRACE,               // Trace logging, intended for internal use onlyRL_LOG_TRACE401,20749
+    RL_LOG_DEBUG,               // Debug logging, used for internal debugging, it should be disaRL_LOG_DEBUG402,20830
+    RL_LOG_INFO,                // Info logging, used for program execution infoRL_LOG_INFO403,20949
+    RL_LOG_WARNING,             // Warning logging, used on recoverable failuresRL_LOG_WARNING404,21030
+    RL_LOG_ERROR,               // Error logging, used on unrecoverable failuresRL_LOG_ERROR405,21111
+    RL_LOG_FATAL,               // Fatal logging, used to abort program: exit(EXIT_FAILURE)RL_LOG_FATAL406,21192
+    RL_LOG_NONE                 // Disable loggingRL_LOG_NONE407,21284
+} rlTraceLogLevel;rlTraceLogLevel408,21335
+typedef enum {__anon190b81f10403412,21423
+    RL_PIXELFORMAT_UNCOMPRESSED_GRAYSCALE = 1,     // 8 bit per pixel (no alpha)RL_PIXELFORMAT_UNCOMPRESSED_GRAYSCALE413,21438
+    RL_PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,        // 8*2 bpp (2 channels)RL_PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA414,21519
+    RL_PIXELFORMAT_UNCOMPRESSED_R5G6B5,            // 16 bppRL_PIXELFORMAT_UNCOMPRESSED_R5G6B5415,21594
+    RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8,            // 24 bppRL_PIXELFORMAT_UNCOMPRESSED_R8G8B8416,21655
+    RL_PIXELFORMAT_UNCOMPRESSED_R5G5B5A1,          // 16 bpp (1 bit alpha)RL_PIXELFORMAT_UNCOMPRESSED_R5G5B5A1417,21716
+    RL_PIXELFORMAT_UNCOMPRESSED_R4G4B4A4,          // 16 bpp (4 bit alpha)RL_PIXELFORMAT_UNCOMPRESSED_R4G4B4A4418,21791
+    RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,          // 32 bppRL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8419,21866
+    RL_PIXELFORMAT_UNCOMPRESSED_R32,               // 32 bpp (1 channel - float)RL_PIXELFORMAT_UNCOMPRESSED_R32420,21927
+    RL_PIXELFORMAT_UNCOMPRESSED_R32G32B32,         // 32*3 bpp (3 channels - float)RL_PIXELFORMAT_UNCOMPRESSED_R32G32B32421,22008
+    RL_PIXELFORMAT_UNCOMPRESSED_R32G32B32A32,      // 32*4 bpp (4 channels - float)RL_PIXELFORMAT_UNCOMPRESSED_R32G32B32A32422,22092
+    RL_PIXELFORMAT_UNCOMPRESSED_R16,               // 16 bpp (1 channel - half float)RL_PIXELFORMAT_UNCOMPRESSED_R16423,22176
+    RL_PIXELFORMAT_UNCOMPRESSED_R16G16B16,         // 16*3 bpp (3 channels - half float)RL_PIXELFORMAT_UNCOMPRESSED_R16G16B16424,22262
+    RL_PIXELFORMAT_UNCOMPRESSED_R16G16B16A16,      // 16*4 bpp (4 channels - half float)RL_PIXELFORMAT_UNCOMPRESSED_R16G16B16A16425,22351
+    RL_PIXELFORMAT_COMPRESSED_DXT1_RGB,            // 4 bpp (no alpha)RL_PIXELFORMAT_COMPRESSED_DXT1_RGB426,22440
+    RL_PIXELFORMAT_COMPRESSED_DXT1_RGBA,           // 4 bpp (1 bit alpha)RL_PIXELFORMAT_COMPRESSED_DXT1_RGBA427,22511
+    RL_PIXELFORMAT_COMPRESSED_DXT3_RGBA,           // 8 bppRL_PIXELFORMAT_COMPRESSED_DXT3_RGBA428,22585
+    RL_PIXELFORMAT_COMPRESSED_DXT5_RGBA,           // 8 bppRL_PIXELFORMAT_COMPRESSED_DXT5_RGBA429,22645
+    RL_PIXELFORMAT_COMPRESSED_ETC1_RGB,            // 4 bppRL_PIXELFORMAT_COMPRESSED_ETC1_RGB430,22705
+    RL_PIXELFORMAT_COMPRESSED_ETC2_RGB,            // 4 bppRL_PIXELFORMAT_COMPRESSED_ETC2_RGB431,22765
+    RL_PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA,       // 8 bppRL_PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA432,22825
+    RL_PIXELFORMAT_COMPRESSED_PVRT_RGB,            // 4 bppRL_PIXELFORMAT_COMPRESSED_PVRT_RGB433,22885
+    RL_PIXELFORMAT_COMPRESSED_PVRT_RGBA,           // 4 bppRL_PIXELFORMAT_COMPRESSED_PVRT_RGBA434,22945
+    RL_PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA,       // 8 bppRL_PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA435,23005
+    RL_PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA        // 2 bppRL_PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA436,23065
+} rlPixelFormat;rlPixelFormat437,23125
+typedef enum {__anon190b81f10503442,23317
+    RL_TEXTURE_FILTER_POINT = 0,        // No filter, just pixel approximationRL_TEXTURE_FILTER_POINT443,23332
+    RL_TEXTURE_FILTER_BILINEAR,         // Linear filteringRL_TEXTURE_FILTER_BILINEAR444,23411
+    RL_TEXTURE_FILTER_TRILINEAR,        // Trilinear filtering (linear with mipmaps)RL_TEXTURE_FILTER_TRILINEAR445,23471
+    RL_TEXTURE_FILTER_ANISOTROPIC_4X,   // Anisotropic filtering 4xRL_TEXTURE_FILTER_ANISOTROPIC_4X446,23556
+    RL_TEXTURE_FILTER_ANISOTROPIC_8X,   // Anisotropic filtering 8xRL_TEXTURE_FILTER_ANISOTROPIC_8X447,23624
+    RL_TEXTURE_FILTER_ANISOTROPIC_16X,  // Anisotropic filtering 16xRL_TEXTURE_FILTER_ANISOTROPIC_16X448,23692
+} rlTextureFilter;rlTextureFilter449,23761
+typedef enum {__anon190b81f10603452,23819
+    RL_BLEND_ALPHA = 0,                 // Blend textures considering alpha (default)RL_BLEND_ALPHA453,23834
+    RL_BLEND_ADDITIVE,                  // Blend textures adding colorsRL_BLEND_ADDITIVE454,23920
+    RL_BLEND_MULTIPLIED,                // Blend textures multiplying colorsRL_BLEND_MULTIPLIED455,23992
+    RL_BLEND_ADD_COLORS,                // Blend textures adding colors (alternative)RL_BLEND_ADD_COLORS456,24069
+    RL_BLEND_SUBTRACT_COLORS,           // Blend textures subtracting colors (alternative)RL_BLEND_SUBTRACT_COLORS457,24155
+    RL_BLEND_ALPHA_PREMULTIPLY,         // Blend premultiplied textures considering alphaRL_BLEND_ALPHA_PREMULTIPLY458,24246
+    RL_BLEND_CUSTOM,                    // Blend textures using custom src/dst factors (use rlSeRL_BLEND_CUSTOM459,24336
+    RL_BLEND_CUSTOM_SEPARATE            // Blend textures using custom src/dst factors (use rlSeRL_BLEND_CUSTOM_SEPARATE460,24449
+} rlBlendMode;rlBlendMode461,24570
+typedef enum {__anon190b81f10703464,24616
+    RL_SHADER_LOC_VERTEX_POSITION = 0,  // Shader location: vertex attribute: positionRL_SHADER_LOC_VERTEX_POSITION465,24631
+    RL_SHADER_LOC_VERTEX_TEXCOORD01,    // Shader location: vertex attribute: texcoord01RL_SHADER_LOC_VERTEX_TEXCOORD01466,24718
+    RL_SHADER_LOC_VERTEX_TEXCOORD02,    // Shader location: vertex attribute: texcoord02RL_SHADER_LOC_VERTEX_TEXCOORD02467,24807
+    RL_SHADER_LOC_VERTEX_NORMAL,        // Shader location: vertex attribute: normalRL_SHADER_LOC_VERTEX_NORMAL468,24896
+    RL_SHADER_LOC_VERTEX_TANGENT,       // Shader location: vertex attribute: tangentRL_SHADER_LOC_VERTEX_TANGENT469,24981
+    RL_SHADER_LOC_VERTEX_COLOR,         // Shader location: vertex attribute: colorRL_SHADER_LOC_VERTEX_COLOR470,25067
+    RL_SHADER_LOC_MATRIX_MVP,           // Shader location: matrix uniform: model-view-projectioRL_SHADER_LOC_MATRIX_MVP471,25151
+    RL_SHADER_LOC_MATRIX_VIEW,          // Shader location: matrix uniform: view (camera transfoRL_SHADER_LOC_MATRIX_VIEW472,25249
+    RL_SHADER_LOC_MATRIX_PROJECTION,    // Shader location: matrix uniform: projectionRL_SHADER_LOC_MATRIX_PROJECTION473,25349
+    RL_SHADER_LOC_MATRIX_MODEL,         // Shader location: matrix uniform: model (transform)RL_SHADER_LOC_MATRIX_MODEL474,25436
+    RL_SHADER_LOC_MATRIX_NORMAL,        // Shader location: matrix uniform: normalRL_SHADER_LOC_MATRIX_NORMAL475,25530
+    RL_SHADER_LOC_VECTOR_VIEW,          // Shader location: vector uniform: viewRL_SHADER_LOC_VECTOR_VIEW476,25613
+    RL_SHADER_LOC_COLOR_DIFFUSE,        // Shader location: vector uniform: diffuse colorRL_SHADER_LOC_COLOR_DIFFUSE477,25694
+    RL_SHADER_LOC_COLOR_SPECULAR,       // Shader location: vector uniform: specular colorRL_SHADER_LOC_COLOR_SPECULAR478,25784
+    RL_SHADER_LOC_COLOR_AMBIENT,        // Shader location: vector uniform: ambient colorRL_SHADER_LOC_COLOR_AMBIENT479,25875
+    RL_SHADER_LOC_MAP_ALBEDO,           // Shader location: sampler2d texture: albedo (same as: RL_SHADER_LOC_MAP_ALBEDO480,25965
+    RL_SHADER_LOC_MAP_METALNESS,        // Shader location: sampler2d texture: metalness (same aRL_SHADER_LOC_MAP_METALNESS481,26088
+    RL_SHADER_LOC_MAP_NORMAL,           // Shader location: sampler2d texture: normalRL_SHADER_LOC_MAP_NORMAL482,26215
+    RL_SHADER_LOC_MAP_ROUGHNESS,        // Shader location: sampler2d texture: roughnessRL_SHADER_LOC_MAP_ROUGHNESS483,26301
+    RL_SHADER_LOC_MAP_OCCLUSION,        // Shader location: sampler2d texture: occlusionRL_SHADER_LOC_MAP_OCCLUSION484,26390
+    RL_SHADER_LOC_MAP_EMISSION,         // Shader location: sampler2d texture: emissionRL_SHADER_LOC_MAP_EMISSION485,26479
+    RL_SHADER_LOC_MAP_HEIGHT,           // Shader location: sampler2d texture: heightRL_SHADER_LOC_MAP_HEIGHT486,26567
+    RL_SHADER_LOC_MAP_CUBEMAP,          // Shader location: samplerCube texture: cubemapRL_SHADER_LOC_MAP_CUBEMAP487,26653
+    RL_SHADER_LOC_MAP_IRRADIANCE,       // Shader location: samplerCube texture: irradianceRL_SHADER_LOC_MAP_IRRADIANCE488,26742
+    RL_SHADER_LOC_MAP_PREFILTER,        // Shader location: samplerCube texture: prefilterRL_SHADER_LOC_MAP_PREFILTER489,26834
+    RL_SHADER_LOC_MAP_BRDF              // Shader location: sampler2d texture: brdfRL_SHADER_LOC_MAP_BRDF490,26925
+} rlShaderLocationIndex;rlShaderLocationIndex491,27009
+#define RL_SHADER_LOC_MAP_DIFFUSE RL_SHADER_LOC_MAP_DIFFUSE493,27035
+#define RL_SHADER_LOC_MAP_SPECULAR RL_SHADER_LOC_MAP_SPECULAR494,27100
+typedef enum {__anon190b81f10803497,27197
+    RL_SHADER_UNIFORM_FLOAT = 0,        // Shader uniform type: floatRL_SHADER_UNIFORM_FLOAT498,27212
+    RL_SHADER_UNIFORM_VEC2,             // Shader uniform type: vec2 (2 float)RL_SHADER_UNIFORM_VEC2499,27282
+    RL_SHADER_UNIFORM_VEC3,             // Shader uniform type: vec3 (3 float)RL_SHADER_UNIFORM_VEC3500,27361
+    RL_SHADER_UNIFORM_VEC4,             // Shader uniform type: vec4 (4 float)RL_SHADER_UNIFORM_VEC4501,27440
+    RL_SHADER_UNIFORM_INT,              // Shader uniform type: intRL_SHADER_UNIFORM_INT502,27519
+    RL_SHADER_UNIFORM_IVEC2,            // Shader uniform type: ivec2 (2 int)RL_SHADER_UNIFORM_IVEC2503,27587
+    RL_SHADER_UNIFORM_IVEC3,            // Shader uniform type: ivec3 (3 int)RL_SHADER_UNIFORM_IVEC3504,27665
+    RL_SHADER_UNIFORM_IVEC4,            // Shader uniform type: ivec4 (4 int)RL_SHADER_UNIFORM_IVEC4505,27743
+    RL_SHADER_UNIFORM_SAMPLER2D         // Shader uniform type: sampler2dRL_SHADER_UNIFORM_SAMPLER2D506,27821
+} rlShaderUniformDataType;rlShaderUniformDataType507,27895
+typedef enum {__anon190b81f10903510,27954
+    RL_SHADER_ATTRIB_FLOAT = 0,         // Shader attribute type: floatRL_SHADER_ATTRIB_FLOAT511,27969
+    RL_SHADER_ATTRIB_VEC2,              // Shader attribute type: vec2 (2 float)RL_SHADER_ATTRIB_VEC2512,28041
+    RL_SHADER_ATTRIB_VEC3,              // Shader attribute type: vec3 (3 float)RL_SHADER_ATTRIB_VEC3513,28122
+    RL_SHADER_ATTRIB_VEC4               // Shader attribute type: vec4 (4 float)RL_SHADER_ATTRIB_VEC4514,28203
+} rlShaderAttributeDataType;rlShaderAttributeDataType515,28284
+typedef enum {__anon190b81f10a03519,28416
+    RL_ATTACHMENT_COLOR_CHANNEL0 = 0,       // Framebuffer attachment type: color 0RL_ATTACHMENT_COLOR_CHANNEL0520,28431
+    RL_ATTACHMENT_COLOR_CHANNEL1 = 1,       // Framebuffer attachment type: color 1RL_ATTACHMENT_COLOR_CHANNEL1521,28515
+    RL_ATTACHMENT_COLOR_CHANNEL2 = 2,       // Framebuffer attachment type: color 2RL_ATTACHMENT_COLOR_CHANNEL2522,28599
+    RL_ATTACHMENT_COLOR_CHANNEL3 = 3,       // Framebuffer attachment type: color 3RL_ATTACHMENT_COLOR_CHANNEL3523,28683
+    RL_ATTACHMENT_COLOR_CHANNEL4 = 4,       // Framebuffer attachment type: color 4RL_ATTACHMENT_COLOR_CHANNEL4524,28767
+    RL_ATTACHMENT_COLOR_CHANNEL5 = 5,       // Framebuffer attachment type: color 5RL_ATTACHMENT_COLOR_CHANNEL5525,28851
+    RL_ATTACHMENT_COLOR_CHANNEL6 = 6,       // Framebuffer attachment type: color 6RL_ATTACHMENT_COLOR_CHANNEL6526,28935
+    RL_ATTACHMENT_COLOR_CHANNEL7 = 7,       // Framebuffer attachment type: color 7RL_ATTACHMENT_COLOR_CHANNEL7527,29019
+    RL_ATTACHMENT_DEPTH = 100,              // Framebuffer attachment type: depthRL_ATTACHMENT_DEPTH528,29103
+    RL_ATTACHMENT_STENCIL = 200,            // Framebuffer attachment type: stencilRL_ATTACHMENT_STENCIL529,29185
+} rlFramebufferAttachType;rlFramebufferAttachType530,29269
+typedef enum {__anon190b81f10b03533,29336
+    RL_ATTACHMENT_CUBEMAP_POSITIVE_X = 0,   // Framebuffer texture attachment type: cubemap, +X RL_ATTACHMENT_CUBEMAP_POSITIVE_X534,29351
+    RL_ATTACHMENT_CUBEMAP_NEGATIVE_X = 1,   // Framebuffer texture attachment type: cubemap, -X RL_ATTACHMENT_CUBEMAP_NEGATIVE_X535,29452
+    RL_ATTACHMENT_CUBEMAP_POSITIVE_Y = 2,   // Framebuffer texture attachment type: cubemap, +Y RL_ATTACHMENT_CUBEMAP_POSITIVE_Y536,29553
+    RL_ATTACHMENT_CUBEMAP_NEGATIVE_Y = 3,   // Framebuffer texture attachment type: cubemap, -Y RL_ATTACHMENT_CUBEMAP_NEGATIVE_Y537,29654
+    RL_ATTACHMENT_CUBEMAP_POSITIVE_Z = 4,   // Framebuffer texture attachment type: cubemap, +Z RL_ATTACHMENT_CUBEMAP_POSITIVE_Z538,29755
+    RL_ATTACHMENT_CUBEMAP_NEGATIVE_Z = 5,   // Framebuffer texture attachment type: cubemap, -Z RL_ATTACHMENT_CUBEMAP_NEGATIVE_Z539,29856
+    RL_ATTACHMENT_TEXTURE2D = 100,          // Framebuffer texture attachment type: texture2dRL_ATTACHMENT_TEXTURE2D540,29957
+    RL_ATTACHMENT_RENDERBUFFER = 200,       // Framebuffer texture attachment type: renderbufferRL_ATTACHMENT_RENDERBUFFER541,30051
+} rlFramebufferAttachTextureType;rlFramebufferAttachTextureType542,30148
+typedef enum {__anon190b81f10c03545,30204
+    RL_CULL_FACE_FRONT = 0,RL_CULL_FACE_FRONT546,30219
+    RL_CULL_FACE_BACKRL_CULL_FACE_BACK547,30247
+} rlCullMode;rlCullMode548,30269
+                #define APIENTRY APIENTRY784,48747
+                #define APIENTRYAPIENTRY786,48808
+            #define WINGDIAPI WINGDIAPI791,48995
+    #define GLAD_MALLOC GLAD_MALLOC799,49180
+    #define GLAD_FREE GLAD_FREE800,49214
+    #define GLAD_GL_IMPLEMENTATIONGLAD_GL_IMPLEMENTATION802,49245
+    #define GL_GLEXT_PROTOTYPESGL_GLEXT_PROTOTYPES808,49490
+        #define GLAD_GLES2_IMPLEMENTATIONGLAD_GLES2_IMPLEMENTATION814,49846
+        #define GL_GLEXT_PROTOTYPESGL_GLEXT_PROTOTYPES817,49939
+    typedef void (GL_APIENTRYP PFNGLDRAWARRAYSINSTANCEDEXTPROC) (GLenum mode, GLint start, GLsizPFNGLDRAWARRAYSINSTANCEDEXTPROC826,50413
+    typedef void (GL_APIENTRYP PFNGLDRAWELEMENTSINSTANCEDEXTPROC) (GLenum mode, GLsizei count, GPFNGLDRAWELEMENTSINSTANCEDEXTPROC827,50539
+    typedef void (GL_APIENTRYP PFNGLVERTEXATTRIBDIVISOREXTPROC) (GLuint index, GLuint divisor);PFNGLVERTEXATTRIBDIVISOREXTPROC828,50688
+    #define PI PI840,51298
+    #define DEG2RAD DEG2RAD843,51360
+    #define RAD2DEG RAD2DEG846,51415
+    #define GL_SHADING_LANGUAGE_VERSION GL_SHADING_LANGUAGE_VERSION850,51491
+    #define GL_COMPRESSED_RGB_S3TC_DXT1_EXT GL_COMPRESSED_RGB_S3TC_DXT1_EXT854,51594
+    #define GL_COMPRESSED_RGBA_S3TC_DXT1_EXT GL_COMPRESSED_RGBA_S3TC_DXT1_EXT857,51697
+    #define GL_COMPRESSED_RGBA_S3TC_DXT3_EXT GL_COMPRESSED_RGBA_S3TC_DXT3_EXT860,51800
+    #define GL_COMPRESSED_RGBA_S3TC_DXT5_EXT GL_COMPRESSED_RGBA_S3TC_DXT5_EXT863,51903
+    #define GL_ETC1_RGB8_OES GL_ETC1_RGB8_OES866,51990
+    #define GL_COMPRESSED_RGB8_ETC2 GL_COMPRESSED_RGB8_ETC2869,52084
+    #define GL_COMPRESSED_RGBA8_ETC2_EAC GL_COMPRESSED_RGBA8_ETC2_EAC872,52183
+    #define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG875,52288
+    #define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG878,52394
+    #define GL_COMPRESSED_RGBA_ASTC_4x4_KHR GL_COMPRESSED_RGBA_ASTC_4x4_KHR881,52496
+    #define GL_COMPRESSED_RGBA_ASTC_8x8_KHR GL_COMPRESSED_RGBA_ASTC_8x8_KHR884,52598
+    #define GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT888,52703
+    #define GL_TEXTURE_MAX_ANISOTROPY_EXT GL_TEXTURE_MAX_ANISOTROPY_EXT891,52803
+    #define GL_UNSIGNED_SHORT_5_6_5 GL_UNSIGNED_SHORT_5_6_5895,52902
+    #define GL_UNSIGNED_SHORT_5_5_5_1 GL_UNSIGNED_SHORT_5_5_5_1896,52957
+    #define GL_UNSIGNED_SHORT_4_4_4_4 GL_UNSIGNED_SHORT_4_4_4_4897,53012
+    #define GL_LUMINANCE GL_LUMINANCE901,53111
+    #define GL_LUMINANCE_ALPHA GL_LUMINANCE_ALPHA902,53166
+    #define glClearDepth                 glClearDepthfglClearDepth906,53266
+        #define GL_READ_FRAMEBUFFER GL_READ_FRAMEBUFFER908,53363
+        #define GL_DRAW_FRAMEBUFFER GL_DRAW_FRAMEBUFFER909,53422
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION915,53611
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD918,53782
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL921,53951
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR924,54119
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT927,54289
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2 RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2930,54461
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_MVP RL_DEFAULT_SHADER_UNIFORM_NAME_MVP934,54629
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW937,54787
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION940,54934
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL943,55082
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL946,55226
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR949,55404
+    #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0 RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0952,55600
+    #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1 RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1955,55768
+    #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2 RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2958,55936
+typedef struct rlglData {rlglData965,56332
+    rlRenderBatch *currentBatch;            // Current render batchcurrentBatch966,56358
+    rlRenderBatch defaultBatch;             // Default internal render batchdefaultBatch967,56426
+    struct {__anon190b81f10d08969,56504
+        int vertexCounter;                  // Current active render batch vertex counter (genervertexCounter970,56517
+        float texcoordx, texcoordy;         // Current active texture coordinate (added on glVertexcoordx971,56639
+        float texcoordx, texcoordy;         // Current active texture coordinate (added on glVertexcoordy971,56639
+        float normalx, normaly, normalz;    // Current active normal (added on glVertex*())normalx972,56743
+        float normalx, normaly, normalz;    // Current active normal (added on glVertex*())normaly972,56743
+        float normalx, normaly, normalz;    // Current active normal (added on glVertex*())normalz972,56743
+        unsigned char colorr, colorg, colorb, colora;   // Current active color (added on glVertcolorr973,56835
+        unsigned char colorr, colorg, colorb, colora;   // Current active color (added on glVertcolorg973,56835
+        unsigned char colorr, colorg, colorb, colora;   // Current active color (added on glVertcolorb973,56835
+        unsigned char colorr, colorg, colorb, colora;   // Current active color (added on glVertcolora973,56835
+        int currentMatrixMode;              // Current matrix modecurrentMatrixMode975,56939
+        Matrix *currentMatrix;              // Current matrix pointercurrentMatrix976,57006
+        Matrix modelview;                   // Default modelview matrixmodelview977,57076
+        Matrix projection;                  // Default projection matrixprojection978,57148
+        Matrix transform;                   // Transform matrix to be used with rlTranslate, rlRtransform979,57221
+        bool transformRequired;             // Require transform matrix application to current dtransformRequired980,57332
+        Matrix stack[RL_MAX_MATRIX_STACK_SIZE];// Matrix stack for push/popstack981,57458
+        int stackCounter;                   // Matrix stack counterstackCounter982,57534
+        unsigned int defaultTextureId;      // Default texture used on shapes/poly drawing (requdefaultTextureId984,57603
+        unsigned int activeTextureId[RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS];    // Active texture iactiveTextureId985,57715
+        unsigned int defaultVShaderId;      // Default vertex shader id (used by default shader defaultVShaderId986,57867
+        unsigned int defaultFShaderId;      // Default fragment shader id (used by default shadedefaultFShaderId987,57972
+        unsigned int defaultShaderId;       // Default shader program id, supports vertex color defaultShaderId988,58079
+        int *defaultShaderLocs;             // Default shader locations pointer to be used on redefaultShaderLocs989,58195
+        unsigned int currentShaderId;       // Current shader id to be used on rendering (by defcurrentShaderId990,58299
+        int *currentShaderLocs;             // Current shader locations pointer to be used on recurrentShaderLocs991,58418
+        bool stereoRender;                  // Stereo rendering flagstereoRender993,58555
+        Matrix projectionStereo[2];         // VR stereo rendering eyes projection matricesprojectionStereo994,58624
+        Matrix viewOffsetStereo[2];         // VR stereo rendering eyes view offset matricesviewOffsetStereo995,58716
+        int currentBlendMode;               // Blending mode activecurrentBlendMode998,58840
+        int glBlendSrcFactor;               // Blending source factorglBlendSrcFactor999,58908
+        int glBlendDstFactor;               // Blending destination factorglBlendDstFactor1000,58978
+        int glBlendEquation;                // Blending equationglBlendEquation1001,59053
+        int glBlendSrcFactorRGB;            // Blending source RGB factorglBlendSrcFactorRGB1002,59118
+        int glBlendDestFactorRGB;           // Blending destination RGB factorglBlendDestFactorRGB1003,59192
+        int glBlendSrcFactorAlpha;          // Blending source alpha factorglBlendSrcFactorAlpha1004,59271
+        int glBlendDestFactorAlpha;         // Blending destination alpha factorglBlendDestFactorAlpha1005,59347
+        int glBlendEquationRGB;             // Blending equation for RGBglBlendEquationRGB1006,59428
+        int glBlendEquationAlpha;           // Blending equation for alphaglBlendEquationAlpha1007,59501
+        bool glCustomBlendModeModified;     // Custom blending factor and equation modification glCustomBlendModeModified1008,59576
+        int framebufferWidth;               // Current framebuffer widthframebufferWidth1010,59680
+        int framebufferHeight;              // Current framebuffer heightframebufferHeight1011,59753
+    } State;            // Renderer stateState1013,59828
+    struct {__anon190b81f10e081014,59870
+        bool vao;                           // VAO support (OpenGL ES2 could not support VAO extvao1015,59883
+        bool instancing;                    // Instancing supported (GL_ANGLE_instanced_arrays, instancing1016,60016
+        bool texNPOT;                       // NPOT textures full support (GL_ARB_texture_non_potexNPOT1017,60161
+        bool texDepth;                      // Depth textures supported (GL_ARB_depth_texture, GtexDepth1018,60290
+        bool texDepthWebGL;                 // Depth textures supported WebGL specific (GL_WEBGLtexDepthWebGL1019,60407
+        bool texFloat32;                    // float textures support (32 bit per channel) (GL_OtexFloat321020,60519
+        bool texFloat16;                    // half float textures support (16 bit per channel) texFloat161021,60633
+        bool texCompDXT;                    // DDS texture compression support (GL_EXT_texture_ctexCompDXT1022,60757
+        bool texCompETC1;                   // ETC1 texture compression support (GL_OES_compresstexCompETC11023,60945
+        bool texCompETC2;                   // ETC2/EAC texture compression support (GL_ARB_ES3_texCompETC21024,61097
+        bool texCompPVRT;                   // PVR texture compression support (GL_IMG_texture_ctexCompPVRT1025,61208
+        bool texCompASTC;                   // ASTC texture compression support (GL_KHR_texture_texCompASTC1026,61322
+        bool texMirrorClamp;                // Clamp mirror wrap mode supported (GL_EXT_texture_texMirrorClamp1027,61477
+        bool texAnisoFilter;                // Anisotropic texture filtering support (GL_EXT_textexAnisoFilter1028,61587
+        bool computeShader;                 // Compute shaders support (GL_ARB_compute_shader)computeShader1029,61708
+        bool ssbo;                          // Shader storage buffer object support (GL_ARB_shadssbo1030,61803
+        float maxAnisotropyLevel;           // Maximum anisotropy level supported (minimum is 2.maxAnisotropyLevel1032,61926
+        int maxDepthBits;                   // Maximum bits for depth componentmaxDepthBits1033,62026
+    } ExtSupported;     // Extensions supported flagsExtSupported1035,62107
+} rlglData;rlglData1036,62161
+typedef void *(*rlglLoadProc)(const char *name);   // OpenGL extension functions loader signaturrlglLoadProc1038,62174
+static rlglData RLGL = { 0 };RLGL1046,62631
+static PFNGLGENVERTEXARRAYSOESPROC glGenVertexArrays = NULL;glGenVertexArrays1051,62860
+static PFNGLBINDVERTEXARRAYOESPROC glBindVertexArray = NULL;glBindVertexArray1052,62921
+static PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArrays = NULL;glDeleteVertexArrays1053,62982
+static PFNGLDRAWARRAYSINSTANCEDEXTPROC glDrawArraysInstanced = NULL;glDrawArraysInstanced1056,63126
+static PFNGLDRAWELEMENTSINSTANCEDEXTPROC glDrawElementsInstanced = NULL;glDrawElementsInstanced1057,63195
+static PFNGLVERTEXATTRIBDIVISOREXTPROC glVertexAttribDivisor = NULL;glVertexAttribDivisor1058,63268
+void rlMatrixMode(int mode)rlMatrixMode1085,64677
+void rlFrustum(double left, double right, double bottom, double top, double znear, double zfar)rlFrustum1096,64948
+void rlOrtho(double left, double right, double bottom, double top, double znear, double zfar)rlOrtho1101,65103
+void rlPushMatrix(void) { glPushMatrix(); }rlPushMatrix1106,65254
+void rlPopMatrix(void) { glPopMatrix(); }rlPopMatrix1107,65298
+void rlLoadIdentity(void) { glLoadIdentity(); }rlLoadIdentity1108,65340
+void rlTranslatef(float x, float y, float z) { glTranslatef(x, y, z); }rlTranslatef1109,65388
+void rlRotatef(float angle, float x, float y, float z) { glRotatef(angle, x, y, z); }rlRotatef1110,65460
+void rlScalef(float x, float y, float z) { glScalef(x, y, z); }rlScalef1111,65546
+void rlMultMatrixf(const float *matf) { glMultMatrixf(matf); }rlMultMatrixf1112,65610
+void rlMatrixMode(int mode)rlMatrixMode1116,65799
+void rlPushMatrix(void)rlPushMatrix1126,66142
+void rlPopMatrix(void)rlPopMatrix1141,66644
+void rlLoadIdentity(void)rlLoadIdentity1158,67115
+void rlTranslatef(float x, float y, float z)rlTranslatef1164,67253
+void rlRotatef(float angle, float x, float y, float z)rlRotatef1179,67710
+void rlScalef(float x, float y, float z)rlScalef1223,69004
+void rlMultMatrixf(const float *matf)rlMultMatrixf1237,69395
+void rlFrustum(double left, double right, double bottom, double top, double znear, double zfar)rlFrustum1249,69862
+void rlOrtho(double left, double right, double bottom, double top, double znear, double zfar)rlOrtho1281,70858
+void rlViewport(int x, int y, int width, int height)rlViewport1314,71974
+void rlBegin(int mode)rlBegin1325,72415
+void rlEnd() { glEnd(); }rlEnd1336,72652
+void rlVertex2i(int x, int y) { glVertex2i(x, y); }rlVertex2i1337,72678
+void rlVertex2f(float x, float y) { glVertex2f(x, y); }rlVertex2f1338,72730
+void rlVertex3f(float x, float y, float z) { glVertex3f(x, y, z); }rlVertex3f1339,72786
+void rlTexCoord2f(float x, float y) { glTexCoord2f(x, y); }rlTexCoord2f1340,72854
+void rlNormal3f(float x, float y, float z) { glNormal3f(x, y, z); }rlNormal3f1341,72914
+void rlColor4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a) { glColor4ubrlColor4ub1342,72982
+void rlColor3f(float x, float y, float z) { glColor3f(x, y, z); }rlColor3f1343,73094
+void rlColor4f(float x, float y, float z, float w) { glColor4f(x, y, z, w); }rlColor4f1344,73160
+void rlBegin(int mode)rlBegin1348,73369
+void rlEnd(void)rlEnd1381,75776
+void rlVertex3f(float x, float y, float z)rlVertex3f1391,76192
+void rlVertex2f(float x, float y)rlVertex2f1452,79651
+void rlVertex2i(int x, int y)rlVertex2i1458,79777
+void rlTexCoord2f(float x, float y)rlTexCoord2f1465,79978
+void rlNormal3f(float x, float y, float z)rlNormal3f1473,80153
+void rlColor4ub(unsigned char x, unsigned char y, unsigned char z, unsigned char w)rlColor4ub1481,80314
+void rlColor4f(float r, float g, float b, float a)rlColor4f1490,80540
+void rlColor3f(float x, float y, float z)rlColor3f1496,80737
+void rlSetTexture(unsigned int id)rlSetTexture1508,81177
+void rlActiveTextureSlot(int slot)rlActiveTextureSlot1559,83940
+void rlEnableTexture(unsigned int id)rlEnableTexture1567,84118
+void rlDisableTexture(void)rlDisableTexture1576,84290
+void rlEnableTextureCubemap(unsigned int id)rlEnableTextureCubemap1585,84459
+void rlDisableTextureCubemap(void)rlDisableTextureCubemap1593,84659
+void rlTextureParameters(unsigned int id, int param, int value)rlTextureParameters1601,84871
+void rlCubemapParameters(unsigned int id, int param, int value)rlCubemapParameters1649,86738
+void rlEnableShader(unsigned int id)rlEnableShader1693,88546
+void rlDisableShader(void)rlDisableShader1701,88717
+void rlEnableFramebuffer(unsigned int id)rlEnableFramebuffer1709,88888
+void rlDisableFramebuffer(void)rlDisableFramebuffer1717,89129
+void rlBlitFramebuffer(int srcX, int srcY, int srcWidth, int srcHeight, int dstX, int dstY, int rlBlitFramebuffer1725,89374
+void rlActiveDrawBuffers(int count)rlActiveDrawBuffers1734,89842
+void rlEnableColorBlend(void) { glEnable(GL_BLEND); }rlEnableColorBlend1785,91585
+void rlDisableColorBlend(void) { glDisable(GL_BLEND); }rlDisableColorBlend1788,91666
+void rlEnableDepthTest(void) { glEnable(GL_DEPTH_TEST); }rlEnableDepthTest1791,91744
+void rlDisableDepthTest(void) { glDisable(GL_DEPTH_TEST); }rlDisableDepthTest1794,91825
+void rlEnableDepthMask(void) { glDepthMask(GL_TRUE); }rlEnableDepthMask1797,91908
+void rlDisableDepthMask(void) { glDepthMask(GL_FALSE); }rlDisableDepthMask1800,91987
+void rlEnableBackfaceCulling(void) { glEnable(GL_CULL_FACE); }rlEnableBackfaceCulling1803,92072
+void rlDisableBackfaceCulling(void) { glDisable(GL_CULL_FACE); }rlDisableBackfaceCulling1806,92164
+void rlSetCullFace(int mode)rlSetCullFace1809,92255
+void rlEnableScissorTest(void) { glEnable(GL_SCISSOR_TEST); }rlEnableScissorTest1820,92488
+void rlDisableScissorTest(void) { glDisable(GL_SCISSOR_TEST); }rlDisableScissorTest1823,92575
+void rlScissor(int x, int y, int width, int height) { glScissor(x, y, width, height); }rlScissor1826,92656
+void rlEnableWireMode(void)rlEnableWireMode1829,92765
+void rlEnablePointMode(void)rlEnablePointMode1837,92979
+void rlDisableWireMode(void)rlDisableWireMode1846,93252
+void rlSetLineWidth(float width) { glLineWidth(width); }rlSetLineWidth1855,93497
+float rlGetLineWidth(void)rlGetLineWidth1858,93585
+void rlEnableSmoothLines(void)rlEnableSmoothLines1866,93720
+void rlDisableSmoothLines(void)rlDisableSmoothLines1874,93889
+void rlEnableStereoRender(void)rlEnableStereoRender1882,94062
+void rlDisableStereoRender(void)rlDisableStereoRender1890,94244
+bool rlIsStereoRenderEnabled(void)rlIsStereoRenderEnabled1898,94437
+void rlClearColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)rlClearColor1908,94651
+void rlClearScreenBuffers(void)rlClearScreenBuffers1920,94991
+void rlCheckErrors()rlCheckErrors1927,95302
+void rlSetBlendMode(int mode)rlSetBlendMode1951,96417
+void rlSetBlendFactors(int glSrcFactor, int glDstFactor, int glEquation)rlSetBlendFactors1989,98435
+void rlSetBlendFactorsSeparate(int glSrcRGB, int glDstRGB, int glSrcAlpha, int glDstAlpha, int grlSetBlendFactorsSeparate2006,99043
+static void GLAPIENTRY rlDebugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severlDebugMessageCallback2032,100269
+void rlglInit(int width, int height)rlglInit2093,103546
+void rlglClose(void)rlglClose2181,108079
+void rlLoadExtensions(void *loader)rlLoadExtensions2195,108565
+        #define GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT2407,119867
+int rlGetVersion(void)rlGetVersion2463,123354
+void rlSetFramebufferWidth(int width)rlSetFramebufferWidth2486,123892
+void rlSetFramebufferHeight(int height)rlSetFramebufferHeight2494,124089
+int rlGetFramebufferWidth(void)rlGetFramebufferWidth2502,124289
+int rlGetFramebufferHeight(void)rlGetFramebufferHeight2512,124517
+unsigned int rlGetTextureIdDefault(void)rlGetTextureIdDefault2523,124826
+unsigned int rlGetShaderIdDefault(void)rlGetShaderIdDefault2533,125054
+int *rlGetShaderLocsDefault(void)rlGetShaderLocsDefault2543,125282
+rlRenderBatch rlLoadRenderBatch(int numBuffers, int bufferElements)rlLoadRenderBatch2555,125627
+void rlUnloadRenderBatch(rlRenderBatch batch)rlUnloadRenderBatch2679,131958
+void rlDrawRenderBatch(rlRenderBatch *batch)rlDrawRenderBatch2724,133503
+void rlSetRenderBatchActive(rlRenderBatch *batch)rlSetRenderBatchActive2922,144043
+void rlDrawRenderBatchActive(void)rlDrawRenderBatchActive2933,144360
+bool rlCheckRenderBatchLimit(int vCount)rlCheckRenderBatchLimit2942,144682
+unsigned int rlLoadTexture(const void *data, int width, int height, int format, int mipmapCount)rlLoadTexture2970,145832
+unsigned int rlLoadTextureDepth(int width, int height, bool useRenderBuffer)rlLoadTextureDepth3124,152525
+unsigned int rlLoadTextureCubemap(const void *data, int size, int format)rlLoadTextureCubemap3182,155218
+void rlUpdateTexture(unsigned int id, int offsetX, int offsetY, int width, int height, int formarlUpdateTexture3256,158633
+void rlGetGlTextureFormats(int format, unsigned int *glInternalFormat, unsigned int *glFormat, urlGetGlTextureFormats3271,159301
+void rlUnloadTexture(unsigned int id)rlUnloadTexture3344,168042
+void rlGenTextureMipmaps(unsigned int id, int width, int height, int format, int *mipmaps)rlGenTextureMipmaps3351,168205
+        #define MIN(MIN3367,168889
+        #define MAX(MAX3368,168935
+void *rlReadTexturePixels(unsigned int id, int width, int height, int format)rlReadTexturePixels3383,169421
+unsigned char *rlReadScreenPixels(int width, int height)rlReadScreenPixels3447,172433
+unsigned int rlLoadFramebuffer(int width, int height)rlLoadFramebuffer3479,173783
+void rlFramebufferAttach(unsigned int fboId, unsigned int texId, int attachType, int texType, inrlFramebufferAttach3493,174292
+bool rlFramebufferComplete(unsigned int id)rlFramebufferComplete3534,176322
+void rlUnloadFramebuffer(unsigned int id)rlUnloadFramebuffer3567,177587
+unsigned int rlLoadVertexBuffer(const void *buffer, int size, bool dynamic)rlLoadVertexBuffer3597,179142
+unsigned int rlLoadVertexBufferElement(const void *buffer, int size, bool dynamic)rlLoadVertexBufferElement3611,179541
+void rlEnableVertexBuffer(unsigned int id)rlEnableVertexBuffer3625,179953
+void rlDisableVertexBuffer(void)rlDisableVertexBuffer3633,180150
+void rlEnableVertexBufferElement(unsigned int id)rlEnableVertexBufferElement3641,180351
+void rlDisableVertexBufferElement(void)rlDisableVertexBufferElement3649,180579
+void rlUpdateVertexBuffer(unsigned int id, const void *data, int dataSize, int offset)rlUpdateVertexBuffer3658,180842
+void rlUpdateVertexBufferElements(unsigned int id, const void *data, int dataSize, int offset)rlUpdateVertexBufferElements3668,181216
+bool rlEnableVertexArray(unsigned int vaoId)rlEnableVertexArray3677,181548
+void rlDisableVertexArray(void)rlDisableVertexArray3691,181858
+void rlEnableVertexAttribute(unsigned int index)rlEnableVertexAttribute3699,182060
+void rlDisableVertexAttribute(unsigned int index)rlDisableVertexAttribute3707,182265
+void rlDrawVertexArray(int offset, int count)rlDrawVertexArray3715,182459
+void rlDrawVertexArrayElements(int offset, int count, const void *buffer)rlDrawVertexArrayElements3721,182587
+void rlDrawVertexArrayInstanced(int offset, int count, int instances)rlDrawVertexArrayInstanced3731,182976
+void rlDrawVertexArrayElementsInstanced(int offset, int count, const void *buffer, int instancesrlDrawVertexArrayElementsInstanced3739,183232
+void rlEnableStatePointer(int vertexAttribType, void *buffer)rlEnableStatePointer3752,183780
+void rlDisableStatePointer(int vertexAttribType)rlDisableStatePointer3767,184485
+unsigned int rlLoadVertexArray(void)rlLoadVertexArray3774,184624
+void rlSetVertexAttribute(unsigned int index, int compSize, int type, bool normalized, int stridrlSetVertexAttribute3787,184896
+void rlSetVertexAttributeDivisor(unsigned int index, int divisor)rlSetVertexAttributeDivisor3795,185211
+void rlUnloadVertexArray(unsigned int vaoId)rlUnloadVertexArray3803,185440
+void rlUnloadVertexBuffer(unsigned int vboId)rlUnloadVertexBuffer3816,185810
+unsigned int rlLoadShaderCode(const char *vsCode, const char *fsCode)rlLoadShaderCode3828,186272
+unsigned int rlCompileShader(const char *shaderCode, int type)rlCompileShader3905,189524
+unsigned int rlLoadShaderProgram(unsigned int vShaderId, unsigned int fShaderId)rlLoadShaderProgram3961,191572
+void rlUnloadShaderProgram(unsigned int id)rlUnloadShaderProgram4022,193727
+int rlGetLocationUniform(unsigned int shaderId, const char *uniformName)rlGetLocationUniform4032,194007
+int rlGetLocationAttrib(unsigned int shaderId, const char *attribName)rlGetLocationAttrib4045,194556
+void rlSetUniform(int locIndex, const void *value, int uniformType, int count)rlSetUniform4058,195098
+void rlSetVertexAttributeDefault(int locIndex, const void *value, int attribType, int count)rlSetVertexAttributeDefault4078,196253
+void rlSetUniformMatrix(int locIndex, Matrix mat)rlSetUniformMatrix4093,197033
+void rlSetUniformSampler(int locIndex, unsigned int textureId)rlSetUniformSampler4107,197456
+void rlSetShader(unsigned int id, int *locs)rlSetShader4128,198293
+unsigned int rlLoadComputeShaderProgram(unsigned int shaderId)rlLoadComputeShaderProgram4141,198639
+void rlComputeShaderDispatch(unsigned int groupX, unsigned int groupY, unsigned int groupZ)rlComputeShaderDispatch4190,200135
+unsigned int rlLoadShaderBuffer(unsigned int size, const void *data, int usageHint)rlLoadShaderBuffer4198,200366
+void rlUnloadShaderBuffer(unsigned int ssboId)rlUnloadShaderBuffer4214,200955
+void rlUpdateShaderBuffer(unsigned int id, const void *data, unsigned int dataSize, unsigned intrlUpdateShaderBuffer4222,201110
+unsigned int rlGetShaderBufferSize(unsigned int id)rlGetShaderBufferSize4231,201406
+void rlReadShaderBuffer(unsigned int id, void *dest, unsigned int count, unsigned int offset)rlReadShaderBuffer4244,201722
+void rlBindShaderBuffer(unsigned int id, unsigned int index)rlBindShaderBuffer4253,202003
+void rlCopyShaderBuffer(unsigned int destId, unsigned int srcId, unsigned int destOffset, unsignrlCopyShaderBuffer4261,202196
+void rlBindImageTexture(unsigned int id, unsigned int index, int format, bool readonly)rlBindImageTexture4271,202592
+Matrix rlGetMatrixModelview(void)rlGetMatrixModelview4284,203122
+Matrix rlGetMatrixProjection(void)rlGetMatrixProjection4313,203796
+Matrix rlGetMatrixTransform(void)rlGetMatrixTransform4342,204370
+RLAPI Matrix rlGetMatrixProjectionStereo(int eye)rlGetMatrixProjectionStereo4356,205006
+RLAPI Matrix rlGetMatrixViewOffsetStereo(int eye)rlGetMatrixViewOffsetStereo4366,205305
+void rlSetMatrixModelview(Matrix view)rlSetMatrixModelview4376,205606
+void rlSetMatrixProjection(Matrix projection)rlSetMatrixProjection4384,205834
+void rlSetMatrixProjectionStereo(Matrix right, Matrix left)rlSetMatrixProjectionStereo4392,206057
+void rlSetMatrixViewOffsetStereo(Matrix right, Matrix left)rlSetMatrixViewOffsetStereo4401,206343
+void rlLoadDrawQuad(void)rlLoadDrawQuad4410,206605
+void rlLoadDrawCube(void)rlLoadDrawCube4451,207896
+const char *rlGetPixelFormatName(unsigned int format)rlGetPixelFormatName4529,211618
+static void rlLoadShaderDefault(void)rlLoadShaderDefault4568,214786
+static void rlUnloadShaderDefault(void)rlUnloadShaderDefault4675,220144
+static const char *rlGetCompressedFormatName(int format)rlGetCompressedFormatName4693,220761
+static int rlGetPixelDataSize(int width, int height, int format)rlGetPixelDataSize4771,225556
+static Matrix rlMatrixIdentity(void)rlMatrixIdentity4821,227776
+static Matrix rlMatrixMultiply(Matrix left, Matrix right)rlMatrixMultiply4835,228084
+
+raylib/include/raymath.h,12173
+#define RAYMATH_HRAYMATH_H53,2799
+        #define RMAPI RMAPI62,3118
+        #define RMAPI RMAPI64,3293
+        #define RMAPI RMAPI66,3411
+    #define RMAPI RMAPI69,3526
+        #define RMAPI RMAPI72,3655
+        #define RMAPI RMAPI74,3758
+    #define PI PI82,4072
+    #define EPSILON EPSILON86,4135
+    #define DEG2RAD DEG2RAD90,4189
+    #define RAD2DEG RAD2DEG94,4245
+    #define MatrixToFloat(mat) (MatrixToFloatVMatrixToFloat99,4338
+    #define Vector3ToFloat(vec) (Vector3ToFloatVVector3ToFloat104,4456
+typedef struct Vector2 {Vector2112,4772
+    float x;x113,4797
+    float y;y114,4810
+} Vector2;Vector2115,4823
+#define RL_VECTOR2_TYPERL_VECTOR2_TYPE116,4834
+typedef struct Vector3 {Vector3121,4912
+    float x;x122,4937
+    float y;y123,4950
+    float z;z124,4963
+} Vector3;Vector3125,4976
+#define RL_VECTOR3_TYPERL_VECTOR3_TYPE126,4987
+typedef struct Vector4 {Vector4131,5065
+    float x;x132,5090
+    float y;y133,5103
+    float z;z134,5116
+    float w;w135,5129
+} Vector4;Vector4136,5142
+#define RL_VECTOR4_TYPERL_VECTOR4_TYPE137,5153
+typedef Vector4 Quaternion;Quaternion142,5237
+#define RL_QUATERNION_TYPERL_QUATERNION_TYPE143,5265
+typedef struct Matrix {Matrix148,5392
+    float m0, m4, m8, m12;      // Matrix first row (4 components)m0149,5416
+    float m0, m4, m8, m12;      // Matrix first row (4 components)m4149,5416
+    float m0, m4, m8, m12;      // Matrix first row (4 components)m8149,5416
+    float m0, m4, m8, m12;      // Matrix first row (4 components)m12149,5416
+    float m1, m5, m9, m13;      // Matrix second row (4 components)m1150,5483
+    float m1, m5, m9, m13;      // Matrix second row (4 components)m5150,5483
+    float m1, m5, m9, m13;      // Matrix second row (4 components)m9150,5483
+    float m1, m5, m9, m13;      // Matrix second row (4 components)m13150,5483
+    float m2, m6, m10, m14;     // Matrix third row (4 components)m2151,5551
+    float m2, m6, m10, m14;     // Matrix third row (4 components)m6151,5551
+    float m2, m6, m10, m14;     // Matrix third row (4 components)m10151,5551
+    float m2, m6, m10, m14;     // Matrix third row (4 components)m14151,5551
+    float m3, m7, m11, m15;     // Matrix fourth row (4 components)m3152,5618
+    float m3, m7, m11, m15;     // Matrix fourth row (4 components)m7152,5618
+    float m3, m7, m11, m15;     // Matrix fourth row (4 components)m11152,5618
+    float m3, m7, m11, m15;     // Matrix fourth row (4 components)m15152,5618
+} Matrix;Matrix153,5686
+#define RL_MATRIX_TYPERL_MATRIX_TYPE154,5696
+typedef struct float3 {float3158,5813
+    float v[3];v159,5837
+} float3;float3160,5853
+typedef struct float16 {float16162,5864
+    float v[16];v163,5889
+} float16;float16164,5906
+RMAPI float Clamp(float value, float min, float max)Clamp173,6272
+RMAPI float Lerp(float start, float end, float amount)Lerp183,6487
+RMAPI float Normalize(float value, float start, float end)Normalize191,6660
+RMAPI float Remap(float value, float inputStart, float inputEnd, float outputStart, float outputRemap199,6850
+RMAPI float Wrap(float value, float min, float max)Wrap207,7117
+RMAPI int FloatEquals(float x, float y)FloatEquals215,7319
+    #define EPSILON EPSILON218,7383
+RMAPI Vector2 Vector2Zero(void)Vector2Zero231,7783
+RMAPI Vector2 Vector2One(void)Vector2One239,7914
+RMAPI Vector2 Vector2Add(Vector2 v1, Vector2 v2)Vector2Add247,8036
+RMAPI Vector2 Vector2AddValue(Vector2 v, float add)Vector2AddValue255,8191
+RMAPI Vector2 Vector2Subtract(Vector2 v1, Vector2 v2)Vector2Subtract263,8349
+RMAPI Vector2 Vector2SubtractValue(Vector2 v, float sub)Vector2SubtractValue271,8513
+RMAPI float Vector2Length(Vector2 v)Vector2Length279,8669
+RMAPI float Vector2LengthSqr(Vector2 v)Vector2LengthSqr287,8814
+RMAPI float Vector2DotProduct(Vector2 v1, Vector2 v2)Vector2DotProduct295,8958
+RMAPI float Vector2Distance(Vector2 v1, Vector2 v2)Vector2Distance303,9123
+RMAPI float Vector2DistanceSqr(Vector2 v1, Vector2 v2)Vector2DistanceSqr311,9334
+RMAPI float Vector2Angle(Vector2 v1, Vector2 v2)Vector2Angle320,9587
+RMAPI float Vector2LineAngle(Vector2 start, Vector2 end)Vector2LineAngle335,9948
+RMAPI Vector2 Vector2Scale(Vector2 v, float scale)Vector2Scale346,10242
+RMAPI Vector2 Vector2Multiply(Vector2 v1, Vector2 v2)Vector2Multiply354,10394
+RMAPI Vector2 Vector2Negate(Vector2 v)Vector2Negate362,10537
+RMAPI Vector2 Vector2Divide(Vector2 v1, Vector2 v2)Vector2Divide370,10665
+RMAPI Vector2 Vector2Normalize(Vector2 v)Vector2Normalize378,10818
+RMAPI Vector2 Vector2Transform(Vector2 v, Matrix mat)Vector2Transform394,11138
+RMAPI Vector2 Vector2Lerp(Vector2 v1, Vector2 v2, float amount)Vector2Lerp409,11470
+RMAPI Vector2 Vector2Reflect(Vector2 v, Vector2 normal)Vector2Reflect420,11716
+RMAPI Vector2 Vector2Rotate(Vector2 v, float angle)Vector2Rotate433,12020
+RMAPI Vector2 Vector2MoveTowards(Vector2 v, Vector2 target, float maxDistance)Vector2MoveTowards447,12301
+RMAPI Vector2 Vector2Invert(Vector2 v)Vector2Invert466,12777
+RMAPI Vector2 Vector2Clamp(Vector2 v, Vector2 min, Vector2 max)Vector2Clamp475,12985
+RMAPI Vector2 Vector2ClampValue(Vector2 v, float min, float max)Vector2ClampValue486,13267
+RMAPI int Vector2Equals(Vector2 p, Vector2 q)Vector2Equals513,13853
+    #define EPSILON EPSILON516,13923
+RMAPI Vector3 Vector3Zero(void)Vector3Zero530,14431
+RMAPI Vector3 Vector3One(void)Vector3One538,14568
+RMAPI Vector3 Vector3Add(Vector3 v1, Vector3 v2)Vector3Add546,14686
+RMAPI Vector3 Vector3AddValue(Vector3 v, float add)Vector3AddValue554,14854
+RMAPI Vector3 Vector3Subtract(Vector3 v1, Vector3 v2)Vector3Subtract562,15013
+RMAPI Vector3 Vector3SubtractValue(Vector3 v, float sub)Vector3SubtractValue570,15190
+RMAPI Vector3 Vector3Scale(Vector3 v, float scalar)Vector3Scale578,15359
+RMAPI Vector3 Vector3Multiply(Vector3 v1, Vector3 v2)Vector3Multiply586,15526
+RMAPI Vector3 Vector3CrossProduct(Vector3 v1, Vector3 v2)Vector3CrossProduct594,15702
+RMAPI Vector3 Vector3Perpendicular(Vector3 v)Vector3Perpendicular602,15924
+RMAPI float Vector3Length(const Vector3 v)Vector3Length631,16590
+RMAPI float Vector3LengthSqr(const Vector3 v)Vector3LengthSqr639,16747
+RMAPI float Vector3DotProduct(Vector3 v1, Vector3 v2)Vector3DotProduct647,16903
+RMAPI float Vector3Distance(Vector3 v1, Vector3 v2)Vector3Distance655,17080
+RMAPI float Vector3DistanceSqr(Vector3 v1, Vector3 v2)Vector3DistanceSqr668,17359
+RMAPI float Vector3Angle(Vector3 v1, Vector3 v2)Vector3Angle681,17624
+RMAPI Vector3 Vector3Negate(Vector3 v)Vector3Negate694,18022
+RMAPI Vector3 Vector3Divide(Vector3 v1, Vector3 v2)Vector3Divide702,18156
+RMAPI Vector3 Vector3Normalize(Vector3 v)Vector3Normalize710,18320
+RMAPI Vector3 Vector3Project(Vector3 v1, Vector3 v2)Vector3Project728,18681
+RMAPI Vector3 Vector3Reject(Vector3 v1, Vector3 v2)Vector3Reject745,19060
+RMAPI void Vector3OrthoNormalize(Vector3 *v1, Vector3 *v2)Vector3OrthoNormalize764,19545
+RMAPI Vector3 Vector3Transform(Vector3 v, Matrix mat)Vector3Transform797,20458
+RMAPI Vector3 Vector3RotateByQuaternion(Vector3 v, Quaternion q)Vector3RotateByQuaternion813,20841
+RMAPI Vector3 Vector3RotateByAxisAngle(Vector3 v, Vector3 axis, float angle)Vector3RotateByAxisAngle825,21356
+RMAPI Vector3 Vector3Lerp(Vector3 v1, Vector3 v2, float amount)Vector3Lerp877,22612
+RMAPI Vector3 Vector3Reflect(Vector3 v, Vector3 normal)Vector3Reflect889,22902
+RMAPI Vector3 Vector3Min(Vector3 v1, Vector3 v2)Vector3Min907,23392
+RMAPI Vector3 Vector3Max(Vector3 v1, Vector3 v2)Vector3Max919,23642
+RMAPI Vector3 Vector3Barycenter(Vector3 p, Vector3 a, Vector3 b, Vector3 c)Vector3Barycenter932,23989
+RMAPI Vector3 Vector3Unproject(Vector3 source, Matrix projection, Matrix view)Vector3Unproject956,25088
+RMAPI float3 Vector3ToFloatV(Vector3 v)Vector3ToFloatV1039,29869
+RMAPI Vector3 Vector3Invert(Vector3 v)Vector3Invert1051,30058
+RMAPI Vector3 Vector3Clamp(Vector3 v, Vector3 min, Vector3 max)Vector3Clamp1060,30276
+RMAPI Vector3 Vector3ClampValue(Vector3 v, float min, float max)Vector3ClampValue1072,30594
+RMAPI int Vector3Equals(Vector3 p, Vector3 q)Vector3Equals1101,31260
+    #define EPSILON EPSILON1104,31330
+RMAPI Vector3 Vector3Refract(Vector3 v, Vector3 n, float r)Vector3Refract1119,31992
+RMAPI float MatrixDeterminant(Matrix mat)MatrixDeterminant1144,32632
+RMAPI float MatrixTrace(Matrix mat)MatrixTrace1165,33627
+RMAPI Matrix MatrixTranspose(Matrix mat)MatrixTranspose1173,33776
+RMAPI Matrix MatrixInvert(Matrix mat)MatrixInvert1198,34292
+RMAPI Matrix MatrixIdentity(void)MatrixIdentity1245,36188
+RMAPI Matrix MatrixAdd(Matrix left, Matrix right)MatrixAdd1256,36453
+RMAPI Matrix MatrixSubtract(Matrix left, Matrix right)MatrixSubtract1281,37190
+RMAPI Matrix MatrixMultiply(Matrix left, Matrix right)MatrixMultiply1307,37982
+RMAPI Matrix MatrixTranslate(float x, float y, float z)MatrixTranslate1332,39626
+RMAPI Matrix MatrixRotate(Vector3 axis, float angle)MatrixRotate1344,39975
+RMAPI Matrix MatrixRotateX(float angle)MatrixRotateX1389,40987
+RMAPI Matrix MatrixRotateY(float angle)MatrixRotateY1409,41490
+RMAPI Matrix MatrixRotateZ(float angle)MatrixRotateZ1429,41993
+RMAPI Matrix MatrixRotateXYZ(Vector3 angle)MatrixRotateXYZ1450,42498
+RMAPI Matrix MatrixRotateZYX(Vector3 angle)MatrixRotateZYX1481,43368
+RMAPI Matrix MatrixScale(float x, float y, float z)MatrixScale1516,44059
+RMAPI Matrix MatrixFrustum(double left, double right, double bottom, double top, double near, doMatrixFrustum1527,44350
+RMAPI Matrix MatrixPerspective(double fovY, double aspect, double nearPlane, double farPlane)MatrixPerspective1560,45212
+RMAPI Matrix MatrixOrtho(double left, double right, double bottom, double top, double nearPlane,MatrixOrtho1586,46036
+RMAPI Matrix MatrixLookAt(Vector3 eye, Vector3 target, Vector3 up)MatrixLookAt1615,46829
+RMAPI float16 MatrixToFloatV(Matrix mat)MatrixToFloatV1670,48403
+RMAPI Quaternion QuaternionAdd(Quaternion q1, Quaternion q2)QuaternionAdd1699,49169
+RMAPI Quaternion QuaternionAddValue(Quaternion q, float add)QuaternionAddValue1707,49367
+RMAPI Quaternion QuaternionSubtract(Quaternion q1, Quaternion q2)QuaternionSubtract1715,49551
+RMAPI Quaternion QuaternionSubtractValue(Quaternion q, float sub)QuaternionSubtractValue1723,49759
+RMAPI Quaternion QuaternionIdentity(void)QuaternionIdentity1731,49947
+RMAPI float QuaternionLength(Quaternion q)QuaternionLength1739,50105
+RMAPI Quaternion QuaternionNormalize(Quaternion q)QuaternionNormalize1747,50271
+RMAPI Quaternion QuaternionInvert(Quaternion q)QuaternionInvert1764,50659
+RMAPI Quaternion QuaternionMultiply(Quaternion q1, Quaternion q2)QuaternionMultiply1784,51071
+RMAPI Quaternion QuaternionScale(Quaternion q, float mul)QuaternionScale1800,51562
+RMAPI Quaternion QuaternionDivide(Quaternion q1, Quaternion q2)QuaternionDivide1813,51799
+RMAPI Quaternion QuaternionLerp(Quaternion q1, Quaternion q2, float amount)QuaternionLerp1821,52018
+RMAPI Quaternion QuaternionNlerp(Quaternion q1, Quaternion q2, float amount)QuaternionNlerp1834,52394
+RMAPI Quaternion QuaternionSlerp(Quaternion q1, Quaternion q2, float amount)QuaternionSlerp1859,53120
+    #define EPSILON EPSILON1864,53253
+RMAPI Quaternion QuaternionFromVector3ToVector3(Vector3 from, Vector3 to)QuaternionFromVector3ToVector31905,54498
+RMAPI Quaternion QuaternionFromMatrix(Matrix mat)QuaternionFromMatrix1933,55406
+RMAPI Matrix QuaternionToMatrix(Quaternion q)QuaternionToMatrix1997,57306
+RMAPI Quaternion QuaternionFromAxisAngle(Vector3 axis, float angle)QuaternionFromAxisAngle2031,58169
+RMAPI void QuaternionToAxisAngle(Quaternion q, Vector3 *outAxis, float *outAngle)QuaternionToAxisAngle2076,59378
+RMAPI Quaternion QuaternionFromEuler(float pitch, float yaw, float roll)QuaternionFromEuler2114,60332
+RMAPI Vector3 QuaternionToEuler(Quaternion q)QuaternionToEuler2135,60927
+RMAPI Quaternion QuaternionTransform(Quaternion q, Matrix mat)QuaternionTransform2159,61548
+RMAPI int QuaternionEquals(Quaternion p, Quaternion q)QuaternionEquals2172,61994
+    #define EPSILON EPSILON2175,62073
+
+README.MD,0
+
+screenshots/screenshot_cli.png,0
+
+screenshots/screenshot_gui_title.png,0
+
+screenshots/screenshot_gui_gameplay.png,0
+
+src/tetriste.c,931
+Game* initGame() {initGame8,152
+Piece* generatePiece() {generatePiece24,596
+char* getDisplayStr(int color, int shape) {getDisplayStr44,1103
+Piece* getXPiecesAfter(Piece* piece, int n) {getXPiecesAfter60,1629
+void leftInsert(Game* game, Piece* toInsert) {leftInsert69,1847
+void rightInsert(Game* game, Piece* toInsert) {rightInsert75,2006
+void shiftByColor(Game* game, int color) {shiftByColor87,2306
+void shiftByShape(Game* game, int shape) {shiftByShape135,4042
+void updateShapes(Piece* piece) {updateShapes183,5775
+void updateColors(Piece* piece) {updateColors201,6289
+int updateBoard(Game* game) {updateBoard225,6903
+Piece* getTail(Game* game) {getTail289,9378
+void saveGame(Game *game, Piece **nextPieces, char *name){saveGame297,9529
+Game* loadGame(Piece** nextPieces, char* name) {loadGame317,10253
+void freePiece(Piece* piece) {freePiece380,12258
+void freeGame(Game* game) {freeGame386,12416
+
+src/tetriste.h,650
+#define TETRISTE_HTETRISTE_H2,19
+typedef struct Piece {Piece4,39
+    int color; // 1 = Blue, 2 = Yellow, 3 = Red, 4 = Greencolor5,62
+    int shape; // 1 = Square, 2 = Diamond, 3 = Circle, 4 = Triangleshape6,121
+    struct Piece* next;next8,190
+    struct Piece* shapePrev;shapePrev9,214
+    struct Piece* shapeNext;shapeNext10,243
+    struct Piece* colorPrev;colorPrev11,272
+    struct Piece* colorNext;colorNext12,301
+    char* displayStr;displayStr14,331
+} Piece;Piece15,353
+typedef struct Game {Game17,363
+    Piece* head;head18,385
+    int score;score19,402
+    int piecesCount;piecesCount20,417
+} Game;Game21,438
+
+src/TAGS,0
+
+src/gui/tetriste_gui.c,33
+void startGUI() {startGUI9,141
+
+src/gui/tetriste_gui.h,43
+#define TETRISTE_GUI_HTETRISTE_GUI_H2,24
+
+src/gui/screens/screen_gameplay.c,461
+static Texture2D background;background8,116
+Game* current_game;current_game9,145
+Piece** next_pieces;next_pieces10,165
+int lost = 0;lost11,186
+int combo = 0;combo12,200
+void DrawPiece(int posX, int posY, int color, int shape) {DrawPiece14,216
+void InitGameplayScreen(void) {InitGameplayScreen43,1117
+void UpdateDrawGameplayScreen(void) {UpdateDrawGameplayScreen53,1368
+void UnloadFinishGameplayScreen(void) {UnloadFinishGameplayScreen147,4468
+
+src/gui/screens/screens.h,33
+#define SCREENS_HSCREENS_H2,18
+
+src/gui/screens/screen_title.c,384
+static int finishScreen = 0;finishScreen3,21
+static Texture2D logo;logo4,50
+static Color backgroundColor = {0x04, 0x62, 0xD6, 0xFF};backgroundColor5,73
+void InitTitleScreen(void) {InitTitleScreen8,132
+void UpdateDrawTitleScreen(void) {UpdateDrawTitleScreen12,207
+void UnloadTitleScreen(void) {UnloadTitleScreen31,704
+int FinishTitleScreen(void) {FinishTitleScreen35,763
+
+src/gui/audio/audio.h,29
+#define AUDIO_HAUDIO_H2,16
+
+src/gui/audio/audio.c,292
+Music *currentMusic;currentMusic5,59
+Music theme;theme6,80
+Music theme2;theme27,93
+Music themeRemix;themeRemix8,107
+Sound successSound;successSound9,125
+void InitAudio() {InitAudio11,146
+void SwitchMusic(Music *newMusic) {SwitchMusic27,584
+void CloseAudio() {CloseAudio36,766
+
+src/cli/tetriste_cli.h,43
+#define TETRISTE_CLI_HTETRISTE_CLI_H4,49
+
+src/cli/tetriste_cli.c,477
+void startCLI() {startCLI12,243
+void displayGameInfo(Game *currentGame, Piece **nextPieces, int combo) {displayGameInfo161,4911
+void displayMainMenu() {displayMainMenu188,5709
+void displayColorMenu() {displayColorMenu198,5953
+void displayShapeMenu() {displayShapeMenu207,6160
+void showDebug(Game* currentGame) {showDebug217,6529
+Piece* debugGetNextColor(Piece* piece) {debugGetNextColor306,8829
+Piece* debugGetNextShape(Piece* piece) {debugGetNextShape314,9020
+
+src/#tetriste.c#,0
+
+TAGS,0
+
+tetriste,0

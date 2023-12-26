@@ -4,7 +4,7 @@
 #include <string.h>
 #include "tetriste.h"
 
-// Initialize a new game and adding the first piece
+// Initialize a new game and adds the first piece
 Game* initGame() {
     Piece* newPiece = generatePiece();
     newPiece->next = newPiece;
@@ -17,11 +17,10 @@ Game* initGame() {
     newGame->head = newPiece;
     newGame->score = 0;
     newGame->piecesCount = 1;
-
     return newGame;
 }
 
-// Generate a new piece with a random color and shape
+// Generate a new piece with random color and shape
 Piece* generatePiece() {
     int color = rand() % 4 + 1;
     int shape = rand() % 4 + 1;
@@ -41,7 +40,7 @@ Piece* generatePiece() {
     return newPiece;
 }
 
-// Get the string displayed for a given color/shape in the terminal
+// Returns the string displayed in terminal for a given color/shape
 char* getDisplayStr(int color, int shape) {
 
     char* shapes[] = {"■", "◊", "●", "▲"};
@@ -52,12 +51,13 @@ char* getDisplayStr(int color, int shape) {
     displayStr[0] = '\0';
 
     // Found snprintf on internet as a great alternative to multiple strcat
-    snprintf(displayStr, 15, "%s%s%s", colors[color - 1], shapes[shape - 1], resetColor);
+    snprintf(displayStr,
+             "%s%s%s", colors[color-1], shapes[shape-1], resetColor);
 
     return displayStr;
 }
 
-// Get the Xth piece after the given piece in the linked list
+// Returns a pointer to the Xth piece after the given piece in the linked list
 Piece* getXPiecesAfter(Piece* piece, int n) {
     Piece* current = piece;
     for (int i = 0; i < n; i++) {
@@ -66,13 +66,13 @@ Piece* getXPiecesAfter(Piece* piece, int n) {
     return current;
 }
 
-// Insert a piece on the left side of the board
+// Inserts a piece on the left side of the board
 void leftInsert(Game* game, Piece* toInsert) {
     rightInsert(game, toInsert);
     game->head = toInsert;
 }
 
-// Insert a piece on the right side of the board
+// Inserts a piece on the right side of the board
 void rightInsert(Game* game, Piece* toInsert) {
     Piece* tail = getTail(game);
 
@@ -84,7 +84,7 @@ void rightInsert(Game* game, Piece* toInsert) {
     game->piecesCount++;
 }
 
-// Shift all pieces of a specified color to the left  TODO: make it work
+// Shifts all pieces of a specified color to the left  TODO: make it work
 void shiftByColor(Game* game, int color) {
     Piece* firstColor = game->head;
     while (firstColor->next != game->head) {
@@ -132,7 +132,7 @@ void shiftByColor(Game* game, int color) {
     }
 }
 
-// Shift all pieces of a specified shape to the left  TODO: make it work
+// Shifts all pieces of a specified shape to the left  TODO: make it work
 void shiftByShape(Game* game, int shape) {
     Piece* firstShape = game->head;
     while (firstShape->next != game->head) {
@@ -180,7 +180,7 @@ void shiftByShape(Game* game, int shape) {
     }
 }
 
-// Update the doubly circular linked list of shapes for a given piece
+// Updates the doubly circular linked list of shapes for a given piece
 void updateShapes(Piece* piece) {
     Piece* current = piece->next;
     while (current->shape != piece->shape) {
@@ -198,7 +198,7 @@ void updateShapes(Piece* piece) {
     }
 }
 
-// Update the doubly circular linked list of colors for a given piece
+// Updates the doubly circular linked list of colors for a given piece
 void updateColors(Piece* piece) {
     Piece* current = piece->next;
     while (current->color != piece->color) {
@@ -217,7 +217,7 @@ void updateColors(Piece* piece) {
 
 }
 
-/* Check if some pieces need to be deleted (3 pieces of the same color/shape)
+/* Checks if some pieces need to be deleted (3 pieces of the same color/shape)
    Returns:
      O if nothing changed
     -1 if the game is won

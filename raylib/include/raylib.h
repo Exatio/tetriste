@@ -1055,7 +1055,7 @@ RLAPI Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera); // Get the 
 
 // Timing-related functions
 RLAPI void SetTargetFPS(int fps);                                 // Set target FPS (maximum)
-RLAPI float GetFrameTime(void);                                   // Get time in seconds for last frame drawn (delta time)
+RLAPI float GetFrameTime(void); // Get time in seconds for last frame drawn (delta time)
 RLAPI double GetTime(void);                                       // Get elapsed time in seconds since InitWindow()
 RLAPI int GetFPS(void);                                           // Get current FPS
 

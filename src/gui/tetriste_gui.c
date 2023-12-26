@@ -6,15 +6,19 @@
 #include "screens/screens.h"
 #include "audio/audio.h"
 
+#define SCREEN_WIDTH 1200
+#define SCREEN_HEIGHT 700
+
 void startGUI() {
-    // Initialisation des constantes
-    const int screenWidth = 1200;
-    const int screenHeight = 700;
 
-    srand(time(NULL)); // Initialisation du générateur de nombres aléatoires
+    // Initialisation du générateur de nombres aléatoires
+    srand(time(NULL));
 
-    InitWindow(screenWidth, screenHeight, "Tetriste - Tavalidé");     // Initialisation de la fenêtre
-    InitAudio(); // Initialisation de l'audio, décrit dans audio.c
+    // Initialisation de la fenêtre
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Tetriste - Tavalidé");
+
+    // Initialisation de l'audio
+    InitAudio();
 
 
     int isOnGameplay = 0;

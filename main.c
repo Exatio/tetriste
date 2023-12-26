@@ -15,8 +15,7 @@ int main(int argc, char** argv) {
     } else {
         printf("Wrong argument!\n");
         printf("Usage: %s <cli | gui>\n", argv[0]);
-        return 1;
+        return 2;
     }
     return 0;
 }
-
