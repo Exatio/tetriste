@@ -84,101 +84,122 @@ void rightInsert(Game* game, Piece* toInsert) {
     game->piecesCount++;
 }
 
-// Shifts all pieces of a specified color to the left  TODO: make it work
+// Shifts all pieces of a specified color to the left
 void shiftByColor(Game* game, int color) {
-    Piece* firstColor = game->head;
+    Piece *firstColor = game->head;
     while (firstColor->next != game->head) {
         if (firstColor->color == color) {
             break;
         }
         firstColor = firstColor->next;
     }
-
     if (firstColor->color != color) {
         printf("No piece of this color is present on the board!\n");
         return;
     }
+    Piece *lastColor = firstColor->colorPrev;
 
-    Piece* lastColor = firstColor->colorPrev;
 
+    // Circularly shift the colors by swapping shapes and displayStr by pairs
     if (firstColor != lastColor) {
-        Piece* current = firstColor;
-        do {
-            // Swap shape and displayStr
+
+        Piece *current = firstColor;
+        while (current != lastColor) {
             int tmp = current->shape;
             current->shape = current->colorNext->shape;
             current->colorNext->shape = tmp;
-            char* tmp2 = current->displayStr;
+
+            char *tmp2 = current->displayStr;
             current->displayStr = current->colorNext->displayStr;
             current->colorNext->displayStr = tmp2;
 
-            // Update linking for shapes
-            Piece* tmp3 = current->next;
-            while (tmp3->shape != current->shape && tmp3 != current->colorNext) {
-                tmp3 = tmp3->next;
-            }
-            if (tmp3 != current->colorNext && tmp3 != current->colorNext->shapeNext) {
-                current->shapePrev = tmp3->shapePrev;
-                current->shapePrev->shapeNext = current;
-                current->shapeNext = tmp3;
-                tmp3->shapePrev = current;
-                current->colorNext->shapeNext->shapePrev = current->colorNext->shapePrev;
-                current->colorNext->shapePrev->shapeNext = current->colorNext->shapeNext;
-            }
-
             current = current->colorNext;
-        } while (current != lastColor);
-        updateShapes(lastColor);
+        }
+
+        Piece *heads[4] = {NULL, NULL, NULL, NULL};
+        Piece *tails[4] = {NULL, NULL, NULL, NULL};
+
+        current = game->head;
+        do {
+            int i = current->shape - 1;
+            if(heads[i] == NULL) {
+                heads[i] = current;
+                tails[i] = current;
+            } else {
+                tails[i]->shapeNext = current;
+                current->shapePrev = tails[i];
+                tails[i] = current;
+            }
+            current = current->next;
+        } while (current != game->head);
+
+        for(int i = 0 ; i < 4 ; i++) {
+            if(heads[i] != NULL) {
+                tails[i]->shapeNext = heads[i];
+                heads[i]->shapePrev = tails[i];
+            }
+        }
+
     }
 }
-
-// Shifts all pieces of a specified shape to the left  TODO: make it work
+// Shifts all pieces of a specified shape to the left
 void shiftByShape(Game* game, int shape) {
-    Piece* firstShape = game->head;
+    Piece *firstShape = game->head;
     while (firstShape->next != game->head) {
         if (firstShape->shape == shape) {
             break;
         }
         firstShape = firstShape->next;
     }
-
     if (firstShape->shape != shape) {
         printf("No piece of this shape is present on the board!\n");
         return;
     }
+    Piece *lastShape = firstShape->shapePrev;
 
-    Piece* lastShape = firstShape->shapePrev;
 
+    // Circularly shift the shapes by swapping color and displayStr by pairs
     if (firstShape != lastShape) {
-        Piece* current = firstShape;
-        do {
-            // Swap color and displayStr
+
+        Piece *current = firstShape;
+        while (current != lastShape) {
             int tmp = current->color;
             current->color = current->shapeNext->color;
             current->shapeNext->color = tmp;
-            char* tmp2 = current->displayStr;
+            char *tmp2 = current->displayStr;
             current->displayStr = current->shapeNext->displayStr;
             current->shapeNext->displayStr = tmp2;
 
-            // Update linking for colors
-            Piece* tmp3 = current->next;
-            while (tmp3->color != current->color && tmp3 != current->shapeNext) {
-                tmp3 = tmp3->next;
-            }
-            if (tmp3 != current->shapeNext && tmp3 != current->shapeNext->colorNext) {
-                current->colorPrev = tmp3->colorPrev;
-                current->colorPrev->colorNext = current;
-                current->colorNext = tmp3;
-                tmp3->colorPrev = current;
-                current->shapeNext->colorNext->colorPrev = current->shapeNext->colorPrev;
-                current->shapeNext->colorPrev->colorNext = current->shapeNext->colorNext;
-            }
-
             current = current->shapeNext;
-        } while (current != lastShape);
-        updateShapes(lastShape);
+        }
+
+        Piece *heads[4] = {NULL, NULL, NULL, NULL};
+        Piece *tails[4] = {NULL, NULL, NULL, NULL};
+
+        current = game->head;
+        do {
+            int i = current->color - 1;
+            if(heads[i] == NULL) {
+                heads[i] = current;
+                tails[i] = current;
+            } else {
+                tails[i]->colorNext = current;
+                current->colorPrev = tails[i];
+                tails[i] = current;
+            }
+            current = current->next;
+        } while (current != game->head);
+
+        for(int i = 0 ; i < 4 ; i++) {
+            if(heads[i] != NULL) {
+                tails[i]->colorNext = heads[i];
+                heads[i]->colorPrev = tails[i];
+            }
+        }
+
     }
 }
+
 
 // Updates the doubly circular linked list of shapes for a given piece
 void updateShapes(Piece* piece) {

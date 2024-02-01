@@ -1,4 +1,4 @@
-export LD_LIBRARY_PATH=./raylib/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=./raylib/lib:$LD_LIBRARY_PATH  # utile ??
 
 CFLAGS=-Wall -I./raylib/include/
 LDFLAGS=-L./raylib/lib/ -lraylib -lm -lpthread -ldl -lrt -lX11
@@ -30,4 +30,4 @@ main.o: main.c
 	gcc -o main.o -c main.c $(CFLAGS)
 
 clean:
-	rm -rf ./*.o src/*.o src/cli/*.o src/gui/*.o src/gui/audio/*.o src/gui/screens/*.o tetriste
+	rm ./*.o src/*.o src/cli/*.o src/gui/*.o src/gui/audio/*.o src/gui/screens/*.o tetriste
