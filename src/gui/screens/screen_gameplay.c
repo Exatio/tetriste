@@ -75,7 +75,7 @@ void UpdateDrawGameplayScreen(void) {
             }
             next_pieces[0] = generatePiece();
 
-            combo = updateBoard(current_game);
+            combo = updateBoard(current_game, 0);
             if(combo > 0) PlaySound(successSound);
 
             if(current_game->piecesCount >= 15) {
@@ -90,7 +90,7 @@ void UpdateDrawGameplayScreen(void) {
             }
             next_pieces[0] = generatePiece();
 
-            combo = updateBoard(current_game);
+            combo = updateBoard(current_game, 0);
             if(combo > 0) PlaySound(successSound);
 
             if(current_game->piecesCount >= 15) {

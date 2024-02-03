@@ -3,7 +3,7 @@
 #ifndef TETRISTE_CLI_H
 #define TETRISTE_CLI_H
 
-void displayGameInfo(Game *currentGame, Piece **nextPieces, int combo);
+void displayGameInfo(Game *currentGame, Piece **nextPieces, int scoreAdded);
 void displayMainMenu();
 void displayColorMenu();
 void displayShapeMenu();

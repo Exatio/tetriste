@@ -4,6 +4,7 @@
 #include <string.h>
 #include "tetriste.h"
 
+
 // Initialize a new game and adds the first piece
 Game* initGame() {
     Piece* newPiece = generatePiece();
@@ -22,8 +23,8 @@ Game* initGame() {
 
 // Generate a new piece with random color and shape
 Piece* generatePiece() {
-    int color = rand() % 4 + 1;
-    int shape = rand() % 4 + 1;
+    PColor color = rand() % 4;
+    PShape shape = rand() % 4;
 
     Piece* newPiece = (Piece*)malloc(sizeof(Piece));
     newPiece->color = color;
@@ -41,7 +42,7 @@ Piece* generatePiece() {
 }
 
 // Returns the string displayed in terminal for a given color/shape
-char* getDisplayStr(int color, int shape) {
+char* getDisplayStr(PColor color, PShape shape) {
 
     char* shapes[] = {"■", "◊", "●", "▲"};
     char* colors[] = {"\033[34m", "\033[33m", "\033[31m", "\033[32m"};
@@ -52,18 +53,9 @@ char* getDisplayStr(int color, int shape) {
 
     // Found snprintf on internet as a great alternative to multiple strcat
     snprintf(displayStr, 15,
-             "%s%s%s", colors[color-1], shapes[shape-1], resetColor);
+             "%s%s%s", colors[color], shapes[shape], resetColor);
 
     return displayStr;
-}
-
-// Returns a pointer to the Xth piece after the given piece in the linked list
-Piece* getXPiecesAfter(Piece* piece, int n) {
-    Piece* current = piece;
-    for (int i = 0; i < n; i++) {
-        current = current->next;
-    }
-    return current;
 }
 
 // Inserts a piece on the left side of the board
@@ -85,7 +77,7 @@ void rightInsert(Game* game, Piece* toInsert) {
 }
 
 // Shifts all pieces of a specified color to the left
-void shiftByColor(Game* game, int color) {
+void shiftByColor(Game* game, PColor color) {
     Piece *firstColor = game->head;
     while (firstColor->next != game->head) {
         if (firstColor->color == color) {
@@ -121,7 +113,7 @@ void shiftByColor(Game* game, int color) {
 
         current = game->head;
         do {
-            int i = current->shape - 1;
+            int i = current->shape;
             if(heads[i] == NULL) {
                 heads[i] = current;
                 tails[i] = current;
@@ -143,7 +135,7 @@ void shiftByColor(Game* game, int color) {
     }
 }
 // Shifts all pieces of a specified shape to the left
-void shiftByShape(Game* game, int shape) {
+void shiftByShape(Game* game, PShape shape) {
     Piece *firstShape = game->head;
     while (firstShape->next != game->head) {
         if (firstShape->shape == shape) {
@@ -178,7 +170,7 @@ void shiftByShape(Game* game, int shape) {
 
         current = game->head;
         do {
-            int i = current->color - 1;
+            int i = current->color;
             if(heads[i] == NULL) {
                 heads[i] = current;
                 tails[i] = current;
@@ -238,73 +230,93 @@ void updateColors(Piece* piece) {
 
 }
 
-/* Checks if some pieces need to be deleted (3 pieces of the same color/shape)
-   Returns:
-     O if nothing changed
-    -1 if the game is won
-    the combo otherwise
-*/
-int updateBoard(Game* game) {
+// Returns the length of the longest sequence of shape or color starting from piece
+int getPieceSequenceSize(Game *game, Piece *piece) {
+    int colorSequence = 1, shapeSequence = 1;
+    Piece *current = piece->next;
+    // It has been decided that the maximum length of a sequence is 5
+    for (int i = 1; i < 5; i++) {
+        if (current == game->head)
+            break;
+        if (colorSequence == i && current->color == piece->color) colorSequence++;
+        if (shapeSequence == i && current->shape == piece->shape) shapeSequence++;
+        current = current->next;
+    }
+    if (colorSequence > shapeSequence) return colorSequence;
+    return shapeSequence;
+}
 
+/* Checks if some pieces need to be deleted (3 pieces or more of the same color/shape)
+ * Returns: O if nothing changed -1 if the game is won the score added otherwise
+*/
+int updateBoard(Game *game, int isByShift) {
+
+    int initialScore = game->score;
     // No need to check if there is less than 3 pieces
-    if(game->piecesCount < 3){
+    if (game->piecesCount < 3) {
         return 0;
     }
 
-    Piece* currentPiece = getTail(game);
+    Piece *currentPiece = game->head;
+    Piece *beforeCurrent = NULL;
+    int combinationSize;
+    Piece *toDelete[5];
+    Piece *tail = getTail(game);
 
     int combo = 0;
-    // For all the combinaisons of 3 pieces starting from the head to the tail
-    while (getXPiecesAfter(currentPiece, 3) != game->head) {
+    while (currentPiece->next != game->head) {
 
-        Piece* nextPiece = currentPiece->next;
-        Piece* nextNextPiece = nextPiece->next;
-        Piece* nextNextNextPiece = nextNextPiece->next;
+        combinationSize = getPieceSequenceSize(game, currentPiece);
+#ifdef DEBUG
+        printf("Combination found : %d\n", combinationSize);
+#endif
+        // If there are at least 3 pieces of the same color or shape, delete them
+        if (combinationSize >= 3) {
 
-        // If the 3 pieces are of the same color or shape, delete them
-        // TODO: Ask & check if we need to delete all the pieces of the same color/shape or only the 3 first
-        if ((nextPiece->color == nextNextPiece->color && nextPiece->color == nextNextNextPiece->color) ||
-            (nextPiece->shape == nextNextPiece->shape && nextPiece->shape == nextNextNextPiece->shape)) {
+            // If there are combos, the score will augment exponentially (3^x or 4^x etc)
+            combo++;
+            game->piecesCount -= combinationSize;
+            game->score += pow(combinationSize, combo) * (isByShift ? 2 : 1);
 
-            // If there are exactly 3 pieces on the board, its a win, the game will end so everything will be correctly freed
-            if (game->piecesCount == 3) {
+            // If all the pieces on the board are deleted, it's a win, the game will end so everything will be correctly freed
+            if (game->piecesCount == combinationSize) {
                 return -1;
             }
 
             // Updating the linking for the shapes and colors
-            for(int i = 0; i < 3; i++) {
-                Piece* tmp = getXPiecesAfter(currentPiece, i+1);
-                tmp->shapePrev->shapeNext = tmp->shapeNext;
-                tmp->shapeNext->shapePrev = tmp->shapePrev;
-                tmp->colorPrev->colorNext = tmp->colorNext;
-                tmp->colorNext->colorPrev = tmp->colorPrev;
+            for (int i = 0; i < combinationSize; i++) {
+                currentPiece->shapePrev->shapeNext = currentPiece->shapeNext;
+                currentPiece->shapeNext->shapePrev = currentPiece->shapePrev;
+                currentPiece->colorPrev->colorNext = currentPiece->colorNext;
+                currentPiece->colorNext->colorPrev = currentPiece->colorPrev;
+                toDelete[i] = currentPiece;
+                currentPiece = currentPiece->next;
+            }
+
+            // Removing the pieces from the board
+            for (int i = 0; i < combinationSize; i++) {
+                free(toDelete[i]);
             }
 
             // Removing the pieces from the single circular linked list
-            currentPiece->next = nextNextNextPiece->next;
-
-            if (nextPiece == game->head) {
-                game->head = nextNextNextPiece->next;
+            if (beforeCurrent == NULL) { // In this case the head go removed
+                game->head = currentPiece;
+                tail->next = game->head;
+            } else {
+                beforeCurrent->next = currentPiece;
+                if (currentPiece == game->head) tail = beforeCurrent; // Checking whether or not the tail got removed
             }
 
-            // They aren't used anymore by any other pieces thanks to the above update
-            freePiece(nextPiece);
-            freePiece(nextNextPiece);
-            freePiece(nextNextNextPiece);
-
-            combo++;
-
-            game->piecesCount -= 3;
-            game->score += (int) pow(3, combo);// If there are combos, the score will augment exponentially (3^x)
-
-            currentPiece = getTail(game); // We need to check again since the beginning to see if a new combinaison was created from this deletion
+            // We need to check again since the beginning to see if a new combinaison was created from this deletion
+            beforeCurrent = NULL;
+            currentPiece = game->head;
         } else {
-            currentPiece = currentPiece->next; // Only increment if no deletion was done
+            beforeCurrent = currentPiece;
+            currentPiece = currentPiece->next;
         }
-
     }
 
-    return combo;
+    return game->score - initialScore;
 }
 
 // Returns the last displayed piece "tail"
@@ -319,7 +331,7 @@ Piece* getTail(Game* game) {
 void saveGame(Game *game, Piece **nextPieces, char *name){
     char* magic = "TETRISTE";
     FILE *file = fopen(strcat(name, ".txt"), "w");
-    fprintf(file, "%s\n", magic); // permet de vérifier que le fichier est bien un fichier de sauvegarde valide
+    fprintf(file, "%s\n", magic); // the magic string is used to check if the file is a valid save
     fprintf(file, "%d\n%d\n", game->score, game->piecesCount);
 
     for(int i = 0 ; i < 5 ; i++){
@@ -335,12 +347,11 @@ void saveGame(Game *game, Piece **nextPieces, char *name){
     fclose(file);
 }
 
-// Returns 1 if the game was successfully loaded, 0 otherwise (file doesn't exist)
+// Returns the game if it was successfully loaded, NULL otherwise (file doesn't exist or corrupted/invalid)
 Game* loadGame(Piece** nextPieces, char* name) {
 
     char magic[] = "        ";
     strcat(name, ".txt");
-
     FILE* file = fopen(name, "r");;
 
     if (file == NULL) {
@@ -358,7 +369,9 @@ Game* loadGame(Piece** nextPieces, char* name) {
 
     Game* newGame = (Game*)malloc(sizeof(Game));
     fscanf(file, "%d\n%d\n", &newGame->score, &newGame->piecesCount);
+#ifdef DEBUG
     printf("Score: %d\nPieces count: %d\n", newGame->score, newGame->piecesCount);
+#endif
     for (int i = 0; i < 5; i++) {
         int color, shape;
         fscanf(file, "%d %d\n", &color, &shape);
@@ -366,7 +379,9 @@ Game* loadGame(Piece** nextPieces, char* name) {
         nextPieces[i]->color = color;
         nextPieces[i]->shape = shape;
         nextPieces[i]->displayStr = getDisplayStr(color, shape);
+#ifdef DEBUG
         printf("Next piece %d: %s\n", i, nextPieces[i]->displayStr);
+#endif
     }
 
     Piece* current = NULL;
@@ -377,7 +392,9 @@ Game* loadGame(Piece** nextPieces, char* name) {
         newPiece->color = color;
         newPiece->shape = shape;
         newPiece->displayStr = getDisplayStr(color, shape);
+#ifdef DEBUG
         printf("Piece %d: %s\n", i, newPiece->displayStr);
+#endif
         if (i == 0) {
             newGame->head = newPiece;
             newPiece->next = newPiece;

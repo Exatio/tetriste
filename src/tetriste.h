@@ -1,20 +1,37 @@
 #ifndef TETRISTE_H
 #define TETRISTE_H
 
-typedef struct Piece {
-    int color; // 1 = Blue, 2 = Yellow, 3 = Red, 4 = Green
-    int shape; // 1 = Square, 2 = Diamond, 3 = Circle, 4 = Triangle
+// #define DEBUG
 
-    struct Piece* next;
-    struct Piece* shapePrev;
-    struct Piece* shapeNext;
-    struct Piece* colorPrev;
-    struct Piece* colorNext;
+typedef enum {
+    P_BLUE,
+    P_YELLOW,
+    P_RED,
+    P_GREEN
+} PColor;
 
-    char* displayStr;
-} Piece;
+typedef enum {
+    P_SQUARE,
+    P_DIAMOND,
+    P_CIRCLE,
+    P_TRIANGLE
+} PShape;
 
-typedef struct Game {
+typedef struct Piece Piece;
+struct Piece {
+    PColor color;                 // The piece's color
+    PShape shape;                 // The piece's shape
+
+    Piece* next;                 // Circular linked list for pieces
+    Piece* shapePrev;            // Double linked list for shapes
+    Piece* shapeNext;
+    Piece* colorPrev;            // Double linked list for colors
+    Piece* colorNext;
+
+    char* displayStr;            // How the piece must be displayed in the terminal
+};
+
+typedef struct {
     Piece* head;
     int score;
     int piecesCount;
@@ -23,17 +40,17 @@ typedef struct Game {
 Game* initGame();
 // Pieces
 Piece* generatePiece();
-char* getDisplayStr(int color, int shape);
-Piece* getXPiecesAfter(Piece* piece, int n);
+char* getDisplayStr(PColor color, PShape shape);
+int getPieceSequenceSize(Game *game, Piece *piece);
 // Game actions
 void leftInsert(Game* game, Piece* toInsert);
 void rightInsert(Game* game, Piece* toInsert);
-void shiftByColor(Game* game, int color);
-void shiftByShape(Game* game, int shape);
+void shiftByColor(Game* game, PColor color);
+void shiftByShape(Game* game, PShape shape);
 // Logic
 void updateShapes(Piece* piece);
 void updateColors(Piece* piece);
-int updateBoard(Game* game);
+int updateBoard(Game* game, int isByShift);
 Piece* getTail(Game* game);
 // Files
 void saveGame(Game* game, Piece** nextPieces, char* name);

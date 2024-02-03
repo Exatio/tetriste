@@ -19,7 +19,7 @@ void startCLI() {
     Piece **nextPieces = (Piece **)malloc(5 * sizeof(Piece *));
 
     int keepNextPieces;
-    int combo = 0;
+    int scoreAdded = 0;
 
     printf("Do you want to load a game (y/n) ? ");
     char loadChoice;
@@ -51,14 +51,17 @@ void startCLI() {
 
         printf("%s\033[0;0H\033[2J", "\033[0m");
 
-        displayGameInfo(currentGame, nextPieces, combo);
+        displayGameInfo(currentGame, nextPieces, scoreAdded);
+#ifdef DEBUG
         showDebug(currentGame);
+#endif
         displayMainMenu();
 
         printf("Your choice: ");
         char choice;
         scanf(" %c", &choice); // Found on internet: to solve an infinite loop, space before %c to make it work (scanf will take the \n from the previous input, and the space tells it not to)
         printf("\n");
+        int isByShift = 0;
 
         switch (choice) {
             case 'j':
@@ -77,18 +80,22 @@ void startCLI() {
 
                 switch (colorChoice) {
                     case 'b':
-                        shiftByColor(currentGame, 1);
+                        shiftByColor(currentGame, 0);
+                        isByShift = 1;
                         break;
                     case 'y':
-                        shiftByColor(currentGame, 2);
+                        shiftByColor(currentGame, 1);
+                        isByShift = 1;
                         break;
                     case 'r':
-                        shiftByColor(currentGame, 3);
+                        shiftByColor(currentGame, 2);
+                        isByShift = 1;
                         break;
                     case 'g':
-                        shiftByColor(currentGame, 4);
+                        shiftByColor(currentGame, 3);
+                        isByShift = 1;
                         break;
-                    default: // '0' or invalid choice
+                    default: // Invalid choice
                         break;
                 }
                 break;
@@ -100,16 +107,20 @@ void startCLI() {
 
                 switch (shapeChoice) {
                     case 's':
-                        shiftByShape(currentGame, 1);
+                        shiftByShape(currentGame, 0);
+                        isByShift = 1;
                         break;
                     case 'd':
-                        shiftByShape(currentGame, 2);
+                        shiftByShape(currentGame, 1);
+                        isByShift = 1;
                         break;
                     case 'c':
-                        shiftByShape(currentGame, 3);
+                        shiftByShape(currentGame, 2);
+                        isByShift = 1;
                         break;
                     case 't':
-                        shiftByShape(currentGame, 4);
+                        shiftByShape(currentGame, 3);
+                        isByShift = 1;
                         break;
                     default: // '0' or invalid choice
                         break;
@@ -143,8 +154,8 @@ void startCLI() {
             nextPieces[0] = generatePiece();
         }
 
-        combo = updateBoard(currentGame);
-        if (combo == -1) {
+        scoreAdded = updateBoard(currentGame, isByShift);
+        if (scoreAdded == -1) {
             printf("YOU WIN !\n");
             continueGame = 0;
         }
@@ -163,17 +174,18 @@ void startCLI() {
     freeGame(currentGame);
 }
 
-void displayGameInfo(Game *currentGame, Piece **nextPieces, int combo) {
+void displayGameInfo(Game *currentGame, Piece **nextPieces, int scoreAdded) {
 
     printf("------   TETRISTE   ------\n");
 
-    if(combo == 1){
-        printf("Current score : %d (+3)\n", currentGame->score);
-    } else if (combo > 1){
-        printf("Current score : %d (COMBO! +%d)\n", currentGame->score, (int) pow(3, combo));
-    } else {
+    if(scoreAdded == 0) {
         printf("Current score : %d\n", currentGame->score);
+    } else if(scoreAdded <= 5){
+        printf("Current score : %d (+%d)\n", currentGame->score, scoreAdded);
+    } else {
+        printf("Current score : %d (COMBO! +%d)\n", currentGame->score, scoreAdded);
     }
+
    printf("Next pieces: ");
 
     for (int i = 0; i < 5; i++) {
