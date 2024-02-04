@@ -9,7 +9,8 @@ extern Music themeRemix;
 extern Sound successSound;
 
 void InitAudio();
-void SwitchMusic(Music *newMusic);
+void SwitchMusic();
+void StopMusic();
 void CloseAudio();
 
 #endif // AUDIO_H

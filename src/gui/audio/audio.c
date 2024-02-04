@@ -24,15 +24,20 @@ void InitAudio() {
     currentMusic = &theme;
 }
 
-void SwitchMusic(Music *newMusic) {
-    if(currentMusic != NULL) {
-        StopMusicStream(*currentMusic);
+void SwitchMusic() {
+    if(currentMusic == NULL) {
+        currentMusic = &theme;
+    } else if(currentMusic == &theme) {
+        currentMusic = &theme2;
+    } else if(currentMusic == &theme2) {
+        currentMusic = &themeRemix;
+    } else {
+        currentMusic = &theme;
     }
-    currentMusic = newMusic;
     PlayMusicStream(*currentMusic);
 }
 
-void StopMusicStream() {
+void StopMusic() {
     if(currentMusic != NULL) {
         StopMusicStream(*currentMusic);
         currentMusic = NULL;

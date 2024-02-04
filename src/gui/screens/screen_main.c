@@ -3,7 +3,13 @@
 #include "../../tetriste.h"
 #include "rlgl.h"
 #include "../audio/audio.h"
+#include "screens.h"
 
+
+void UpdateGameplayScreen() {
+
+}
+/*
 
 static Texture2D background;
 Game* current_game;
@@ -152,3 +158,4 @@ void UnloadFinishGameplayScreen(void) {
     freeGame(current_game);
     UnloadTexture(background);
 }
+*/

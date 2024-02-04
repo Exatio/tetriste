@@ -3,7 +3,7 @@
 
 typedef enum {
     TITLE_SCREEN,
-    GAMEPLAY_SCREEN,
+    MAIN_SCREEN,
     PAUSE_SCREEN,
     WIN_SCREEN,
     LOSS_SCREEN
