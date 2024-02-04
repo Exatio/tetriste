@@ -6,27 +6,31 @@
 
 
 // Initialize a new game and adds the first piece
-Game* initGame() {
-    Piece* newPiece = generatePiece();
+Game* initGame(int colorCount, int shapeCount) {
+    Piece* newPiece = generatePiece(colorCount, shapeCount);
     newPiece->next = newPiece;
     newPiece->shapePrev = newPiece;
     newPiece->shapeNext = newPiece;
     newPiece->colorPrev = newPiece;
     newPiece->colorNext = newPiece;
 
+
+
     Game* newGame = (Game*)malloc(sizeof(Game));
     newGame->head = newPiece;
     newGame->score = 0;
     newGame->piecesCount = 1;
+    newGame->colorCount = colorCount;
+    newGame->shapeCount = shapeCount;
     return newGame;
 }
 
 // Generate a new piece with random color and shape
-Piece* generatePiece() {
-    PColor color = rand() % 4;
-    PShape shape = rand() % 4;
+Piece* generatePiece(int colorCount, int shapeCount) {
+    PColor color = rand() % colorCount;
+    PShape shape = rand() % shapeCount;
 
-    Piece* newPiece = (Piece*)malloc(sizeof(Piece));
+    Piece* newPiece = (Piece*) malloc(sizeof(Piece));
     newPiece->color = color;
     newPiece->shape = shape;
 
@@ -44,16 +48,15 @@ Piece* generatePiece() {
 // Returns the string displayed in terminal for a given color/shape
 char* getDisplayStr(PColor color, PShape shape) {
 
-    char* shapes[] = {"■", "◊", "●", "▲"};
-    char* colors[] = {"\033[34m", "\033[33m", "\033[31m", "\033[32m"};
+    char* shapes[] = {"■", "◊", "●", "▲", "★", "✚"};
+    char* colors[] = {"\033[34m", "\033[33m", "\033[31m", "\033[32m", "\033[35m", "\033[37m"};
     char* resetColor = "\033[0m";
 
     char* displayStr = (char*)malloc(15);
     displayStr[0] = '\0';
 
     // Found snprintf on internet as a great alternative to multiple strcat
-    snprintf(displayStr, 15,
-             "%s%s%s", colors[color], shapes[shape], resetColor);
+    snprintf(displayStr, 15, "%s%s%s", colors[color], shapes[shape], resetColor);
 
     return displayStr;
 }
@@ -108,8 +111,8 @@ void shiftByColor(Game* game, PColor color) {
             current = current->colorNext;
         }
 
-        Piece *heads[4] = {NULL, NULL, NULL, NULL};
-        Piece *tails[4] = {NULL, NULL, NULL, NULL};
+        Piece *heads[6] = {NULL};
+        Piece *tails[6] = {NULL};
 
         current = game->head;
         do {
@@ -125,7 +128,7 @@ void shiftByColor(Game* game, PColor color) {
             current = current->next;
         } while (current != game->head);
 
-        for(int i = 0 ; i < 4 ; i++) {
+        for(int i = 0 ; i < game->shapeCount ; i++) {
             if(heads[i] != NULL) {
                 tails[i]->shapeNext = heads[i];
                 heads[i]->shapePrev = tails[i];
@@ -165,8 +168,8 @@ void shiftByShape(Game* game, PShape shape) {
             current = current->shapeNext;
         }
 
-        Piece *heads[4] = {NULL, NULL, NULL, NULL};
-        Piece *tails[4] = {NULL, NULL, NULL, NULL};
+        Piece *heads[6] = {NULL};
+        Piece *tails[6] = {NULL};
 
         current = game->head;
         do {
@@ -182,7 +185,7 @@ void shiftByShape(Game* game, PShape shape) {
             current = current->next;
         } while (current != game->head);
 
-        for(int i = 0 ; i < 4 ; i++) {
+        for(int i = 0 ; i < game->colorCount ; i++) {
             if(heads[i] != NULL) {
                 tails[i]->colorNext = heads[i];
                 heads[i]->colorPrev = tails[i];
@@ -275,13 +278,14 @@ int updateBoard(Game *game, int isByShift) {
 
             // If there are combos, the score will augment exponentially (3^x or 4^x etc)
             combo++;
-            game->piecesCount -= combinationSize;
             game->score += pow(combinationSize, combo) * (isByShift ? 2 : 1);
 
             // If all the pieces on the board are deleted, it's a win, the game will end so everything will be correctly freed
             if (game->piecesCount == combinationSize) {
                 return -1;
             }
+
+            game->piecesCount -= combinationSize;
 
             // Updating the linking for the shapes and colors
             for (int i = 0; i < combinationSize; i++) {
@@ -295,7 +299,7 @@ int updateBoard(Game *game, int isByShift) {
 
             // Removing the pieces from the board
             for (int i = 0; i < combinationSize; i++) {
-                free(toDelete[i]);
+                freePiece(toDelete[i]);
             }
 
             // Removing the pieces from the single circular linked list
@@ -332,6 +336,7 @@ void saveGame(Game *game, Piece **nextPieces, char *name){
     char* magic = "TETRISTE";
     FILE *file = fopen(strcat(name, ".txt"), "w");
     fprintf(file, "%s\n", magic); // the magic string is used to check if the file is a valid save
+    fprintf(file, "%d %d\n", game->colorCount, game->shapeCount);
     fprintf(file, "%d\n%d\n", game->score, game->piecesCount);
 
     for(int i = 0 ; i < 5 ; i++){
@@ -368,6 +373,7 @@ Game* loadGame(Piece** nextPieces, char* name) {
     }
 
     Game* newGame = (Game*)malloc(sizeof(Game));
+    fscanf(file, "%d %d\n", &newGame->colorCount, &newGame->shapeCount);
     fscanf(file, "%d\n%d\n", &newGame->score, &newGame->piecesCount);
 #ifdef DEBUG
     printf("Score: %d\nPieces count: %d\n", newGame->score, newGame->piecesCount);

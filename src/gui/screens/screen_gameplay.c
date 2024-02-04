@@ -41,10 +41,10 @@ void DrawPiece(int posX, int posY, int color, int shape) {
 }
 
 void InitGameplayScreen(void) {
-    current_game = initGame();
+    current_game = initGame(4, 4);
     next_pieces = (Piece**) malloc(sizeof(Piece*) * 5);
     for(int i = 0; i < 5; i++) {
-        next_pieces[i] = generatePiece();
+        next_pieces[i] = generatePiece(4, 4);
     }
 
     background = LoadTexture("assets/bg.png");
@@ -73,7 +73,7 @@ void UpdateDrawGameplayScreen(void) {
             for (int i = 4; i > 0; i--) {
                 next_pieces[i] = next_pieces[i - 1];
             }
-            next_pieces[0] = generatePiece();
+            next_pieces[0] = generatePiece(4, 4);
 
             combo = updateBoard(current_game, 0);
             if(combo > 0) PlaySound(successSound);
@@ -88,7 +88,7 @@ void UpdateDrawGameplayScreen(void) {
             for (int i = 4; i > 0; i--) {
                 next_pieces[i] = next_pieces[i - 1];
             }
-            next_pieces[0] = generatePiece();
+            next_pieces[0] = generatePiece(4, 4);
 
             combo = updateBoard(current_game, 0);
             if(combo > 0) PlaySound(successSound);

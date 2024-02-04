@@ -5,10 +5,6 @@
 #include "../tetriste.h"
 #include "tetriste_cli.h"
 
-void showDebug(Game* currentGame);
-Piece* debugGetNextShape(Piece* piece);
-Piece* debugGetNextColor(Piece* piece);
-
 void startCLI() {
 
     // Initialization of the random number generator
@@ -18,8 +14,8 @@ void startCLI() {
     int continueGame = 1;
     Piece **nextPieces = (Piece **)malloc(5 * sizeof(Piece *));
 
-    int keepNextPieces;
-    int scoreAdded = 0;
+    int keepNextPieces; // Is used to know if we have to generate a new piece (only if we did an insertion in the previous iteration)
+    int scoreAdded = 0; // Is used to keep track of the score added by the last action and display it in the next iteration of the loop
 
     printf("Do you want to load a game (y/n) ? ");
     char loadChoice;
@@ -36,15 +32,51 @@ void startCLI() {
             return;
         }
     } else {
-        currentGame = initGame();
+        printf("Choose the difficulty of the game:\n");
+        printf("1. Easy (4 colors, 4 shapes)\n");
+        printf("2. Medium (5 colors, 5 shapes)\n");
+        printf("3. Hard (6 colors, 6 shapes)\n");
+        printf("4. Custom\n");
+        printf("Your choice: ");
+        int difficulty, colorCount, shapeCount;
+        scanf("%d", &difficulty);
+        printf("\n");
+
+        switch (difficulty) {
+            case 1:
+                colorCount = 4;
+                shapeCount = 4;
+                break;
+            case 2:
+                colorCount = 5;
+                shapeCount = 5;
+                break;
+            case 3:
+                colorCount = 6;
+                shapeCount = 6;
+                break;
+            case 4:
+                do {
+                    printf("Number of colors (4-6): ");
+                    scanf("%d", &colorCount);
+                    printf("Number of shapes (4-6): ");
+                    scanf("%d", &shapeCount);
+                    printf("\n");
+                } while (colorCount < 4 || colorCount > 6 || shapeCount < 4 || shapeCount > 6);
+                break;
+            default:
+                printf("Invalid choice. Exiting...\n");
+                free(nextPieces);
+                return;
+        }
+
+        currentGame = initGame(colorCount, shapeCount);
         for (int i = 0; i < 5; i++) {
-            nextPieces[i] = generatePiece();
+            nextPieces[i] = generatePiece(currentGame->colorCount, currentGame->shapeCount);
         }
     }
 
     while (continueGame) {
-
-        Piece *current = nextPieces[4];
 
          // By default, we keep nextPieces as is for the next execution of the loop (shifting by color/shape, quit or wrong action)
         keepNextPieces = 1;
@@ -61,19 +93,19 @@ void startCLI() {
         char choice;
         scanf(" %c", &choice); // Found on internet: to solve an infinite loop, space before %c to make it work (scanf will take the \n from the previous input, and the space tells it not to)
         printf("\n");
-        int isByShift = 0;
+        int isByShift = 1;           // Is used to know if the updateBoard function has to do a *2 multiplier if the action was a shift
 
         switch (choice) {
             case 'j':
-                leftInsert(currentGame, current);
-                keepNextPieces = 0;
+                leftInsert(currentGame, nextPieces[4]);
+                isByShift = keepNextPieces = 0;
                 break;
             case 'k':
-                rightInsert(currentGame, current);
-                keepNextPieces = 0;
+                rightInsert(currentGame, nextPieces[4]);
+                isByShift = keepNextPieces = 0;
                 break;
             case 'c':
-                displayColorMenu();
+                displayColorMenu(currentGame->colorCount > 4, currentGame->colorCount == 6);
                 char colorChoice;
                 scanf(" %c", &colorChoice);
                 printf("\n");
@@ -81,26 +113,37 @@ void startCLI() {
                 switch (colorChoice) {
                     case 'b':
                         shiftByColor(currentGame, 0);
-                        isByShift = 1;
                         break;
                     case 'y':
                         shiftByColor(currentGame, 1);
-                        isByShift = 1;
                         break;
                     case 'r':
                         shiftByColor(currentGame, 2);
-                        isByShift = 1;
                         break;
                     case 'g':
                         shiftByColor(currentGame, 3);
-                        isByShift = 1;
+                        break;
+                    case 'p':
+                        if(currentGame->colorCount > 4) { // If the game has less than 5 colors, we can't shift by purple (because it doesn't exist)
+                            shiftByColor(currentGame, 4);
+                        } else {
+                            isByShift = 0;
+                        }
+                        break;
+                    case 'w':
+                        if(currentGame->colorCount == 6) { // If the game has not 6 colors, we can't shift by white (because it doesn't exist)
+                            shiftByColor(currentGame, 5);
+                        } else {
+                            isByShift = 0;
+                        }
                         break;
                     default: // Invalid choice
+                        isByShift = 0;
                         break;
                 }
                 break;
             case 's':
-                displayShapeMenu();
+                displayShapeMenu(currentGame->shapeCount > 4, currentGame->shapeCount == 6);
                 char shapeChoice;
                 scanf(" %c", &shapeChoice);
                 printf("\n");
@@ -108,26 +151,37 @@ void startCLI() {
                 switch (shapeChoice) {
                     case 's':
                         shiftByShape(currentGame, 0);
-                        isByShift = 1;
                         break;
                     case 'd':
                         shiftByShape(currentGame, 1);
-                        isByShift = 1;
                         break;
                     case 'c':
                         shiftByShape(currentGame, 2);
-                        isByShift = 1;
                         break;
                     case 't':
                         shiftByShape(currentGame, 3);
-                        isByShift = 1;
+                        break;
+                    case 'a':
+                        if(currentGame->shapeCount > 4) { // If the game has less than 5 shapes, we can't shift by star (because it doesn't exist)
+                            shiftByShape(currentGame, 4);
+                        } else {
+                            isByShift = 0;
+                        }
+                        break;
+                    case 'p':
+                        if(currentGame->shapeCount == 6) { // If the game has not 6 shapes, we can't shift by plus (because it doesn't exist)
+                            shiftByShape(currentGame, 5);
+                        } else {
+                            isByShift = 0;
+                        }
                         break;
                     default: // '0' or invalid choice
+                        isByShift = 0;
                         break;
                 }
                 break;
             case 'q':
-                continueGame = 0;
+                isByShift = continueGame = 0;
 
                 printf("Do you want to save your progression (y/n) ? ");
                 char saveChoice;
@@ -151,7 +205,7 @@ void startCLI() {
             for (int i = 4; i > 0; i--) {
                 nextPieces[i] = nextPieces[i - 1];
             }
-            nextPieces[0] = generatePiece();
+            nextPieces[0] = generatePiece(currentGame->colorCount, currentGame->shapeCount);
         }
 
         scoreAdded = updateBoard(currentGame, isByShift);
@@ -180,10 +234,10 @@ void displayGameInfo(Game *currentGame, Piece **nextPieces, int scoreAdded) {
 
     if(scoreAdded == 0) {
         printf("Current score : %d\n", currentGame->score);
-    } else if(scoreAdded <= 5){
+    } else if(scoreAdded <= 5){ // Insertions
         printf("Current score : %d (+%d)\n", currentGame->score, scoreAdded);
-    } else {
-        printf("Current score : %d (COMBO! +%d)\n", currentGame->score, scoreAdded);
+    } else {                    // Combos and/or shifts
+        printf("Current score : %d (Incredible! +%d)\n", currentGame->score, scoreAdded);
     }
 
    printf("Next pieces: ");
@@ -212,21 +266,33 @@ void displayMainMenu() {
 
 }
 
-void displayColorMenu() {
+void displayColorMenu(int purple, int white) {
     printf("Which color do you want to shift?\n");
     printf("b. Blue\n");
     printf("y. Yellow\n");
     printf("r. Red\n");
     printf("g. Green\n");
+    if(purple) {
+        printf("p. Purple\n");
+    }
+    if(white) {
+        printf("w. White\n");
+    }
     printf("0. Back\n");
 }
 
-void displayShapeMenu() {
+void displayShapeMenu(int star, int plus) {
     printf("Which shape do you want to shift?\n");
     printf("s. Square\n");
     printf("d. Diamond\n");
     printf("c. Circle\n");
     printf("t. Triangle\n");
+    if(star) {
+        printf("a. Star\n");
+    }
+    if(plus) {
+        printf("p. Plus\n");
+    }
     printf("0. Back\n");
 }
 
