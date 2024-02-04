@@ -190,6 +190,7 @@ void startCLI() {
                     char name[21] = "";
                     printf("Name of the save (max of 20): ");
                     scanf("%s", name);
+                    updateRankings(currentGame->score, name);
                     saveGame(currentGame, nextPieces, name);
                 }
 
@@ -210,11 +211,13 @@ void startCLI() {
 
         scoreAdded = updateBoard(currentGame, isByShift);
         if (scoreAdded == -1) {
-            printf("YOU WIN !\n");
+            printf("YOU WIN !\nFinal score : %d\n", currentGame->score);
+            askUpdateRankings(currentGame);
             continueGame = 0;
         }
         if (currentGame->piecesCount >= 15) {
-            printf("YOU LOST!\n");
+            printf("YOU LOST !\nFinal score: %d!\n", currentGame->score);
+            askUpdateRankings(currentGame);
             continueGame = 0;
         }
     }
@@ -226,6 +229,18 @@ void startCLI() {
     free(nextPieces);
 
     freeGame(currentGame);
+}
+
+void askUpdateRankings(Game* currentGame) {
+    printf("Do you want to update the rankings (y/n) ? ");
+    char updateChoice;
+    scanf(" %c", &updateChoice);
+    if (updateChoice == 'y') {
+        char name[21] = "";
+        printf("Name of the player (max of 20): ");
+        scanf("%s", name);
+        updateRankings(currentGame->score, name);
+    }
 }
 
 void displayGameInfo(Game *currentGame, Piece **nextPieces, int scoreAdded) {

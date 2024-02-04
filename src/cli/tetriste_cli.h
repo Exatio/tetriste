@@ -6,6 +6,8 @@
 // Main
 void startCLI();
 // Utilities
+void askUpdateRankings(Game* currentGame);
+// Game menus
 void displayGameInfo(Game *currentGame, Piece **nextPieces, int scoreAdded);
 void displayMainMenu();
 void displayColorMenu(int purple, int white);

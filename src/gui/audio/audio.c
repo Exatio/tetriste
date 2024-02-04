@@ -16,10 +16,10 @@ void InitAudio() {
     themeRemix = LoadMusicStream("assets/theme-trap-remix.mp3");
     successSound = LoadSound("assets/success.mp3");
 
-    SetSoundVolume(successSound, 1.0f);
-    SetMusicVolume(theme, 0.4f);
-    SetMusicVolume(theme2, 0.4f);
-    SetMusicVolume(themeRemix, 0.4f);
+    SetSoundVolume(successSound, 0.8f);
+    SetMusicVolume(theme, 0.3f);
+    SetMusicVolume(theme2, 0.3f);
+    SetMusicVolume(themeRemix, 0.3f);
 
     currentMusic = &theme;
 }
@@ -32,6 +32,12 @@ void SwitchMusic(Music *newMusic) {
     PlayMusicStream(*currentMusic);
 }
 
+void StopMusicStream() {
+    if(currentMusic != NULL) {
+        StopMusicStream(*currentMusic);
+        currentMusic = NULL;
+    }
+}
 
 void CloseAudio() {
     UnloadMusicStream(theme);

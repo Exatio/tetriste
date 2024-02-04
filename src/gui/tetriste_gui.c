@@ -6,70 +6,66 @@
 #include "screens/screens.h"
 #include "audio/audio.h"
 
-#define SCREEN_WIDTH 1200
-#define SCREEN_HEIGHT 700
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
 
 void startGUI() {
 
-    // Initialisation du générateur de nombres aléatoires
+    // Initialization of the random number generator
     srand(time(NULL));
 
-    // Initialisation de la fenêtre
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Tetriste - Tavalidé");
-
-    // Initialisation de l'audio
+    // Initialization of the audio
     InitAudio();
 
-
     int isOnGameplay = 0;
-
+    SetExitKey(KEY_NULL); // Pressing ESC doesn't close the window
     PlayMusicStream(theme);
     SetTargetFPS(60);
     InitTitleScreen();
 
-    // Boucle principale du jeu (tick)
+    // Textures (background images) loading to memory
+    Texture2D title = LoadTexture("assets/title.png");
+    Texture2D main = LoadTexture("assets/main.png");
+    Texture2D pause = LoadTexture("assets/pause.png");
+    Texture2D win = LoadTexture("assets/win.png");
+    Texture2D loss = LoadTexture("assets/loss.png");
+
+    SCREEN currentScreen = TITLE_SCREEN;
+
+    // Main game loop (executed each tick)
     while (!WindowShouldClose()) {
 
         if(currentMusic != NULL) {
             UpdateMusicStream(*currentMusic);
         }
 
-        if(!isOnGameplay) {
-            UpdateDrawTitleScreen();
-            if(FinishTitleScreen()) {
-                UnloadTitleScreen();
-                isOnGameplay = 1;
-                InitGameplayScreen();
-            }
-        } else {
-            UpdateDrawGameplayScreen();
+        switch (currentScreen) {
+            case TITLE_SCREEN:
+                UpdateTitleScreen();
+                break;
+            case GAMEPLAY_SCREEN:
+                UpdateGameplayScreen();
+                break;
+            case PAUSE_SCREEN:
+                UpdatePauseScreen();
+                break;
+            case WIN_SCREEN:
+                UpdateWinScreen();
+                break;
+            case LOSS_SCREEN:
+                UpdateLossScreen();
+                break;
         }
-
-        if(IsKeyPressed(KEY_ONE)) {
-            if (currentMusic != &theme) {
-                SwitchMusic(&theme);
-            }
-        } else if(IsKeyPressed(KEY_TWO)) {
-            if(currentMusic != &theme2) {
-                SwitchMusic(&theme2);
-            }
-        } else if(IsKeyPressed(KEY_THREE)) {
-            if(currentMusic != &themeRemix) {
-                SwitchMusic(&themeRemix);
-            }
-        } else if(IsKeyPressed(KEY_FOUR)) {
-            StopMusicStream(*currentMusic);
-            currentMusic = NULL;
-        }
-
 
     }
 
-    if(isOnGameplay) {
-        UnloadFinishGameplayScreen();
-    } else {
-        UnloadTitleScreen();
-    }
+    // Unloading the textures
+    UnloadTexture(title);
+    UnloadTexture(main);
+    UnloadTexture(pause);
+    UnloadTexture(win);
+    UnloadTexture(loss);
+
 
     CloseAudio();
     CloseWindow();
