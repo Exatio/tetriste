@@ -31,6 +31,7 @@ void UpdateSaveScreen(Vector2 mousePoint) {
 
         if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
             if(letterCount > 0) {
+                updateRankings(current_game->score, name);
                 saveGame(current_game, next_pieces, name);
                 switchScreen(END_SCREEN);
             }
@@ -100,7 +101,7 @@ void InputBoxCollisionCheck(Vector2 mousePoint) {
         while (key > 0)
         {
             // only letters and numbers (no spaces) are allowed
-            if (letterCount < 20 && ((key >= 48 && key <= 57) || (key >= 65 && key <= 90) || (key >= 97 && key <= 122)))
+            if (letterCount < 20 && key == 95 || ((key >= 48 && key <= 57) || (key >= 65 && key <= 90) || (key >= 97 && key <= 122)))
             {
                 name[letterCount] = (char)key;
                 name[letterCount + 1] = '\0'; // Add null terminator at the end of the string.
