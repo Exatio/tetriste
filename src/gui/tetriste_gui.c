@@ -10,21 +10,25 @@
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 
-void startGUI() {
+Game* current_game;
+Piece** next_pieces;
+
+Screen currentScreen = TITLE_SCREEN;
+
+void startGUI(char* saveName) {
 
     // Initialization of the random number generator
     srand(time(NULL));
 
+    // Game initialization
+    next_pieces = (Piece **)malloc(5 * sizeof(Piece *));
+
     // Initialization of the audio
     InitAudio();
-
-    int isOnGameplay = 0;
-    
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Tetriste");
     SetExitKey(KEY_NULL); // Pressing ESC doesn't close the window
     PlayMusicStream(theme);
     SetTargetFPS(60);
-
 
     // Textures (background images) loading to memory
     Texture2D title = LoadTexture("assets/title.png");
@@ -32,11 +36,13 @@ void startGUI() {
     Texture2D pause = LoadTexture("assets/pause.png");
     Texture2D win = LoadTexture("assets/win.png");
     Texture2D loss = LoadTexture("assets/loss.png");
+    Texture2D input = LoadTexture("assets/input.png");
 
-    Screen currentScreen = TITLE_SCREEN;
+    Vector2 mousePoint;
 
+    int continueGame = 1;
     // Main game loop (executed each tick)
-    while (!WindowShouldClose()) {
+    while (!WindowShouldClose() && continueGame) {
 
         if(currentMusic != NULL) {
             UpdateMusicStream(*currentMusic);
@@ -45,26 +51,38 @@ void startGUI() {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        mousePoint = GetMousePosition();
         switch (currentScreen) {
             case TITLE_SCREEN:
                 DrawTexture(title, 0, 0, WHITE);
-                UpdateTitleScreen();
+                UpdateTitleScreen(mousePoint);
                 break;
             case MAIN_SCREEN:
                 DrawTexture(main, 0, 0, WHITE);
-                UpdateGameplayScreen();
+                UpdateGameplayScreen(mousePoint);
                 break;
             case PAUSE_SCREEN:
                 DrawTexture(pause, 0, 0, WHITE);
-                UpdatePauseScreen();
+                UpdatePauseScreen(mousePoint);
                 break;
             case WIN_SCREEN:
                 DrawTexture(win, 0, 0, WHITE);
-                UpdateWinScreen();
+                UpdateWinLossScreen(mousePoint);
                 break;
             case LOSS_SCREEN:
                 DrawTexture(loss, 0, 0, WHITE);
-                UpdateLossScreen();
+                UpdateWinLossScreen(mousePoint);
+                break;
+            case SAVE_SCREEN:
+                DrawTexture(input, 0, 0, WHITE);
+                UpdateSaveScreen(mousePoint);
+                break;
+            case LOAD_SCREEN:
+                DrawTexture(input, 0, 0, WHITE);
+                UpdateLoadScreen(mousePoint);
+                break;
+            case END_SCREEN:
+                continueGame = 0;
                 break;
         }
 
@@ -78,8 +96,12 @@ void startGUI() {
     UnloadTexture(pause);
     UnloadTexture(win);
     UnloadTexture(loss);
-
+    UnloadTexture(input);
 
     CloseAudio();
     CloseWindow();
+}
+
+void switchScreen(Screen screen) {
+    currentScreen = screen;
 }

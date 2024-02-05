@@ -1,12 +1,63 @@
 #include <stdlib.h>
 #include "raylib.h"
+#include "screens.h"
+#include "../tetriste_gui.h"
+
 #include "../../tetriste.h"
 #include "rlgl.h"
 #include "../audio/audio.h"
-#include "screens.h"
 
+int pauseMenuButtonState = 0;
+Rectangle pauseMenuButtonBounds = {32, 32, 205, 32};
 
-void UpdateGameplayScreen() {
+int changeTrackButtonState = 0;
+Rectangle changeTrackButtonBounds = {1020, 25, 205, 32};
+
+int stopMusicButtonState = 0;
+Rectangle stopMusicButtonBounds = {1020, 75, 205, 32};
+
+void UpdateGameplayScreen(Vector2 mousePoint) {
+
+    /* Buttons Logic */
+
+    // Pause Menu Button
+    if(CheckCollisionPointRec(mousePoint, pauseMenuButtonBounds)) {
+
+        DrawRectangle(pauseMenuButtonBounds.x, pauseMenuButtonBounds.y, pauseMenuButtonBounds.width, pauseMenuButtonBounds.height, Fade(WHITE, 0.3f));
+        if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) pauseMenuButtonState = 2;
+        else pauseMenuButtonState = 1;
+
+        if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) switchScreen(PAUSE_SCREEN);
+
+    } else {
+        pauseMenuButtonState = 0;
+    }
+
+    // Change Track Button
+    if(CheckCollisionPointRec(mousePoint, changeTrackButtonBounds)) {
+
+        DrawRectangle(changeTrackButtonBounds.x, changeTrackButtonBounds.y, changeTrackButtonBounds.width, changeTrackButtonBounds.height, Fade(WHITE, 0.3f));
+        if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) changeTrackButtonState = 2;
+        else changeTrackButtonState = 1;
+
+        if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) SwitchMusic();
+
+    } else {
+        changeTrackButtonState = 0;
+    }
+
+    // Stop Music Button
+    if(CheckCollisionPointRec(mousePoint, stopMusicButtonBounds)) {
+
+        DrawRectangle(stopMusicButtonBounds.x, stopMusicButtonBounds.y, stopMusicButtonBounds.width, stopMusicButtonBounds.height, Fade(WHITE, 0.3f));
+        if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) stopMusicButtonState = 2;
+        else stopMusicButtonState = 1;
+
+        if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) StopMusic();
+
+    } else {
+        stopMusicButtonState = 0;
+    }
 
 }
 /*
