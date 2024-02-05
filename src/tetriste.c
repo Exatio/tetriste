@@ -422,96 +422,99 @@ Game* loadGame(Piece** nextPieces, char* name) {
 }
 
 void updateRankings(int score, char *name) {
+    char *rankingFile = "rankings.txt";
+    FILE *f = fopen(rankingFile, "r");
 
-    char* rankingFileName = "rankings.txt";
-    FILE *rankingFile = fopen(rankingFileName, "r");
+    if (f == NULL){// if the ranking file does not exist
+        FILE *f = fopen(rankingFile, "w");
 
-    if (rankingFile == NULL) { // if the file doesn't exist
-        rankingFile = fopen(rankingFileName, "w");
-
-        if(rankingFile != NULL) {
-            fprintf(rankingFile,"TETRISTE\n1\n%d %s\n", score, name);
-            fclose(rankingFile);
-        } else {
-            printf("Error : Could not open the rankings file \"%s\".\n", rankingFileName);
-        }
-
-    } else { // file exists, and therefore has at least 1 score
-
-        char magic[] = "        ";
-        fgets(magic, 9, rankingFile);
-        if (strcmp(magic, "TETRISTE") != 0) {
-            printf("Error : Could not save to the ranking file (invalid or corrupted\n");
-            fclose(rankingFile);
+        if (f == NULL){
+            printf("Error : can't create a ranking file.");
             return;
         }
 
-        int scoreCount; // How many scores there is in the ranking
+        fprintf(f, "TETRISTE\n");
+        fprintf(f, "1\n%d %s\n", score, name);
+        fclose(f);
 
-        int currentScore;
-        char currentName[21];
+    } else { // file exists, and therefore has at least 1 score
+        char magic[10];
+        fscanf(f, "%s", magic);
+        if (strcmp(magic, "TETRISTE") != 0){
+            printf("Ranking file is invalid or corrupted.\n");
+            fclose(f);
+            return;
+        }
 
-        int allScores[10];
-        char *allNames[10];
+        int scoreCount, scoreCopy;
+        char nameCopy[21];
+        int scores[10];
+        char *names[10];
+        int alreadyRanked = 0, willBeReplaced = 0;
 
-        int alreadyRanked = 0;
+        // Read the scores in the previous ranking and stores them
+        fscanf(f, "%d", &scoreCount);
+        for(int i=0; i<scoreCount; i++){
+            fscanf(f, "%d", &scoreCopy);
+            fscanf(f, "%s", nameCopy);
 
-        fscanf(rankingFile, "%d\n", &scoreCount);
+            if (strcmp(name, nameCopy) == 0){
+                alreadyRanked = 1;
+                if (score > scoreCopy) willBeReplaced = 1;
+            }
 
-        for(int i = 0; i < scoreCount; i++){
-            fscanf(rankingFile, "%d %s\n", &currentScore, currentName);
+            scores[i] = scoreCopy;
+            names[i] = strdup(nameCopy);
+        }
+        fclose(f);
 
-#ifdef DEBUG
-            printf("%d %ld %s\n",currentScore, strlen(currentName), currentName);
+        // Creating the new updated ranking file
+        f = fopen(rankingFile, "w");
+        if (f == NULL){
+            printf("Error, can't open the file");
+            return;
+        }
+
+        fprintf(f, "TETRISTE\n");
+        // Writing the final number of scores in the ranking (max of 10)
+        int numberOfScores = (scoreCount < 10)? scoreCount + 1 - alreadyRanked : 10;
+        fprintf(f, "%d\n", numberOfScores);
+
+        // Writing the best scores
+        int counter = 0;
+        int position = 0;
+        // Inserting all the PREVIOUS scores (counter < scoreCount and not numberOfScores)
+        // which are greater than the one we're trying to insert
+
+#ifdef debug
+        for(int j = 0; j<scoreCount; j++){
+          printf("%d %s\n", scores[j], names[j]);
 #endif
 
-            allScores[i] = currentScore;
-            allNames[i] = strdup(currentName);
-
-            if (strcmp(name, currentName) == 0){
-                alreadyRanked = 1;
-                if (score > currentScore) {
-                    allScores[i] = score;       // If the player has already a ranking lower than the actual one, we just replace it
-                } else {
-                    return;              // If the player has already a ranking, higher than the actual one, there is nothing to do
-                }
-            }
-
-
-
-        }
-        fclose(rankingFile);
-
-
-        // Writing the final number of scores in the ranking (max of 10)
-        rankingFile = fopen(rankingFileName, "w");
-        fprintf(rankingFile, "TETRISTE\n");
-
-        // If there are less than 10 scores, we need to check if the user is already ranked to know if we add one or not
-        int numberOfScores = (scoreCount < 10) ? scoreCount + 1 - alreadyRanked : 10;
-        fprintf(rankingFile, "%d\n", numberOfScores);
-
-        int isNewScoreWritten = 0;
-
-        for(int i = 0, j = 0 ; j < numberOfScores ; i++, j++)
-        {
-            // If the player is already ranked (and will be replaced), we already took care of that earlier so we just have to rewrite the same things
-            // If he isnt ranked yet, but the currentScore is higher, we rewrite the same thing too.
-            // If we already wrote the new score to the file, then we just have to rewrite the same things
-            if(alreadyRanked || allScores[i] >= score || isNewScoreWritten) {
-                fprintf(rankingFile, "%d %s\n", allScores[i], allNames[i]);
-            } else {
-                fprintf(rankingFile, "%d %s\n", score, name);
-                isNewScoreWritten = 1;
-                i--;
-            }
-
-
+        while(counter < scoreCount && scores[position] >= score){
+            fprintf(f, "%d %s\n", scores[position], names[position]);
+            counter++;
+            position++;
         }
 
-        fclose(rankingFile);
-        for(int j = 0; j < scoreCount; j++){
-            free(allNames[j]);
+        if (counter < numberOfScores && (!alreadyRanked || willBeReplaced)){
+            fprintf(f, "%d %s\n", score, name);
+            counter++;
+        }
+
+        while(counter < numberOfScores){
+            if (strcmp(names[position], name) == 0){ //ignores if the score belongs to someone already ranked
+                position++;
+                continue;
+            }
+            fprintf(f, "%d %s\n", scores[position], names[position]);
+            counter++;
+            position++;
+        }
+
+        fclose(f);
+        for(int j=0; j<scoreCount; j++){
+            free(names[j]);
         }
     }
 }

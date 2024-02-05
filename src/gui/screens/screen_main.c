@@ -20,6 +20,7 @@ Rectangle stopMusicButtonBounds = {1020, 75, 205, 32};
 
 int nextUpdateBoard = 0;
 int isByShift = 1;
+int comesFromWinLoss = 0;
 
 void DrawPiece(int posX, int posY, PColor color, PShape shape) {
 

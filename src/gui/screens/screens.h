@@ -5,6 +5,8 @@
 
 extern Screen nextScreen; // Used so the ranking screen knows if it has to exit after the save or restart
 extern int savedScore;
+extern int comesFromWinLoss;
+
 // The title screen
 void UpdateTitleScreen(Vector2 mousePoint);
 

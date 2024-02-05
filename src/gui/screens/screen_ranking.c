@@ -20,6 +20,7 @@ void UpdateRankingScreen(Vector2 mousePoint) {
         else yesButtonState = 1;
 
         if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+            comesFromWinLoss = 1;
             switchScreen(SAVE_SCREEN);
         }
 

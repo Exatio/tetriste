@@ -36,6 +36,8 @@ void UpdatePauseScreen(Vector2 mousePoint) {
 
         if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
             nextScreen = END_SCREEN;
+            comesFromWinLoss = 0;
+            savedScore = current_game->score;
             switchScreen(SAVE_SCREEN);
         }
 
