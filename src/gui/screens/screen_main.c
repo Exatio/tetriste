@@ -139,17 +139,6 @@ void KeybindsCheck() {
 int scoreAdded = 0;
 void UpdateGameplayScreen(Vector2 mousePoint) {
 
-    if(nextUpdateBoard) {
-        scoreAdded = updateBoard(current_game, isByShift);
-        if(scoreAdded > 0) PlaySound(successSound);
-        if(current_game->piecesCount >= 15) {
-            switchScreen(LOSS_SCREEN);
-        }
-        if(current_game->piecesCount == 0) {
-            switchScreen(WIN_SCREEN);
-        }
-        nextUpdateBoard = 0;
-    }
 
     /* Draw the score */
     if(scoreAdded == 0) {
@@ -173,6 +162,37 @@ void UpdateGameplayScreen(Vector2 mousePoint) {
     for(int i = 0; i < current_game->piecesCount; i++) {
         DrawPiece(15 + 75*i + 8*i, 350, current->color, current->shape);
         current = current->next;
+    }
+
+    if(nextUpdateBoard) {
+        scoreAdded = updateBoard(current_game, isByShift);
+        if(scoreAdded > 0) PlaySound(successSound);
+        if(current_game->piecesCount >= 15) {
+            scoreAdded = 0;
+
+            for (int i = 0; i < 5; i++) {
+                freePiece(next_pieces[i]);
+            }
+
+            free(next_pieces);
+            freeGame(current_game);
+
+            switchScreen(LOSS_SCREEN);
+        }
+        if(scoreAdded == -1) {
+            scoreAdded = 0;
+
+            for (int i = 0; i < 5; i++) {
+                freePiece(next_pieces[i]);
+            }
+
+            free(next_pieces);
+            freeGame(current_game);
+
+            switchScreen(WIN_SCREEN);
+
+        }
+        nextUpdateBoard = 0;
     }
 
 }
@@ -224,104 +244,3 @@ void ButtonsCheck(Vector2 mousePoint) {
         stopMusicButtonState = 0;
     }
 }
-/*
-
-int lost = 0;
-int combo = 0;
-
-
-void UpdateDrawGameplayScreen(void) {
-    DrawFPS(10, 10);
-
-    BeginDrawing();
-    DrawTexture(background, 0, 0, WHITE);
-
-    if(!lost && combo != -1) {
-
-        if(combo == 0) {
-            DrawText(TextFormat("%d", current_game->score), 200, 390, 50, BLUE);
-        } else if(combo == 1) {
-            DrawText(TextFormat("%d (+3)", current_game->score), 200, 390, 50, BLUE);
-        } else {
-            DrawText(TextFormat("%d (combo! +%d)", current_game->score, combo), 200, 390, 50, BLUE);
-        }
-
-
-        if (IsKeyPressed(KEY_LEFT)) {
-            leftInsert(current_game, next_pieces[4]);
-
-            for (int i = 4; i > 0; i--) {
-                next_pieces[i] = next_pieces[i - 1];
-            }
-            next_pieces[0] = generatePiece(4, 4);
-
-            combo = updateBoard(current_game, 0);
-            if(combo > 0) PlaySound(successSound);
-
-            if(current_game->piecesCount >= 15) {
-                lost = 1;
-            }
-
-        } else if (IsKeyPressed(KEY_RIGHT)) {
-            rightInsert(current_game, next_pieces[4]);
-
-            for (int i = 4; i > 0; i--) {
-                next_pieces[i] = next_pieces[i - 1];
-            }
-            next_pieces[0] = generatePiece(4, 4);
-
-            combo = updateBoard(current_game, 0);
-            if(combo > 0) PlaySound(successSound);
-
-            if(current_game->piecesCount >= 15) {
-                lost = 1;
-            }
-
-        } else if (IsKeyPressed(KEY_R)) { // rouge
-            shiftByColor(current_game, 3);
-        } else if (IsKeyPressed(KEY_B)) { // bleu
-            shiftByColor(current_game, 1);
-        } else if (IsKeyPressed(KEY_Y)) { // jaune
-            shiftByColor(current_game, 2);
-        } else if (IsKeyPressed(KEY_G)) { // vert
-            shiftByColor(current_game, 4);
-        } else if (IsKeyPressed(KEY_S)) { // carré
-            shiftByShape(current_game, 1);
-        } else if (IsKeyPressed(KEY_D)) { // losange
-            shiftByShape(current_game, 2);
-        } else if (IsKeyPressed(KEY_C)) { // rond
-            shiftByShape(current_game, 3);
-        } else if (IsKeyPressed(KEY_T)) { // triangle
-            shiftByShape(current_game, 4);
-        }
-
-
-        for (int i = 0; i < 5; i++) {
-            DrawPiece(200 + 80 * i, 450, next_pieces[i]->color,
-                      next_pieces[i]->shape);
-        }
-
-        int piece_count = current_game->piecesCount;
-        int sizeOfAllPieces = piece_count * 65 + (piece_count - 1) * 15;
-        int startX = (GetScreenWidth() - sizeOfAllPieces) / 2;
-        int i = 0;
-
-        Piece *current = current_game->head;
-        do {
-            DrawPiece(startX + 80 * i, 550, current->color, current->shape);
-            current = current->next;
-            i++;
-        } while (current != current_game->head);
-
-    } else if(combo == -1) {
-        DrawText(TextFormat("%d", current_game->score), 200, 390, 50, RED);
-        DrawText("YOU WIN!", 200, 450, 50, RED);
-    } else if(lost) {
-        DrawText("YOU LOST!", 200, 460, 50, RED);
-        DrawText(TextFormat("%d", current_game->score), 200, 390, 50, RED);
-    }
-
-    EndDrawing();
-}
-
-*/

@@ -27,9 +27,6 @@ void startGUI(char* saveName) {
     // Initialization of the random number generator
     srand(time(NULL));
 
-    // Game initialization
-    next_pieces = (Piece **)malloc(5 * sizeof(Piece *));
-
     // Initialization of the audio
     InitAudio();
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Tetriste");

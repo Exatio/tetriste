@@ -20,7 +20,8 @@ void UpdateTitleScreen(Vector2 mousePoint) {
 
         if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
 
-            current_game = initGame(6, 6);
+            current_game = initGame(4, 4);
+            next_pieces = (Piece **)malloc(5 * sizeof(Piece *));
             for (int i = 0; i < 5; i++) {
                 next_pieces[i] = generatePiece(current_game->colorCount, current_game->shapeCount);
             }

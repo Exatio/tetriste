@@ -62,6 +62,7 @@ void UpdateLoadScreen(Vector2 mousePoint) {
 
         if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
             if(letterCount > 0) {
+                next_pieces = (Piece **)malloc(5 * sizeof(Piece *));
                 current_game = loadGame(next_pieces, name);
 
                 // Reset the name on the screen
