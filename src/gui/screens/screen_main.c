@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdio.h>
+
 #include "raylib.h"
 #include "screens.h"
 #include "../tetriste_gui.h"
@@ -16,10 +18,166 @@ Rectangle changeTrackButtonBounds = {1020, 25, 205, 32};
 int stopMusicButtonState = 0;
 Rectangle stopMusicButtonBounds = {1020, 75, 205, 32};
 
+int nextUpdateBoard = 0;
+int isByShift = 1;
+
+void DrawPiece(int posX, int posY, PColor color, PShape shape) {
+
+    Color drawColor;
+    switch(color) {
+        case P_BLUE:
+            drawColor = BLUE;
+            break;
+        case P_RED:
+            drawColor = RED;
+            break;
+        case P_YELLOW:
+            drawColor = YELLOW;
+            break;
+        case P_GREEN:
+            drawColor = GREEN;
+            break;
+        case P_PURPLE:
+            drawColor = PURPLE;
+            break;
+        case P_WHITE:
+            drawColor = WHITE;
+            break;
+        default:
+            drawColor = DARKGRAY;
+            break;
+    }
+
+    Texture2D texture;
+    switch(shape) {
+        case P_SQUARE:
+            texture = square;
+            break;
+        case P_CIRCLE:
+            texture = circle;
+            break;
+        case P_DIAMOND:
+            texture = diamond;
+            break;
+        case P_PLUS:
+            texture = plus;
+            break;
+        case P_STAR:
+            texture = star;
+            break;
+        case P_TRIANGLE:
+            texture = triangle;
+            break;
+        default:
+            texture = square;
+            printf("Shouldnt happen\n");
+            break;
+    }
+
+    DrawTexture(texture, posX, posY, drawColor);
+}
+
+
+void KeybindsCheck() {
+
+    nextUpdateBoard = 1;
+    isByShift = 1;
+
+    // Insertions
+    if(IsKeyPressed(KEY_LEFT)) {
+        leftInsert(current_game, next_pieces[4]);
+        for (int i = 4; i > 0; i--) {
+            next_pieces[i] = next_pieces[i - 1];
+        }
+        next_pieces[0] = generatePiece(4, 4);
+        isByShift = 0;
+    } else if(IsKeyPressed(KEY_RIGHT)) {
+        rightInsert(current_game, next_pieces[4]);
+        for (int i = 4; i > 0; i--) {
+            next_pieces[i] = next_pieces[i - 1];
+        }
+        next_pieces[0] = generatePiece(4, 4);
+        isByShift = 0;
+    }
+
+    // Color shifts
+    else if(IsKeyPressed(KEY_R)) {
+        shiftByColor(current_game, P_RED);
+    } else if(IsKeyPressed(KEY_B)) {
+        shiftByColor(current_game, P_BLUE);
+    } else if(IsKeyPressed(KEY_Y)) {
+        shiftByColor(current_game, P_YELLOW);
+    } else if(IsKeyPressed(KEY_G)) {
+        shiftByColor(current_game, P_GREEN);
+    } else if(IsKeyPressed(KEY_P)) {
+        shiftByColor(current_game, P_PURPLE);
+    } else if(IsKeyPressed(KEY_W)) {
+        shiftByColor(current_game, P_WHITE);
+    }
+
+    // Shape shifts
+    else if(IsKeyPressed(KEY_S)) {
+        shiftByShape(current_game, P_SQUARE);
+    } else if(IsKeyPressed(KEY_D)) {
+        shiftByShape(current_game, P_DIAMOND);
+    } else if(IsKeyPressed(KEY_C)) {
+        shiftByShape(current_game, P_CIRCLE);
+    } else if(IsKeyPressed(KEY_T)) {
+        shiftByShape(current_game, P_TRIANGLE);
+    } else if(IsKeyPressed(KEY_A)) {
+        shiftByShape(current_game, P_STAR);
+    } else if(IsKeyPressed(KEY_M)) {
+        shiftByShape(current_game, P_PLUS);
+    } else {
+        nextUpdateBoard = 0;
+    }
+
+
+
+}
+
+int scoreAdded = 0;
 void UpdateGameplayScreen(Vector2 mousePoint) {
 
-    /* Buttons Logic */
+    if(nextUpdateBoard) {
+        scoreAdded = updateBoard(current_game, isByShift);
+        if(scoreAdded > 0) PlaySound(successSound);
+        if(current_game->piecesCount >= 15) {
+            switchScreen(LOSS_SCREEN);
+        }
+        if(current_game->piecesCount == 0) {
+            switchScreen(WIN_SCREEN);
+        }
+        nextUpdateBoard = 0;
+    }
 
+    /* Draw the score */
+    if(scoreAdded == 0) {
+        DrawText(TextFormat("%d", current_game->score), 220, 140, 50, BLUE);
+    } else if(scoreAdded <= 5) {
+        DrawText(TextFormat("%d (+%d)", current_game->score, scoreAdded), 220, 140, 50, BLUE);
+    } else {
+        DrawText(TextFormat("%d (Incredible! +%d)", current_game->score, scoreAdded), 220, 140, 50, BLUE);
+    }
+
+    ButtonsCheck(mousePoint);
+    KeybindsCheck();
+
+    /* Draw the next pieces */
+    for(int i = 0; i < 5; i++) {
+        DrawPiece(220 + 83 * i, 225, next_pieces[i]->color, next_pieces[i]->shape);
+    }
+
+    /* Draw the game board */
+    Piece* current = current_game->head;
+    for(int i = 0; i < current_game->piecesCount; i++) {
+        DrawPiece(15 + 75*i + 8*i, 350, current->color, current->shape);
+        current = current->next;
+    }
+
+}
+
+void ButtonsCheck(Vector2 mousePoint) {
     // Pause Menu Button
     if(CheckCollisionPointRec(mousePoint, pauseMenuButtonBounds)) {
 
@@ -33,8 +191,15 @@ void UpdateGameplayScreen(Vector2 mousePoint) {
         pauseMenuButtonState = 0;
     }
 
+    if(IsKeyPressed(KEY_ESCAPE)) {
+        switchScreen(PAUSE_SCREEN);
+    }
+
+
     // Change Track Button
     if(CheckCollisionPointRec(mousePoint, changeTrackButtonBounds)) {
+
+
 
         DrawRectangle(changeTrackButtonBounds.x, changeTrackButtonBounds.y, changeTrackButtonBounds.width, changeTrackButtonBounds.height, Fade(WHITE, 0.3f));
         if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) changeTrackButtonState = 2;
@@ -58,54 +223,12 @@ void UpdateGameplayScreen(Vector2 mousePoint) {
     } else {
         stopMusicButtonState = 0;
     }
-
 }
 /*
 
-static Texture2D background;
-Game* current_game;
-Piece** next_pieces;
 int lost = 0;
 int combo = 0;
 
-void DrawPiece(int posX, int posY, int color, int shape) {
-
-    Color drawColor = // light blue
-            {0x04, 0x62, 0xD6, 0xFF};
-    if(color == 2) {
-        drawColor = YELLOW;
-    } else if(color == 3) {
-        drawColor = RED;
-    } else if(color == 4) {
-        drawColor = GREEN;
-    }
-
-    if(shape == 1) { // Carr
-        DrawRectangle(posX, posY, 65, 65, drawColor);
-    } else if(shape == 2) { // Losange
-        Rectangle rect = {posX + 32.5, posY, 46, 46}; // sq(65^2 * 2) = 46
-        DrawRectanglePro(rect, (Vector2){0, 0}, 45, drawColor);
-    } else if(shape == 3) { // Rond
-        DrawCircle(posX+32.5, posY+32.5, 32.5, drawColor);
-    } else if(shape == 4) { // Triangle
-        DrawTriangle(
-                (Vector2){posX + 32.5, posY},
-                (Vector2){posX, posY + 65},
-                (Vector2){posX + 65, posY + 65},
-                drawColor
-        );
-    }
-}
-
-void InitGameplayScreen(void) {
-    current_game = initGame(4, 4);
-    next_pieces = (Piece**) malloc(sizeof(Piece*) * 5);
-    for(int i = 0; i < 5; i++) {
-        next_pieces[i] = generatePiece(4, 4);
-    }
-
-    background = LoadTexture("assets/bg.png");
-}
 
 void UpdateDrawGameplayScreen(void) {
     DrawFPS(10, 10);
@@ -201,12 +324,4 @@ void UpdateDrawGameplayScreen(void) {
     EndDrawing();
 }
 
-void UnloadFinishGameplayScreen(void) {
-    for(int i = 0; i < 5; i++) {
-        freePiece(next_pieces[i]);
-    }
-    free(next_pieces);
-    freeGame(current_game);
-    UnloadTexture(background);
-}
 */

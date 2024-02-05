@@ -1,8 +1,17 @@
+#include "raylib.h"
+
 #ifndef TETRISTE_GUI_H
 #define TETRISTE_GUI_H
 
 extern Game* current_game;
 extern Piece** next_pieces;
+
+extern Texture2D square;
+extern Texture2D circle;
+extern Texture2D diamond;
+extern Texture2D plus;
+extern Texture2D star;
+extern Texture2D triangle;
 
 typedef enum {
     TITLE_SCREEN,

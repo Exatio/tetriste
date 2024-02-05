@@ -63,11 +63,14 @@ void UpdateLoadScreen(Vector2 mousePoint) {
         if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
             if(letterCount > 0) {
                 current_game = loadGame(next_pieces, name);
+
+                // Reset the name on the screen
+                letterCount = 0;
+                for(int i = 0 ; i < 21 ; i++) {
+                    name[i] = '\0';
+                }
+
                 if(current_game != NULL) {
-                    letterCount = 0;
-                    for(int i = 0 ; i < 21 ; i++) {
-                        name[i] = '\0';
-                    }
                     switchScreen(MAIN_SCREEN);
                 } else {
                     drawError = 1;
@@ -119,35 +122,3 @@ void InputBoxCollisionCheck(Vector2 mousePoint) {
     }
 
 }
-
-/*
-void UpdateTitleScreen(Vector2 mousePoint) {
-    // Check if the mouse clicks on the buttons
-
-    // Start Button
-    if(CheckCollisionPointRec(mousePoint, startButtonBounds)) {
-
-        DrawRectangle(startButtonBounds.x, startButtonBounds.y, startButtonBounds.width, startButtonBounds.height, Fade(WHITE, 0.3f));
-        if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) startButtonState = 2;
-        else startButtonState = 1;
-
-        if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) switchScreen(MAIN_SCREEN);
-
-    } else {
-        startButtonState = 0;
-    }
-
-    // Load Button
-    if(CheckCollisionPointRec(mousePoint, loadButtonBounds)) {
-
-        DrawRectangle(loadButtonBounds.x, loadButtonBounds.y, loadButtonBounds.width, loadButtonBounds.height, Fade(WHITE, 0.3f));
-        if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) loadButtonState = 2;
-        else loadButtonState = 1;
-
-        if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) switchScreen(WIN_SCREEN);
-
-    } else {
-        loadButtonState = 0;
-    }
-}
-*/

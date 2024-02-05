@@ -13,6 +13,13 @@
 Game* current_game;
 Piece** next_pieces;
 
+Texture2D square;
+Texture2D circle;
+Texture2D diamond;
+Texture2D plus;
+Texture2D star;
+Texture2D triangle;
+
 Screen currentScreen = TITLE_SCREEN;
 
 void startGUI(char* saveName) {
@@ -37,6 +44,13 @@ void startGUI(char* saveName) {
     Texture2D win = LoadTexture("assets/win.png");
     Texture2D loss = LoadTexture("assets/loss.png");
     Texture2D input = LoadTexture("assets/input.png");
+
+    square = LoadTexture("assets/square.png");
+    circle = LoadTexture("assets/circle.png");
+    diamond = LoadTexture("assets/diamond.png");
+    plus = LoadTexture("assets/plus.png");
+    star = LoadTexture("assets/star.png");
+    triangle = LoadTexture("assets/triangle.png");
 
     Vector2 mousePoint;
 
@@ -90,6 +104,19 @@ void startGUI(char* saveName) {
 
     }
 
+    // Free memory
+    for (int i = 0; i < 5; i++) {
+        if(next_pieces[i] != NULL) {
+            freePiece(next_pieces[i]);
+        }
+    }
+
+    free(next_pieces);
+
+    if(current_game != NULL) {
+        freeGame(current_game);
+    }
+
     // Unloading the textures
     UnloadTexture(title);
     UnloadTexture(main);
@@ -97,6 +124,13 @@ void startGUI(char* saveName) {
     UnloadTexture(win);
     UnloadTexture(loss);
     UnloadTexture(input);
+
+    UnloadTexture(square);
+    UnloadTexture(circle);
+    UnloadTexture(diamond);
+    UnloadTexture(plus);
+    UnloadTexture(star);
+    UnloadTexture(triangle);
 
     CloseAudio();
     CloseWindow();

@@ -4,8 +4,12 @@
 
 // The title screen
 void UpdateTitleScreen(Vector2 mousePoint);
+
 // The game itself
+
 void UpdateGameplayScreen(Vector2 mousePoint);
+void ButtonsCheck(Vector2 mousePoint); // manages the 3 buttons of the main game screen
+
 // Pause menu
 void UpdatePauseScreen(Vector2 mousePoint);
 // End of the game
