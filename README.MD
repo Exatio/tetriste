@@ -11,7 +11,8 @@
 ## Description
 
 Tetriste is a game similar to the famous Tetris.\
-It was made as part of a C programming project.
+It was made as part of a C programming project.\
+You can find it [in this Github repo](https://github.com/Exatio/tetriste)
 
 ## Installation
 
