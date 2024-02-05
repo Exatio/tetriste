@@ -22,7 +22,7 @@ void UpdateTitleScreen(Vector2 mousePoint) {
 
             current_game = initGame(6, 6);
             for (int i = 0; i < 5; i++) {
-                nextPieces[i] = generatePiece(currentGame->colorCount, currentGame->shapeCount);
+                next_pieces[i] = generatePiece(current_game->colorCount, current_game->shapeCount);
             }
 
             switchScreen(MAIN_SCREEN);
