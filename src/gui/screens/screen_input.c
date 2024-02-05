@@ -64,6 +64,10 @@ void UpdateLoadScreen(Vector2 mousePoint) {
             if(letterCount > 0) {
                 current_game = loadGame(next_pieces, name);
                 if(current_game != NULL) {
+                    letterCount = 0;
+                    for(int i = 0 ; i < 21 ; i++) {
+                        name[i] = '\0';
+                    }
                     switchScreen(MAIN_SCREEN);
                 } else {
                     drawError = 1;
