@@ -2,10 +2,11 @@
 
 ## Screenshots
 
-![CLI Mode](screenshots/screenshot_cli.png)
-![GUI Mode - title screen](screenshots/screenshot_gui_title.png)
-![GUI Mode - gameplay](screenshots/screenshot_gui_gameplay.png)
-
+![CLI Mode - normal](screenshots/screen_cli_1.png)
+![CLI Mode - combo](screenshots/screen_cli_2.png)
+![GUI Mode - title screen](screenshots/screen_gui_1.png)
+![GUI Mode - gameplay](screenshots/screen_gui_2.png)
+![GUI Mode - pause screen](screenshots/screen_gui_3.png)
 
 ## Description
 
@@ -18,18 +19,17 @@ To install the game, just clone the git repository and compile the program with 
 
 ## Usage
 
-To launch the game in CLI mode, use the `./tetriste cli` command.
+To launch the game in CLI mode, use the `./tetriste cli` command.\
 To start it in GUI mode, use the `./tetriste gui` command.
 
 ## Controls
 
-For the GUI, you can currently use the following controls:
-- Insert a piece to the left : Left arrow
-- Insert a piece to the right : Right arrow
-- Rotate through the shape cycle : S, D, C, T
-- Rotate through the color cycle : R, B, Y, G
+During the gameplay, you can currently use the following controls:
+- Insert a piece to the left/right : Left/Right arrow
+- Rotate through the shape cycle : S, D, C, T, A, M
+- Rotate through the color cycle : R, B, Y, G, P, W
 - Switch the music or disable it : 1, 2, 3, 4
-- Quit the game : Esc
+- Pause menu : Esc 
 
 ## C Coding Style Conventions
 
