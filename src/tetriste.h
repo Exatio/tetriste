@@ -27,16 +27,16 @@ struct Piece {
     PShape shape;                 // The piece's shape
 
     Piece* next;                  // Circular linked list for pieces
-    Piece* shapePrev;             // Double linked list for shapes
+    Piece* shapePrev;             // Double circular linked list for shapes
     Piece* shapeNext;
-    Piece* colorPrev;             // Double linked list for colors
+    Piece* colorPrev;             // Double circular linked list for colors
     Piece* colorNext;
 
     char* displayStr;             // How the piece must be displayed in the terminal
 };
 
 typedef struct {
-    Piece* head;
+    Piece* head;            // The first piece displayed from the left in the game
     int score;
     int piecesCount;
     int colorCount;         // The (difficulty) number of colors in the game

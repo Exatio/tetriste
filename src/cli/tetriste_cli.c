@@ -81,7 +81,7 @@ void startCLI() {
          // By default, we keep nextPieces as is for the next execution of the loop (shifting by color/shape, quit or wrong action)
         keepNextPieces = 1;
 
-        printf("%s\033[0;0H\033[2J", "\033[0m");
+        printf("%s\033[0;0H\033[2J", "\033[0m"); // Reset and Clear the terminal
 
         displayGameInfo(currentGame, nextPieces, scoreAdded);
 #ifdef DEBUG

@@ -166,10 +166,11 @@ void UpdateGameplayScreen(Vector2 mousePoint) {
         current = current->next;
     }
 
+    /* If we need to update the board, do it */
     if(nextUpdateBoard) {
         scoreAdded = updateBoard(current_game, isByShift);
         if(scoreAdded > 0) PlaySound(successSound);
-        if(current_game->piecesCount >= 15) {
+        if(current_game->piecesCount >= 15) {  // The game is a loss (15 is the maximum amount of pieces)
             savedScore = current_game->score;
             scoreAdded = 0;
 
@@ -185,7 +186,7 @@ void UpdateGameplayScreen(Vector2 mousePoint) {
 
             switchScreen(LOSS_SCREEN);
         }
-        if(scoreAdded == -1) {
+        if(scoreAdded == -1) {                 // The game is a win
             savedScore = current_game->score;
             scoreAdded = 0;
 
@@ -228,8 +229,6 @@ void ButtonsCheck(Vector2 mousePoint) {
 
     // Change Track Button
     if(CheckCollisionPointRec(mousePoint, changeTrackButtonBounds)) {
-
-
 
         DrawRectangle(changeTrackButtonBounds.x, changeTrackButtonBounds.y, changeTrackButtonBounds.width, changeTrackButtonBounds.height, Fade(WHITE, 0.3f));
         if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) changeTrackButtonState = 2;

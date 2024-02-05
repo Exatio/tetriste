@@ -16,7 +16,7 @@ void InitAudio() {
     themeRemix = LoadMusicStream("assets/theme-trap-remix.mp3");
     successSound = LoadSound("assets/success.mp3");
 
-    SetSoundVolume(successSound, 0.8f);
+    SetSoundVolume(successSound, 0.7f);
     SetMusicVolume(theme, 0.3f);
     SetMusicVolume(theme2, 0.3f);
     SetMusicVolume(themeRemix, 0.3f);

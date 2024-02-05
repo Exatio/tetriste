@@ -57,6 +57,7 @@ void UpdateLoadScreen(Vector2 mousePoint) {
 
     // Input Box
     InputBoxCollisionCheck(mousePoint);
+
     // Confirm Button
     if(CheckCollisionPointRec(mousePoint, confirmButtonBounds)) {
 

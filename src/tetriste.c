@@ -15,7 +15,6 @@ Game* initGame(int colorCount, int shapeCount) {
     newPiece->colorNext = newPiece;
 
 
-
     Game* newGame = (Game*)malloc(sizeof(Game));
     newGame->head = newPiece;
     newGame->score = 0;
@@ -81,6 +80,8 @@ void rightInsert(Game* game, Piece* toInsert) {
 
 // Shifts all pieces of a specified color to the left
 void shiftByColor(Game* game, PColor color) {
+
+    // The first piece of the color from the left of the board
     Piece *firstColor = game->head;
     while (firstColor->next != game->head) {
         if (firstColor->color == color) {
@@ -95,9 +96,10 @@ void shiftByColor(Game* game, PColor color) {
     Piece *lastColor = firstColor->colorPrev;
 
 
-    // Circularly shift the colors by swapping shapes and displayStr by pairs
+    // If there are at least 2 pieces of the same color, we shift them
     if (firstColor != lastColor) {
 
+        // Circularly shift the colors by swapping shapes and displayStr by pairs
         Piece *current = firstColor;
         while (current != lastColor) {
             int tmp = current->shape;
@@ -111,6 +113,7 @@ void shiftByColor(Game* game, PColor color) {
             current = current->colorNext;
         }
 
+        // Updating the doubly circular linked list of shapes
         Piece *heads[6] = {NULL};
         Piece *tails[6] = {NULL};
 
@@ -128,6 +131,7 @@ void shiftByColor(Game* game, PColor color) {
             current = current->next;
         } while (current != game->head);
 
+        // We connect all the tails to all the heads of the same shape
         for(int i = 0 ; i < game->shapeCount ; i++) {
             if(heads[i] != NULL) {
                 tails[i]->shapeNext = heads[i];
@@ -137,8 +141,11 @@ void shiftByColor(Game* game, PColor color) {
 
     }
 }
+
 // Shifts all pieces of a specified shape to the left
 void shiftByShape(Game* game, PShape shape) {
+
+    // The first piece of the shape from the left of the board
     Piece *firstShape = game->head;
     while (firstShape->next != game->head) {
         if (firstShape->shape == shape) {
@@ -153,9 +160,11 @@ void shiftByShape(Game* game, PShape shape) {
     Piece *lastShape = firstShape->shapePrev;
 
 
-    // Circularly shift the shapes by swapping color and displayStr by pairs
+    // If there are at least 2 pieces of the same shape, we shift them
     if (firstShape != lastShape) {
 
+
+        // Circularly shift the shapes by swapping color and displayStr by pairs
         Piece *current = firstShape;
         while (current != lastShape) {
             int tmp = current->color;
@@ -168,6 +177,7 @@ void shiftByShape(Game* game, PShape shape) {
             current = current->shapeNext;
         }
 
+        // Updating the doubly circular linked list of colors
         Piece *heads[6] = {NULL};
         Piece *tails[6] = {NULL};
 
@@ -185,6 +195,7 @@ void shiftByShape(Game* game, PShape shape) {
             current = current->next;
         } while (current != game->head);
 
+        // We connect all the tails to all the heads of the same color
         for(int i = 0 ; i < game->colorCount ; i++) {
             if(heads[i] != NULL) {
                 tails[i]->colorNext = heads[i];
@@ -196,7 +207,7 @@ void shiftByShape(Game* game, PShape shape) {
 }
 
 
-// Updates the doubly circular linked list of shapes for a given piece
+// Updates the doubly circular linked list of shapes for a given piece that is added to the board
 void updateShapes(Piece* piece) {
     Piece* current = piece->next;
     while (current->shape != piece->shape) {
@@ -214,7 +225,7 @@ void updateShapes(Piece* piece) {
     }
 }
 
-// Updates the doubly circular linked list of colors for a given piece
+// Updates the doubly circular linked list of colors for a given piece that is added to the board
 void updateColors(Piece* piece) {
     Piece* current = piece->next;
     while (current->color != piece->color) {
@@ -308,7 +319,7 @@ int updateBoard(Game *game, int isByShift) {
                 tail->next = game->head;
             } else {
                 beforeCurrent->next = currentPiece;
-                if (currentPiece == game->head) tail = beforeCurrent; // Checking whether or not the tail got removed
+                if (currentPiece == game->head) tail = beforeCurrent; // Checking whether the tail got removed
             }
 
             // We need to check again since the beginning to see if a new combinaison was created from this deletion
