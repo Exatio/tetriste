@@ -5,8 +5,8 @@ LDFLAGS=-L./raylib/lib/ -lraylib -lm -lpthread -ldl -lrt -lX11
 
 all: tetriste
 
-tetriste: src/tetriste.o src/cli/tetriste_cli.o src/gui/tetriste_gui.o src/gui/audio/audio.o src/gui/screens/screen_title.o src/gui/screens/screen_input.o src/gui/screens/screen_main.o src/gui/screens/screen_pause.o src/gui/screens/screen_winloss.o main.o raylib/lib/libraylib.a Makefile
-	gcc -o tetriste src/tetriste.o src/cli/tetriste_cli.o src/gui/tetriste_gui.o src/gui/audio/audio.o src/gui/screens/screen_title.o src/gui/screens/screen_input.o src/gui/screens/screen_main.o src/gui/screens/screen_pause.o src/gui/screens/screen_winloss.o main.o raylib/lib/libraylib.a $(LDFLAGS)
+tetriste: src/tetriste.o src/cli/tetriste_cli.o src/gui/tetriste_gui.o src/gui/audio/audio.o src/gui/screens/screen_title.o src/gui/screens/screen_ranking.o src/gui/screens/screen_difficulty.o src/gui/screens/screen_input.o src/gui/screens/screen_main.o src/gui/screens/screen_pause.o src/gui/screens/screen_winloss.o main.o raylib/lib/libraylib.a Makefile
+	gcc -o tetriste src/tetriste.o src/cli/tetriste_cli.o src/gui/tetriste_gui.o src/gui/audio/audio.o src/gui/screens/screen_title.o src/gui/screens/screen_ranking.o src/gui/screens/screen_difficulty.o src/gui/screens/screen_input.o src/gui/screens/screen_main.o src/gui/screens/screen_pause.o src/gui/screens/screen_winloss.o main.o raylib/lib/libraylib.a $(LDFLAGS)
 
 src/tetriste.o: src/tetriste.c src/tetriste.h
 	gcc -o src/tetriste.o -c src/tetriste.c $(CFLAGS)
@@ -34,6 +34,12 @@ src/gui/screens/screen_pause.o: src/gui/screens/screen_pause.c src/gui/screens/s
 
 src/gui/screens/screen_winloss.o: src/gui/screens/screen_winloss.c src/gui/screens/screens.h
 	gcc -o src/gui/screens/screen_winloss.o -c src/gui/screens/screen_winloss.c $(CFLAGS)
+
+src/gui/screens/screen_difficulty.o: src/gui/screens/screen_difficulty.c src/gui/screens/screens.h
+	gcc -o src/gui/screens/screen_difficulty.o -c src/gui/screens/screen_difficulty.c $(CFLAGS)
+
+src/gui/screens/screen_ranking.o: src/gui/screens/screen_ranking.c src/gui/screens/screens.h
+	gcc -o src/gui/screens/screen_ranking.o -c src/gui/screens/screen_ranking.c $(CFLAGS)
 
 main.o: main.c
 	gcc -o main.o -c main.c $(CFLAGS)

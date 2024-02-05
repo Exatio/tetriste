@@ -34,7 +34,10 @@ void UpdatePauseScreen(Vector2 mousePoint) {
         if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) saveButtonState = 2;
         else saveButtonState = 1;
 
-        if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) switchScreen(SAVE_SCREEN);
+        if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+            nextScreen = END_SCREEN;
+            switchScreen(SAVE_SCREEN);
+        }
 
 
     } else {

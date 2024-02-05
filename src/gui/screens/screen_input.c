@@ -32,9 +32,13 @@ void UpdateSaveScreen(Vector2 mousePoint) {
 
         if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
             if(letterCount > 0) {
-                updateRankings(current_game->score, name);
-                saveGame(current_game, next_pieces, name);
-                switchScreen(END_SCREEN);
+                if(nextScreen == TITLE_SCREEN) {
+                    updateRankings(savedScore, name);
+                } else {
+                    updateRankings(current_game->score, name);
+                    saveGame(current_game, next_pieces, name);
+                }
+                switchScreen(nextScreen);
             }
         }
 

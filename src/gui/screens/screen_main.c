@@ -137,6 +137,7 @@ void KeybindsCheck() {
 }
 
 int scoreAdded = 0;
+int savedScore;
 void UpdateGameplayScreen(Vector2 mousePoint) {
 
 
@@ -168,6 +169,7 @@ void UpdateGameplayScreen(Vector2 mousePoint) {
         scoreAdded = updateBoard(current_game, isByShift);
         if(scoreAdded > 0) PlaySound(successSound);
         if(current_game->piecesCount >= 15) {
+            savedScore = current_game->score;
             scoreAdded = 0;
 
             for (int i = 0; i < 5; i++) {
@@ -176,10 +178,14 @@ void UpdateGameplayScreen(Vector2 mousePoint) {
 
             free(next_pieces);
             freeGame(current_game);
+
+            next_pieces = NULL;
+            current_game = NULL;
 
             switchScreen(LOSS_SCREEN);
         }
         if(scoreAdded == -1) {
+            savedScore = current_game->score;
             scoreAdded = 0;
 
             for (int i = 0; i < 5; i++) {
@@ -188,6 +194,9 @@ void UpdateGameplayScreen(Vector2 mousePoint) {
 
             free(next_pieces);
             freeGame(current_game);
+
+            next_pieces = NULL;
+            current_game = NULL;
 
             switchScreen(WIN_SCREEN);
 

@@ -20,14 +20,7 @@ void UpdateTitleScreen(Vector2 mousePoint) {
         else startButtonState = 1;
 
         if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-
-            current_game = initGame(4, 4);
-            next_pieces = (Piece **)malloc(5 * sizeof(Piece *));
-            for (int i = 0; i < 5; i++) {
-                next_pieces[i] = generatePiece(current_game->colorCount, current_game->shapeCount);
-            }
-
-            switchScreen(MAIN_SCREEN);
+            switchScreen(DIFFICULTY_SCREEN);
         }
 
     } else {

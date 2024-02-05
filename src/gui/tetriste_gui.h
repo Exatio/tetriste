@@ -21,6 +21,8 @@ typedef enum {
     LOSS_SCREEN,
     SAVE_SCREEN,
     LOAD_SCREEN,
+    DIFFICULTY_SCREEN,
+    RANKING_SCREEN,
     END_SCREEN
 } Screen;
 

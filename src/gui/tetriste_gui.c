@@ -41,6 +41,8 @@ void startGUI(char* saveName) {
     Texture2D win = LoadTexture("assets/win.png");
     Texture2D loss = LoadTexture("assets/loss.png");
     Texture2D input = LoadTexture("assets/input.png");
+    Texture2D difficulty = LoadTexture("assets/difficulty.png");
+    Texture2D ranking = LoadTexture("assets/rankings.png");
 
     square = LoadTexture("assets/square.png");
     circle = LoadTexture("assets/circle.png");
@@ -92,6 +94,14 @@ void startGUI(char* saveName) {
                 DrawTexture(input, 0, 0, WHITE);
                 UpdateLoadScreen(mousePoint);
                 break;
+            case DIFFICULTY_SCREEN:
+                DrawTexture(difficulty, 0, 0, WHITE);
+                UpdateDifficultyScreen(mousePoint);
+                break;
+            case RANKING_SCREEN:
+                DrawTexture(ranking, 0, 0, WHITE);
+                UpdateRankingScreen(mousePoint);
+                break;
             case END_SCREEN:
                 continueGame = 0;
                 break;
@@ -102,13 +112,15 @@ void startGUI(char* saveName) {
     }
 
     // Free memory
-    for (int i = 0; i < 5; i++) {
-        if(next_pieces[i] != NULL) {
-            freePiece(next_pieces[i]);
+    if(next_pieces != NULL) {
+        for (int i = 0; i < 5; i++) {
+            if(next_pieces[i] != NULL) {
+                freePiece(next_pieces[i]);
+            }
         }
-    }
 
-    free(next_pieces);
+        free(next_pieces);
+    }
 
     if(current_game != NULL) {
         freeGame(current_game);
@@ -121,6 +133,8 @@ void startGUI(char* saveName) {
     UnloadTexture(win);
     UnloadTexture(loss);
     UnloadTexture(input);
+    UnloadTexture(difficulty);
+    UnloadTexture(ranking);
 
     UnloadTexture(square);
     UnloadTexture(circle);
